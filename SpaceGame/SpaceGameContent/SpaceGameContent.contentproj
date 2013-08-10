@@ -234,13 +234,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\IceCube.bmp">
-      <Name>IceCube</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="particles\BoomerangBlur.png">
       <Name>BoomerangBlur</Name>
       <Importer>TextureImporter</Importer>
@@ -250,6 +243,13 @@
   <ItemGroup>
     <Compile Include="spritesheets\Boomerang.png">
       <Name>Boomerang</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="spritesheets\IceCube.png">
+      <Name>IceCube</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
