@@ -15,10 +15,10 @@ namespace SpaceGame.equipment
     class HookShot : Weapon
     {
         //spacing between chain links to draw between handle and hook
-        const float DISTANCE_PER_LINK = 30.0f;
+        const float DISTANCE_PER_LINK = 15.0f;
         const float MAX_RANGE = 1000.0f;
-        const float HOOK_SPEED = 10.0f;
-        const float HOOK_FORCE = 9000.0f;
+        const float HOOK_SPEED = 20.0f;
+        const float HOOK_FORCE = 12000.0f;
         const float FIRE_DELAY = 0.5f;
 
         #region fields
@@ -55,6 +55,7 @@ namespace SpaceGame.equipment
         #region methods
         protected override void UpdateWeapon(GameTime gameTime)
         {
+            _hookAngle = XnaHelper.RadiansFromVector(_hookPosition - _owner.Position);
             switch (_hookState)
             {
                 case (HookState.Idle):
@@ -63,15 +64,13 @@ namespace SpaceGame.equipment
                         {
                             _hookState = HookState.Fired;
                             _hookPosition = _owner.Position;
-                            _hookAngle = XnaHelper.RadiansFromVector(_fireDirection);
                             _hookVelocity = _fireDirection * HOOK_SPEED;
                         }
                         break;
                     }
                 case (HookState.Fired):
                     {
-                        if (!(_firing) && 
-                            Vector2.Distance(_hookPosition, _owner.Position) < MAX_RANGE)
+                        if (!(_firing) && Vector2.Distance(_hookPosition, _owner.Position) < MAX_RANGE)
                         {
                             _hookPosition += _hookVelocity;
                             _hookHitRect.X = (int)_hookPosition.X;
@@ -98,7 +97,7 @@ namespace SpaceGame.equipment
                         _owner.ApplyForce(pullForce);
                         _hookedUnit.ApplyForce(Vector2.Negate(pullForce));
 
-                        if (_firing)
+                        if (_firing || _hookedUnit.UnitLifeState == PhysicalUnit.LifeState.Destroyed)
                         {
                             _hookState = HookState.Idle;
                         }
@@ -132,7 +131,7 @@ namespace SpaceGame.equipment
                 for (int i = 0; i < numLinksToDraw; i++)
                 {
                     nextLinkPosition += chainDirection * DISTANCE_PER_LINK;
-                    _chainSprite.Draw(sb, nextLinkPosition);
+                    _chainSprite.Draw(sb, nextLinkPosition, MathHelper.PiOver2 + _hookAngle);
                 }
             }
         }
