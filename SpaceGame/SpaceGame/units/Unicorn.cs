@@ -87,7 +87,7 @@ namespace SpaceGame.units
             _standingEffect = new ParticleEffect(STAND_PARTICLE_EFFECT);
             _chargeEffect = new ParticleEffect(MOVE_PARTICLE_EFFECT);
             _explodeEffect = new ParticleEffect(EXPLODE_PARTICLE_EFFECT);
-            _sprite = new Sprite(SPRITE_NAME);
+            _sprite = new Sprite(SPRITE_NAME, Sprite.SpriteType.Unit);
             _state = State.Dormant;
             _gravity = new Gravity(_position, UNICORN_GRAVITY);
             _hitRect = new Rectangle(0, 0, (int)_sprite.Width, (int)_sprite.Height);

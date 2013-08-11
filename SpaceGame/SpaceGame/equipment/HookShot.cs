@@ -46,8 +46,8 @@ namespace SpaceGame.equipment
             :base(TimeSpan.FromSeconds(FIRE_DELAY), 1, 0, owner)
         {
             _hookState = HookState.Idle;
-            _hookSprite = new Sprite("HookClaw");
-            _chainSprite = new Sprite("HookChain");
+            _hookSprite = new Sprite("HookClaw", Sprite.SpriteType.Projectile);
+            _chainSprite = new Sprite("HookChain", Sprite.SpriteType.Projectile);
             _hookHitRect = new Rectangle(0, 0, (int)_hookSprite.Width, (int)_hookSprite.Height);
         }
         #endregion

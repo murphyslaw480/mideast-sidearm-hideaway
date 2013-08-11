@@ -240,7 +240,7 @@ namespace SpaceGame.units
         protected PhysicalUnit(PhysicalData pd)
         {
             _unitName = pd.Name;
-            _sprite = new Sprite(_unitName);
+            _sprite = new Sprite(_unitName, Sprite.SpriteType.Unit);
 
             if (pd.MovementParticleEffectName != null)
                 _movementParticleEffect = new ParticleEffect(pd.MovementParticleEffectName);

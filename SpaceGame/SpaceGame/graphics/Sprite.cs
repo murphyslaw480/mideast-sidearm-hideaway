@@ -12,7 +12,9 @@ namespace SpaceGame.graphics
     class Sprite
     {
         #region constant
-        const string SPRITE_FOLDER_PATH = "spritesheets/";
+        const string c_SpritePath = "spritesheets/";
+        const string c_unitSpritePath = "spritesheets/units/";
+        const string c_projectileSpritePath = "spritesheets/projectiles/";
         const float ICE_OPACITY_FACTOR = 0.5f;
         //time it takes to complete a teleport
         const float c_teleportTime = 0.25f;
@@ -21,6 +23,12 @@ namespace SpaceGame.graphics
         #endregion
         
         #region static
+        public enum SpriteType
+        {
+            None,
+            Unit,
+            Projectile
+        }
         public static ContentManager Content;
         static Rectangle tempRect;   //temporary rectangle for cross instance use
         public static Texture2D IceCubeTexture
@@ -149,10 +157,11 @@ namespace SpaceGame.graphics
         /// Create a new animated sprite
         /// </summary>
         /// <param name="spriteName">key used to find sprite data in SpriteData Dictionary</param>
-        public Sprite(string spriteName)
+        public Sprite(string spriteName, SpriteType type = SpriteType.None)
         {
             SpriteData spriteData = Data[spriteName];
-            _frameWidth = spriteData.FrameWidth; _frameHeight = spriteData.FrameHeight;
+            _frameWidth = spriteData.FrameWidth; 
+            _frameHeight = spriteData.FrameHeight;
             _textureCenter = new Vector2(_frameWidth / 2.0f, _frameHeight / 2.0f);
             _framesPerAnimation = spriteData.NumFrames;
             _numStates = spriteData.NumStates;
@@ -163,7 +172,18 @@ namespace SpaceGame.graphics
             initRects();
             Shade = Color.White;
             _zLayer = spriteData.ZLayer;
-            _spriteSheet = Content.Load<Texture2D>(SPRITE_FOLDER_PATH + spriteData.AssetName);
+            switch (type)
+            {
+                case SpriteType.Projectile:
+                    _spriteSheet = Content.Load<Texture2D>(c_projectileSpritePath + spriteData.AssetName);
+                    break;
+                case SpriteType.Unit:
+                    _spriteSheet = Content.Load<Texture2D>(c_unitSpritePath + spriteData.AssetName);
+                    break;
+                default:
+                    _spriteSheet = Content.Load<Texture2D>(c_SpritePath + spriteData.AssetName);
+                    break;
+            }
         }
 
         private void initRects()

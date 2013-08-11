@@ -47,33 +47,26 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
-    <Compile Include="spritesheets\Spaceman.png">
+    <Compile Include="spritesheets\units\Spaceman.png">
       <Name>Spaceman</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Projectile.png">
-      <Name>Projectile</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="spritesheets\HookChain.png">
+    <Compile Include="spritesheets\projectiles\HookChain.png">
       <Name>HookChain</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="spritesheets\HookClaw.png">
+    <Compile Include="spritesheets\projectiles\HookClaw.png">
       <Name>HookClaw</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Rocket.png">
+    <Compile Include="spritesheets\projectiles\Rocket.png">
       <Name>Rocket</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -93,11 +86,9 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="hud\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="spritesheets\Flame.bmp">
+    <Compile Include="spritesheets\projectiles\Flame.bmp">
       <Name>Flame</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -109,36 +100,36 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Food_Cart.png">
+    <Compile Include="spritesheets\units\Food_Cart.png">
       <Name>Food_Cart</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Goblin1.png">
+    <Compile Include="spritesheets\units\Goblin1.png">
       <Name>Goblin1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="spritesheets\Goblin2.png">
+    <Compile Include="spritesheets\units\Goblin2.png">
       <Name>Goblin2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="spritesheets\Goblin3.png">
+    <Compile Include="spritesheets\units\Goblin3.png">
       <Name>Goblin3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="spritesheets\Unicorn.png">
+    <Compile Include="spritesheets\units\Unicorn.png">
       <Name>Unicorn</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Bullet.png">
+    <Compile Include="spritesheets\projectiles\Bullet.png">
       <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -210,7 +201,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\GravityWell.bmp">
+    <Compile Include="spritesheets\projectiles\GravityWell.bmp">
       <Name>GravityWell</Name>
     </Compile>
     <Compile Include="gui\Score_&amp;_Void_Tracker.png">
@@ -241,7 +232,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Boomerang.png">
+    <Compile Include="spritesheets\projectiles\Boomerang.png">
       <Name>Boomerang</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>

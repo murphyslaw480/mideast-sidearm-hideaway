@@ -58,7 +58,7 @@ namespace SpaceGame.equipment
         #region contructor
         public Projectile(string spriteName)
         {
-            _sprite = new Sprite(spriteName);
+            _sprite = new Sprite(spriteName, graphics.Sprite.SpriteType.Projectile);
             _hitRect = new Rectangle(0, 0, (int)_sprite.Width, (int)_sprite.Height);
             _contactEffect = ProjectileEffect.NullEffect;
             _destinationEffect = ProjectileEffect.NullEffect;
