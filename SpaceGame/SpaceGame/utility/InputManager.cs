@@ -127,8 +127,7 @@ namespace SpaceGame.utility
         {
             get { return currentMouseState.RightButton == ButtonState.Pressed; }
         }
-        public bool TogglePrimary { get { return keyTapped(Keys.Q); } }
-        public bool ToggleSecondary { get { return keyTapped(Keys.E); } }
+        public bool UseItem { get { return keyTapped(Keys.Q); } }
         public bool TriggerGadget1
         { 
             get {return (currentKeyboardState.IsKeyDown(Keys.LeftShift)

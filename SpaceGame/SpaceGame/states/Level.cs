@@ -38,6 +38,7 @@ namespace SpaceGame.states
 
         #region fields
         Spaceman _player;
+        InventoryManager _inventoryManager;
         BlackHole _blackHole;
         Weapon _primaryWeapon, _secondaryWeapon;
         Gadget _primaryGadget, _secondaryGadget;
@@ -77,6 +78,7 @@ namespace SpaceGame.states
             im.setPrimaryWeapon(new ProjectileWeapon("Rocket", _player));
             im.setSecondaryWeapon(new ThrowableWeapon("Cryonade", _player));
             im.setPrimaryGadget(new Gadget("Teleporter", this));
+            im.setSlot(1, new ThrowableWeapon("Cryonade", _player));
 
             //Set Weapon holders in level
             _primaryWeapon = im.getPrimaryWeapon();
@@ -91,6 +93,7 @@ namespace SpaceGame.states
             _foodCarts = data.FoodCarts;
 
             _primaryGadget = im.getPrimaryGadget();
+            _inventoryManager = im;
             
             userInterface = new GUI(_player, _blackHole);
         }
@@ -145,7 +148,7 @@ namespace SpaceGame.states
           
             for (int i = 0; i < _waves.Length; i++)
             {
-                _waves[i].Update(gameTime, _player, _blackHole, _primaryWeapon, _secondaryWeapon, _unicorns);
+                _waves[i].Update(gameTime, _player, _blackHole, _primaryWeapon, _secondaryWeapon, _inventoryManager.CurrentItem, _unicorns);
                 //check cross-wave collisions
                 if (_waves[i].Active)
                 {
@@ -172,12 +175,21 @@ namespace SpaceGame.states
                 _foodCarts[i].Update(gameTime, _levelBounds, _blackHole.Position);
                 _primaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
                 _secondaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
+                if (_inventoryManager.CurrentItem is ProjectileWeapon)
+                {
+                    (_inventoryManager.CurrentItem as ProjectileWeapon).CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
+                }
                 _blackHole.ApplyToUnit(_foodCarts[i], gameTime);
             }
 
-            //Update Weapon Choice
+            //Update Weapons 
             _primaryWeapon.Update(gameTime);
             _secondaryWeapon.Update(gameTime);
+            //iterate through all? currently, switching items after firing will cause active objects to disappear
+            if (_inventoryManager.CurrentItem != null)
+            {
+                _inventoryManager.CurrentItem.Update(gameTime);
+            }
  
         }
 
@@ -192,18 +204,24 @@ namespace SpaceGame.states
             _player.MoveDirection = input.MoveDirection;
             _player.LookDirection = XnaHelper.DirectionBetween(_player.Center, input.MouseLocation);
 
-            if (input.FirePrimary && _player.UnitLifeState == PhysicalUnit.LifeState.Living)
+            if (_player.UnitLifeState == PhysicalUnit.LifeState.Living)
             {
-                _primaryWeapon.Trigger(_player.Position, input.MouseLocation);
-            }
-            if (input.FireSecondary && _player.UnitLifeState == PhysicalUnit.LifeState.Living)
-            {
-                _secondaryWeapon.Trigger(_player.Position, input.MouseLocation);
-            }
-
-            if (input.TriggerGadget1)
-            {
-                _primaryGadget.Trigger();
+                if (input.FirePrimary)
+                {
+                    _primaryWeapon.Trigger(_player.Position, input.MouseLocation);
+                }
+                if (input.FireSecondary)
+                {
+                    _secondaryWeapon.Trigger(_player.Position, input.MouseLocation);
+                }
+                if (input.UseItem)
+                {
+                    _inventoryManager.CurrentItem.Use(input.MouseLocation);
+                }
+                if (input.TriggerGadget1)
+                {
+                    _primaryGadget.Trigger();
+                }
             }
 
             if (input.DebugKey)
@@ -221,6 +239,10 @@ namespace SpaceGame.states
             _player.Draw(spriteBatch);
             _primaryWeapon.Draw(spriteBatch);
             _secondaryWeapon.Draw(spriteBatch);
+            if (_inventoryManager.CurrentItem != null)
+            {
+                _inventoryManager.CurrentItem.Draw(spriteBatch);
+            }
 			
             foreach (FoodCart cart in _foodCarts)
             {

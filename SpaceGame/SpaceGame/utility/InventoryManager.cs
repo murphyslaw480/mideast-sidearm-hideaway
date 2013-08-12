@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 using SpaceGame.utility;
 using SpaceGame.equipment;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame.utility
 {
@@ -24,8 +25,17 @@ namespace SpaceGame.utility
         #endregion
 
         #region properties
+        public IConsumable CurrentItem
+        {
+            get 
+            {
+                item = item ?? slots[0];
+                return item; 
+            }
+        }
+
         //Set Item slot, slots can be from 1-6
-        public void setSlot(int slot, IConsumable passed)
+        public void setSlot(int slot, IConsumable passed) 
         {
             slots[slot - 1] = passed;
         }

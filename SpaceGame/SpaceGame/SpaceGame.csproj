@@ -107,7 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="equipment\Item.cs" />
+    <Compile Include="equipment\IConsumable.cs" />
     <Compile Include="equipment\Gadget.cs" />
     <Compile Include="equipment\MeleeWeapon.cs" />
     <Compile Include="equipment\Projectile.cs" />

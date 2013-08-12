@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using SpaceGame.units;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame.equipment
 {
@@ -24,6 +25,16 @@ namespace SpaceGame.equipment
         public void Use(Vector2 target)
         {
             base.Trigger(_owner.Position, target);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
+        public void Draw(SpriteBatch sb)
+        {
+            base.Draw(sb);
         }
     }
 }

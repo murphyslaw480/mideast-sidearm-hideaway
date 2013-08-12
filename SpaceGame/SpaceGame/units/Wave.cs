@@ -133,8 +133,7 @@ namespace SpaceGame.units
         /// <param name="weapon1"></param>
         /// <param name="weapon2"></param>
         public void Update(GameTime gameTime, Spaceman player, 
-            BlackHole blackHole, Weapon weapon1, Weapon weapon2,
-            Unicorn[] unicorns)
+            BlackHole blackHole, Weapon weapon1, Weapon weapon2, IConsumable activeItem, Unicorn[] unicorns)
         {
             if (_startTimer >= TimeSpan.Zero)        //not started yet
             {
@@ -206,6 +205,10 @@ namespace SpaceGame.units
                 blackHole.ApplyToUnit(_enemies[i], gameTime);
                 weapon1.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
                 weapon2.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
+                if (activeItem is ProjectileWeapon)
+                {
+                    (activeItem as ProjectileWeapon).CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
+                }
             }
             //stay active unless it is not a trickle wave and all enemies are destroyed
             Active = Active && (_isTrickleWave || !allDestroyed);
