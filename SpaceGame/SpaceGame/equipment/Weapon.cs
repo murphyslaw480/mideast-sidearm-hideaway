@@ -18,6 +18,20 @@ namespace SpaceGame.equipment
         #region static
         #endregion
 
+        #region properties
+        public int Ammo
+        {
+            get
+            {
+                return _currentAmmo;
+            }
+            protected set
+            {
+                _currentAmmo = value;
+            }
+        }
+        #endregion
+
         #region fields
         //minimum time between shots and till next shot
         TimeSpan _fireDelay, _tillNextFire;

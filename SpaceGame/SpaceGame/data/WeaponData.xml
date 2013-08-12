@@ -73,13 +73,13 @@
   </ProjectileWeapon>
 
   <!-- Consumable Weapons -->
-  <ProjectileWeapon Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" >
+  <ThrowableWeapon Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" >
     <ProjectileInfo SpriteName="Cryonade" Speed="800" Acceleration="-320" SecondsToLive="2.5" 
                     Penetration="-1" Mass="5.0" >
       <ProximityEffect ParticleEffectName="CryoTrace"/>
       <DestinationEffect ParticleEffectName="Cryosplosion" Radius="250" CryoEffect="100"/>
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ThrowableWeapon>
 
 
   <MeleeWeapon Name="Gravity Gauntlet" 

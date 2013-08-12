@@ -14,8 +14,8 @@ namespace SpaceGame.utility
     {
         #region members
         //There are 6 Item slots
-        private Item[] slots = new Item[6];
-        private Item item;
+        private IConsumable[] slots = new IConsumable[6];
+        private IConsumable item;
         private Weapon primaryWeapon;
         private Weapon secondaryWeapon;
         private Gadget primaryGadget;
@@ -25,13 +25,13 @@ namespace SpaceGame.utility
 
         #region properties
         //Set Item slot, slots can be from 1-6
-        public void setSlot(int slot, Item passed)
+        public void setSlot(int slot, IConsumable passed)
         {
             slots[slot - 1] = passed;
         }
 
         //Get secondary Item
-        public Item getItem(int slot)
+        public IConsumable getItem(int slot)
         {
             //Use when first starting
             if (item == null)

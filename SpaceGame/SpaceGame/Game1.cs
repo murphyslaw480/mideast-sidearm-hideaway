@@ -125,6 +125,9 @@ namespace SpaceGame
 
             ProjectileWeapon.DataDict = DataLoader.CollectData<ProjectileWeaponData>( 
                     DataLoader.WEAPON_DATA_PATH, "ProjectileWeapon").ToDictionary(t => t.Name);
+
+            ThrowableWeapon.DataDict = DataLoader.CollectData<ProjectileWeaponData>( 
+                    DataLoader.WEAPON_DATA_PATH, "ThrowableWeapon").ToDictionary(t => t.Name);
                         
             MeleeWeapon.MeleeWeaponDataDict = DataLoader.CollectData<MeleeWeapon.MeleeWeaponData>(
                     DataLoader.WEAPON_DATA_PATH, "MeleeWeapon").ToDictionary(t => t.Name);
