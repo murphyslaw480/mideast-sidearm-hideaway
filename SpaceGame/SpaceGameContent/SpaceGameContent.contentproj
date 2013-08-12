@@ -86,7 +86,13 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="spritesheets\projectiles\Cryonade.png">
+      <Name>Cryonade</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="spritesheets\projectiles\Flame.bmp">
       <Name>Flame</Name>

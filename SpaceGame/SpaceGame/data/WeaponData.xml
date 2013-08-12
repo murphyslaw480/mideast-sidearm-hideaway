@@ -72,18 +72,15 @@
     </ProjectileInfo>
   </ProjectileWeapon>
 
-<!--
+  <!-- Consumable Weapons -->
+  <ProjectileWeapon Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" >
+    <ProjectileInfo SpriteName="Cryonade" Speed="800" Acceleration="-320" SecondsToLive="2.5" 
+                    Penetration="-1" Mass="5.0" >
+      <ProximityEffect ParticleEffectName="CryoTrace"/>
+      <DestinationEffect ParticleEffectName="Cryosplosion" Radius="250" CryoEffect="100"/>
+    </ProjectileInfo>
+  </ProjectileWeapon>
 
-  <ProjectileWeapon Name="Swarmer" ProjectileSpriteName="Rocket"
-                    FireRate ="10" MaxAmmo="60" AmmoConsumption="1"
-                    ProjectilesPerFire="3" Damage="20" ProjectileForce="50000"
-                    Recoil="15000" ProjectileSpeed="10" ProjectileAcceleration="30"
-                    ProjectileSpread="30" DissipateOnHit="true"
-                    SplashDamage="10" SplashRadius="80" SplashForce="100000"
-                    MovementParticleEffect="RocketBooster"
-                    SplashParticleEffect="RocketExplosion"
-                    MaxProjectiles="20" ProjectileLife="3" />
-                    -->
 
   <MeleeWeapon Name="Gravity Gauntlet" 
                     FireRate ="1" MaxAmmo="60" AmmoConsumption="0"
