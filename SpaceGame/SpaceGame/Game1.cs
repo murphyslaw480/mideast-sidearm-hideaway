@@ -169,7 +169,6 @@ namespace SpaceGame
                 this.Exit();
 
             _inputManager.Update();
-            _weaponManager.Update(_inputManager);
             _stateStack.Last().Update(gameTime, _inputManager, _weaponManager);
 
             if (_stateStack.Last().ReplaceState != null)

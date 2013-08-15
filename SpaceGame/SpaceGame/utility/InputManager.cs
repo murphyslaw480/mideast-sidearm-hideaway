@@ -150,36 +150,41 @@ namespace SpaceGame.utility
             get { return currentKeyboardState.IsKeyDown(Keys.Escape); }
         }
         //Change Item Request
-        public bool Item1
+        public int SelectItemNum
         {
-            get { return keyTapped(Keys.NumPad1) ||
-                         keyTapped(Keys.D1);}
+            get
+            {
+                if (keyTapped(Keys.NumPad1) || keyTapped(Keys.D1))
+                {
+                    return 1;
+                }
+                else if (keyTapped(Keys.NumPad2) || keyTapped(Keys.D2))
+                {
+                    return 2;
+                }
+                else if (keyTapped(Keys.NumPad3) || keyTapped(Keys.D3))
+                {
+                    return 3;
+                }
+                else if (keyTapped(Keys.NumPad4) || keyTapped(Keys.D4))
+                {
+                    return 4;
+                }
+                else if (keyTapped(Keys.NumPad5) || keyTapped(Keys.D5))
+                {
+                    return 5;
+                }
+                else if (keyTapped(Keys.NumPad6) || keyTapped(Keys.D6))
+                {
+                    return 6;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
         }
-        public bool Item2
-        {
-            get { return keyTapped(Keys.NumPad2)||
-                         keyTapped(Keys.D2);}
-        }
-        public bool Item3
-        {
-            get { return keyTapped(Keys.NumPad3)||
-                         keyTapped(Keys.D3);}
-        }
-        public bool Item4
-        {
-            get { return keyTapped(Keys.NumPad4)||
-                         keyTapped(Keys.D4);}
-        }
-        public bool Item5
-        {
-            get { return keyTapped(Keys.NumPad5)||
-                         keyTapped(Keys.D5);}
-        }
-        public bool Item6
-        {
-            get { return keyTapped(Keys.NumPad6)||
-                         keyTapped(Keys.D6);}
-        }
+                         
 
         public bool fCycle
         {

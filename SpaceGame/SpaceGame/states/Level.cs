@@ -148,7 +148,7 @@ namespace SpaceGame.states
           
             for (int i = 0; i < _waves.Length; i++)
             {
-                _waves[i].Update(gameTime, _player, _blackHole, _primaryWeapon, _secondaryWeapon, _inventoryManager.CurrentItem, _unicorns);
+                _waves[i].Update(gameTime, _player, _blackHole, _primaryWeapon, _secondaryWeapon, _inventoryManager, _unicorns);
                 //check cross-wave collisions
                 if (_waves[i].Active)
                 {
@@ -175,22 +175,15 @@ namespace SpaceGame.states
                 _foodCarts[i].Update(gameTime, _levelBounds, _blackHole.Position);
                 _primaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
                 _secondaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
-                if (_inventoryManager.CurrentItem is ProjectileWeapon)
-                {
-                    (_inventoryManager.CurrentItem as ProjectileWeapon).CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
-                }
+                _inventoryManager.CheckCollisions(gameTime, _foodCarts[i]);
                 _blackHole.ApplyToUnit(_foodCarts[i], gameTime);
             }
 
             //Update Weapons 
             _primaryWeapon.Update(gameTime);
             _secondaryWeapon.Update(gameTime);
-            //iterate through all? currently, switching items after firing will cause active objects to disappear
-            if (_inventoryManager.CurrentItem != null)
-            {
-                _inventoryManager.CurrentItem.Update(gameTime);
-            }
- 
+            //update all items
+            _inventoryManager.Update(gameTime, input);
         }
 
         private void handleInput(InputManager input)

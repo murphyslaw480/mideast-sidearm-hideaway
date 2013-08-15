@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using SpaceGame.utility;
 using SpaceGame.equipment;
 using Microsoft.Xna.Framework.Graphics;
+using SpaceGame.units;
 
 namespace SpaceGame.utility
 {
@@ -15,13 +16,13 @@ namespace SpaceGame.utility
     {
         #region members
         //There are 6 Item slots
-        private IConsumable[] slots = new IConsumable[6];
-        private IConsumable item;
+        private IConsumable[] _slots = new IConsumable[6];
+        private IConsumable _item;
         private Weapon primaryWeapon;
         private Weapon secondaryWeapon;
         private Gadget primaryGadget;
         private Gadget secondaryGadget;
-        private int currentSlot;
+        private int _currentSlot;
         #endregion
 
         #region properties
@@ -29,33 +30,33 @@ namespace SpaceGame.utility
         {
             get 
             {
-                item = item ?? slots[0];
-                return item; 
+                _item = _item ?? _slots[0];
+                return _item; 
             }
         }
 
         //Set Item slot, slots can be from 1-6
         public void setSlot(int slot, IConsumable passed) 
         {
-            slots[slot - 1] = passed;
+            _slots[slot - 1] = passed;
         }
 
         //Get secondary Item
         public IConsumable getItem(int slot)
         {
             //Use when first starting
-            if (item == null)
+            if (_item == null)
             {
-                item = slots[slot];
-                currentSlot = slot;
+                _item = _slots[slot];
+                _currentSlot = slot;
             }
-            return item;
+            return _item;
         }
 
         //See if slots is empty
         public bool isEmpty()
         {
-            if (slots.Length == 0)
+            if (_slots.Length == 0)
             {
                 return true;
             }
@@ -116,75 +117,58 @@ namespace SpaceGame.utility
         }
 
         //Runs often
-        public void Update(InputManager input)
+        public void Update(GameTime gameTime, InputManager input)
         {
             handleSwap(input);
+            foreach (IConsumable item in _slots)
+            {
+                if (item is ProjectileWeapon)
+                {
+                    (item as ProjectileWeapon).Update(gameTime);
+                }
+            }
+        }
+
+        public void CheckCollisions(GameTime gameTime, PhysicalUnit unit)
+        {
+            foreach (IConsumable item in _slots)
+            {
+                if (item is ProjectileWeapon)
+                {
+                    (item as ProjectileWeapon).CheckAndApplyCollision(unit, gameTime.ElapsedGameTime);
+                }
+            }
         }
 
         private void handleSwap(InputManager input)
         {
-            //check for Primary Swap
-            if(input.Item1)
+            int slotSelected = input.SelectItemNum;
+            if (slotSelected >= 0)
             {
-                //Change Primary to slot 0
-                item = slots[0];
-                currentSlot = 0;
+                _item = _slots[slotSelected];
+                _currentSlot = slotSelected;
             }
-            else if (input.Item2)
-            {
-                //Change Primary to slot 1
-                item = slots[1];
-                currentSlot = 1;
-            }
-            else if (input.Item3)
-            {
-                //Change Primary to slot 2
-                item = slots[2];
-                currentSlot = 2;
-            }
-
-            //Check for Secondary Swap
-            if (input.Item4)
-            {
-                //Change Secondary to slot 3
-                item = slots[3];
-                currentSlot = 3;
-            }
-            else if (input.Item5)
-            {
-                //Change Primary to slot 4
-                item = slots[4];
-                currentSlot = 4;
-            }
-            else if (input.Item6)
-            {
-                //Change Primary to slot 5
-                item = slots[5];
-                currentSlot = 5;
-            }
-
-            if (input.fCycle)
+            else if (input.fCycle)
             {
                 //Cycle items forward
-                if (currentSlot == 5)
+                if (_currentSlot == 5)
                 {
-                    currentSlot = 0;
-                    item = slots[0];
+                    _currentSlot = 0;
+                    _item = _slots[0];
                 }
-                currentSlot = currentSlot + 1;
-                item = slots[currentSlot];
+                _currentSlot = _currentSlot + 1;
+                _item = _slots[_currentSlot];
             }
-
-            if (input.bCycle)
+            else if (input.bCycle)
             {
                 //Cycle items backwards
-                if (currentSlot == 0)
+                if (_currentSlot == 0)
                 {
-                    currentSlot = 5;
-                    item = slots[5];
+                    _currentSlot = 5;
+                    _item = _slots[5];
                 }
-                currentSlot = currentSlot + 1;
-                item = slots[currentSlot];
+                _currentSlot = _currentSlot + 1;
+                _item = _slots[_currentSlot];
             }
             
         }
