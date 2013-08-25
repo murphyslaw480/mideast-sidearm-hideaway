@@ -19,24 +19,11 @@ namespace SpaceGame.equipment
         #endregion
 
         #region properties
-        public int Ammo
-        {
-            get
-            {
-                return _currentAmmo;
-            }
-            protected set
-            {
-                _currentAmmo = value;
-            }
-        }
         #endregion
 
         #region fields
         //minimum time between shots and till next shot
         TimeSpan _fireDelay, _tillNextFire;
-        //maximum possible ammo, current ammo, and ammo use per Fire
-        int _maxAmmo, _currentAmmo, _ammoConsumption;
 
         //whether the weapon is firing, and if so, what direction
         //set during Weapon.Trigger
@@ -58,34 +45,32 @@ namespace SpaceGame.equipment
         /// <param name="ammoConsumption">Ammo used per shot. Set to 0 for infinite ammo.</param>
         /// <param name="levelWidth">Width of the level in which this weapon is instantiated.</param>
         /// <param name="levelHeight">Height of the level in which this weapon is instantiated.</param>
-        public Weapon(TimeSpan fireDelay, int maxAmmo, int ammoConsumption, PhysicalUnit owner)
+        public Weapon(TimeSpan fireDelay, PhysicalUnit owner)
         {
             _fireDelay = fireDelay;
-            _maxAmmo = maxAmmo;
-            _currentAmmo = maxAmmo;
-            _ammoConsumption = ammoConsumption;
             _owner = owner;
         }
         #endregion
 
         #region concrete methods
         /// <summary>
-        /// Attempt to fire a weapon.
-        /// Only fires if enough time has passed since the last fire and enough ammo is available
+        /// Attempt to fire a weapon. Return true if successfull
+        /// Only fires if enough time has passed since the last fire 
         /// </summary>
         /// <param name="firePosition"></param>
         /// <param name="targetPosition"></param>
-        public void Trigger(Vector2 firePosition, Vector2 targetPosition)
+        public bool Trigger(Vector2 firePosition, Vector2 targetPosition)
         {
-            if (_currentAmmo >= _ammoConsumption && _tillNextFire.TotalSeconds <= 0)
+            if (_tillNextFire.TotalSeconds <= 0)
             {
                 _firing = true;
                 _fireDirection = XnaHelper.DirectionBetween(firePosition, targetPosition);
                 _targetDestination = targetPosition;
 
-                _currentAmmo -= _ammoConsumption;
                 _tillNextFire = _fireDelay;
+                return true;
             }
+            return false;
         }
 
         public void Update(GameTime gameTime)

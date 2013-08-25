@@ -43,7 +43,7 @@ namespace SpaceGame.equipment
 
         #region constructor
         public HookShot(PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(FIRE_DELAY), 1, 0, owner)
+            :base(TimeSpan.FromSeconds(FIRE_DELAY), owner)
         {
             _hookState = HookState.Idle;
             _hookSprite = new Sprite("HookClaw", Sprite.SpriteType.Projectile);

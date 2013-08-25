@@ -19,8 +19,6 @@ namespace SpaceGame.equipment
         {
             public string Name;
             public float FireRate;  //attacks/second
-            public int MaxAmmo;
-            public int AmmoConsumption;
             public int Damage;
             public int Impact;
             public float Range;
@@ -54,8 +52,7 @@ namespace SpaceGame.equipment
         { }
 
         protected MeleeWeapon(MeleeWeaponData data, PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), 
-                  data.MaxAmmo, data.AmmoConsumption, owner)
+            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner)
         {
             _damage = data.Damage;
             _force = data.Impact;

@@ -43,7 +43,7 @@ namespace SpaceGame.equipment
         { }
 
         protected ProjectileWeapon(ProjectileWeaponData data, PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), 1, 0, owner)
+            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner)
         {
             _name = data.Name;
             _projectilesPerFire = data.ProjectilesPerFire;
