@@ -116,7 +116,15 @@ namespace SpaceGame.equipment
                     Sprite.Angle += _angularVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (_lifeTime < TimeSpan.Zero)
                     {
-                        _state = State.Dormant;
+                        if (_destinationEffect != ProjectileEffect.NullEffect)
+                        {
+                            _state = State.ReachedDestination;
+                            _timer = _destinationEffect.Duration;
+                        }
+                        else
+                        {
+                            _state = State.Dormant;
+                        }
                     }
                     _distanceLeft -= _velocity.Length() * (float)time.TotalSeconds;
                     if (_distanceLeft < 0 && _destinationEffect != ProjectileEffect.NullEffect)
