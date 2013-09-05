@@ -35,7 +35,7 @@ namespace SpaceGame
         InputManager _inputManager = new InputManager();
         InventoryManager _weaponManager = new InventoryManager();
         List<Gamestate> _stateStack = new List<Gamestate>();  
-        bool _init;         //hack to set window size properly (see update)
+        TimeSpan _initTimer; 	//hack to set window size properly (see update)
 
         public static GameStates gamestate;
 
@@ -58,6 +58,8 @@ namespace SpaceGame
             //TODO: replace with custom cursor
             this.IsMouseVisible = true;
 
+			_initTimer = TimeSpan.FromSeconds(1.0);
+
         }
 
         /// <summary>
@@ -68,7 +70,6 @@ namespace SpaceGame
         /// </summary>
         protected override void Initialize()
         {
-
             _inputManager = new InputManager();
             _weaponManager = new InventoryManager();
             gamestate = GameStates.Menu;
@@ -166,12 +167,12 @@ namespace SpaceGame
         protected override void Update(GameTime gameTime)
         {
             //hack to set window size properly in Linux - set during first update
-			if (!_init) {
-				_init = true;
+			if (_initTimer > TimeSpan.Zero) {
 				graphics.PreferredBackBufferWidth = 1280;
 				graphics.PreferredBackBufferHeight = 720;
 				graphics.IsFullScreen = false;
 				graphics.ApplyChanges();
+				_initTimer -= gameTime.ElapsedGameTime;
 			}
 
             if (_inputManager.Exit)
