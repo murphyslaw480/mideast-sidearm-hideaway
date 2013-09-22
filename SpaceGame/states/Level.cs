@@ -109,8 +109,10 @@ namespace SpaceGame.states
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
             selectRandomWeapons();
+			/*
             Song song = content.Load<Song>("music/gravitational_conflict");
             MediaPlayer.Play(song);
+			*/
         }
 
         void selectRandomWeapons()
