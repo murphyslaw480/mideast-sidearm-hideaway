@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 using SpaceGame.utility;
 
@@ -18,7 +19,7 @@ namespace SpaceGame.states
         public string title { get; set; }
         public static SpriteFont spriteFont;
 
-        public Gamemenu() : base(false)
+        public Gamemenu(ContentManager content) : base(content, false)
         {
             title = "Space Game";
             MenuItems = new List<string>();
@@ -27,7 +28,10 @@ namespace SpaceGame.states
             MenuItems.Add("Exit Game");
             Iterator = 0;
             infoText = string.Empty;
-            
+            Song song = content.Load<Song>("music/space");
+            MediaPlayer.Volume = 0.7f;
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(song);
         }
 
         public int Iterator
@@ -70,12 +74,13 @@ namespace SpaceGame.states
                     this.Iterator++;
                 }
 
-                if (input.Confirm)
+                if (input.Confirm || input.FirePrimary)
                 {
                     if (this.Iterator == 0)
                     {
                         //load game
-                        ReplaceState = new Level(1, wm);
+                        //ReplaceState = new Shop(wm);
+                        ReplaceState = new Level(_content, 1, wm);
                     }
                     else if (this.Iterator == 1)
                     {

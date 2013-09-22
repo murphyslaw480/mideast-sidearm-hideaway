@@ -5,12 +5,14 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 using SpaceGame.graphics;
 using SpaceGame.graphics.hud;
 using SpaceGame.utility;
 using SpaceGame.units;
 using SpaceGame.equipment;
+using Microsoft.Xna.Framework.Content;
 
 namespace SpaceGame.states
 {
@@ -19,6 +21,8 @@ namespace SpaceGame.states
 
     class Level : Gamestate
     {
+		public static Texture2D s_CursorTexture;
+
         #region classes
         public struct LevelData
         {
@@ -53,11 +57,15 @@ namespace SpaceGame.states
         Camera2D _camera;
 
         bool _timeSlowed;
+
+		Vector2 _cursorTextureCenter;
+
+        TimeSpan _gameOverTimer = TimeSpan.FromSeconds(3.0);
         #endregion
 
         #region constructor
-        public Level (int levelNumber, InventoryManager im)
-            : base(false)
+        public Level (ContentManager content, int levelNumber, InventoryManager im)
+            : base(content, false)
         {
             LevelData data = DataLoader.LoadLevel(levelNumber);
             _levelBounds = new Rectangle(0, 0, data.Width, data.Height);
@@ -78,6 +86,7 @@ namespace SpaceGame.states
             im.setPrimaryWeapon(new ProjectileWeapon("Rocket", _player));
             im.setSecondaryWeapon(new ThrowableWeapon("Cryonade", _player));
             im.setPrimaryGadget(new Gadget("Teleporter", this));
+            im.setSecondaryGadget(new Gadget("Stopwatch", this));
             im.setSlot(1, new ThrowableWeapon("Cryonade", _player));
 
             //Set Weapon holders in level
@@ -93,16 +102,50 @@ namespace SpaceGame.states
             _foodCarts = data.FoodCarts;
 
             _primaryGadget = im.getPrimaryGadget();
+            _secondaryGadget = im.getSecondaryGadget();
             _inventoryManager = im;
             
             userInterface = new GUI(_player, _blackHole);
+
+			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
+            selectRandomWeapons();
+            Song song = content.Load<Song>("music/gravitational_conflict");
+            MediaPlayer.Play(song);
         }
 
+        void selectRandomWeapons()
+        {
+            Random rand = new Random();
+            int rand1 = rand.Next(0, 4);
+            int rand2;
+            do
+            {
+                rand2 = rand.Next(0, 4);
+            } while (rand2 == rand1);
+            ProjectileWeapon[] weapons = new ProjectileWeapon[]
+            {
+                new ProjectileWeapon("Shotgun", _player),
+                new ProjectileWeapon("Gatling", _player),
+                new ProjectileWeapon("Flamethrower", _player),
+                new ProjectileWeapon("Rocket", _player),
+            };
+            _primaryWeapon = weapons[rand1];
+            _secondaryWeapon = weapons[rand2];
+        }
         #endregion
 
         #region methods
         public override void Update(GameTime gameTime, InputManager input, InventoryManager im)
         {
+            if (_player.UnitLifeState == PhysicalUnit.LifeState.Destroyed || _player.UnitLifeState == PhysicalUnit.LifeState.Disabled
+                || _blackHole.capacityUsed > _blackHole.totalCapacity)
+            {
+                _gameOverTimer -= gameTime.ElapsedGameTime;
+            }
+            if (_gameOverTimer < TimeSpan.Zero)
+            {
+                ReplaceState = new Gamemenu(_content);
+            }
             _mousePos = input.MouseLocation;
             input.SetCameraOffset(_camera.Position);
             handleInput(input);
@@ -131,6 +174,7 @@ namespace SpaceGame.states
             }
             _player.Update(gameTime, _levelBounds);
             _primaryGadget.Update(gameTime);
+            _secondaryGadget.Update(gameTime);
             _blackHole.Update(gameTime);
 
 
@@ -203,7 +247,7 @@ namespace SpaceGame.states
                 {
                     _primaryWeapon.Trigger(_player.Position, input.MouseLocation);
                 }
-                if (input.FireSecondary)
+                else if (input.FireSecondary)
                 {
                     _secondaryWeapon.Trigger(_player.Position, input.MouseLocation);
                 }
@@ -215,11 +259,10 @@ namespace SpaceGame.states
                 {
                     _primaryGadget.Trigger();
                 }
-            }
-
-            if (input.DebugKey)
-            {
-                _blackHole.Explode();
+                if (input.TriggerGadget2)
+                {
+                    _secondaryGadget.Trigger();
+                }
             }
         }
 
@@ -255,6 +298,7 @@ namespace SpaceGame.states
 
             spriteBatch.Begin();
             userInterface.draw(spriteBatch);
+			spriteBatch.Draw(s_CursorTexture, _mousePos - _cursorTextureCenter, Color.White);
             spriteBatch.End();
 
         }

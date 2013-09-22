@@ -17,6 +17,8 @@ using SpaceGame.utility;
 using SpaceGame.equipment;
 using SpaceGame.states;
 
+using MonoGameExtensions;
+
 
 namespace SpaceGame
 {
@@ -56,7 +58,7 @@ namespace SpaceGame
             graphics.PreferredBackBufferHeight = SCREENHEIGHT;
             
             //TODO: replace with custom cursor
-            this.IsMouseVisible = true;
+            this.IsMouseVisible = false;
 
 			_initTimer = TimeSpan.FromSeconds(1.0);
 
@@ -70,6 +72,7 @@ namespace SpaceGame
         /// </summary>
         protected override void Initialize()
         {
+            Window.SetPosition(new Point(0, 0));
             _inputManager = new InputManager();
             _weaponManager = new InventoryManager();
             gamestate = GameStates.Menu;
@@ -108,6 +111,8 @@ namespace SpaceGame
             SpaceGame.graphics.hud.GUI.button6 = Content.Load<Texture2D>("gui/Numer 6");
             SpaceGame.graphics.hud.GUI.voidWheel = Content.Load<Texture2D>("gui/Score_&_Void_Tracker");
 
+			Level.s_CursorTexture = Content.Load<Texture2D>("gui/Cross_Hair_Basic_Green");
+
             Sprite.IceCubeTexture = Content.Load<Texture2D>("spritesheets/IceCube");
 
             XnaHelper.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -115,6 +120,7 @@ namespace SpaceGame
 
             Sprite.Content = Content;   //Sprite gets reference to content so it can load textures
             ParticleGenerator.Content = Content;   //ParticleGenerator gets reference to content so it can load textures
+            Gamestate.Content = Content;
 
             //load data from xml
             ParticleGenerator.Data = DataLoader.CollectData<ParticleGeneratorData>(
@@ -147,7 +153,7 @@ namespace SpaceGame
                     DataLoader.GADGET_DATA_PATH, "GadgetData").ToDictionary(t => t.Name);
 
             Gamemenu.LoadContent(Content);
-            _stateStack.Add(new Gamemenu());
+            _stateStack.Add(new Gamemenu(Content));
         }
 
         /// <summary>
