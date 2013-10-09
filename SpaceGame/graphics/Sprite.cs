@@ -221,6 +221,17 @@ namespace SpaceGame.graphics
                 _currentFrame = (_currentFrame + 1) % _framesPerAnimation;
             }
 
+            handleFlash(theGameTime);
+
+            if (_teleportTimer > 0)
+            {
+                _teleportTimer -= (float)theGameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+        }
+
+        void handleFlash(GameTime theGameTime)
+        {
             if (_flashCounter > 0)
             {
                 _currentFlashTime += theGameTime.ElapsedGameTime;
@@ -244,12 +255,6 @@ namespace SpaceGame.graphics
                     _shade = Color.Lerp(_flashColor, Color.White, (float)(_currentFlashTime - _halfFlashTime).TotalSeconds / (float)_halfFlashTime.TotalSeconds);
                 }
             }
-
-            if (_teleportTimer > 0)
-            {
-                _teleportTimer -= (float)theGameTime.ElapsedGameTime.TotalSeconds;
-            }
-
         }
 
         public void PlayAnimation(int animationNumber)
