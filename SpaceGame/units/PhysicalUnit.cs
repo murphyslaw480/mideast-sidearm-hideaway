@@ -113,8 +113,9 @@ namespace SpaceGame.units
         #endregion
 
         #region properties
-        public float health { get { return _health; } }
-        public float maxHealth { get { return _maxHealth; } }
+        public float Health { get { return _health; } }
+        public float MaxHealth { get { return _maxHealth; } }
+        public float MaxSpeed { get { return _maxSpeed; } }
 
         public float Mass { get { return _mass + _additionalMass; } }
         Rectangle _hitRect;
@@ -203,7 +204,7 @@ namespace SpaceGame.units
         #endregion
 
         #region other members
-        protected Sprite _sprite;
+        protected UnitSprite _sprite;
         ParticleEffect _movementParticleEffect;
         #endregion
 
@@ -240,7 +241,7 @@ namespace SpaceGame.units
         protected PhysicalUnit(PhysicalData pd)
         {
             _unitName = pd.Name;
-            _sprite = new Sprite(_unitName, Sprite.SpriteType.Unit);
+            _sprite = new UnitSprite(_unitName, this);
 
             if (pd.MovementParticleEffectName != null)
                 _movementParticleEffect = new ParticleEffect(pd.MovementParticleEffectName);
@@ -484,7 +485,7 @@ namespace SpaceGame.units
             if (_statusEffects.Cryo >= MAX_STAT_EFFECT && _lifeState != LifeState.Frozen)
             {
                 _lifeState = LifeState.Frozen;
-                _iceIntegrity = maxHealth * ICE_INTEGRITY_FACTOR;
+                _iceIntegrity = MaxHealth * ICE_INTEGRITY_FACTOR;
                 _statusEffects.Fire = 0;    //stop burning if frozen
             }
 
@@ -586,20 +587,12 @@ namespace SpaceGame.units
 
         protected void lookThisWay(Vector2 direction)
         {
-            SpriteState spriteDirection;
-
             float angle = XnaHelper.RadiansFromVector(direction);
 
-            if (angle > -Math.PI / 4 && angle < Math.PI / 4)
-                spriteDirection = SpriteState.FaceUp;
-            else if (angle >= Math.PI / 4 && angle < 3 * Math.PI / 4)
-                spriteDirection = SpriteState.FaceRight;
-            else if (angle > 3 * Math.PI / 4 || angle < -3 * Math.PI / 4)
-                spriteDirection =  SpriteState.FaceDown;
+            if (angle > 0 && angle < Math.PI)
+                _sprite.FlipH = true;
             else
-                spriteDirection =  SpriteState.FaceLeft;
-
-            _sprite.AnimationState = (int)spriteDirection;
+                _sprite.FlipH = false;
         }
 
         public void CheckAndApplyUnitCollision(PhysicalUnit other)

@@ -48,18 +48,18 @@ namespace SpaceGame.graphics
         //data to initialize sprites. Initialize this in Game.Initialize
         public static Dictionary<string, SpriteData> Data;
         //length of each animation, in # of frames
-        int _framesPerAnimation;
+        protected int _framesPerAnimation;
         //number of different animations, e.g. for facing different directions
-        int _numStates;
+        protected int _numStates;
         //time between each animation frame, and countdown to next frame
         TimeSpan _animationInterval, _timeTillNext;
         //used if PlayAnimation is called
         public bool Animating { get; private set;}
         public bool AnimationOver { get; private set;}
         //current frame of animation
-        int _currentFrame = 0;
+        protected int _currentFrame = 0;
         //current animation state
-        int _currentState = 0;
+        protected int _currentState = 0;
         //width and height of sprite
         int _frameWidth, _frameHeight;
         //spritesheet of animation frames
@@ -129,7 +129,7 @@ namespace SpaceGame.graphics
             set { _angle = value; }
         }
 
-        public int AnimationState
+        public virtual int AnimationState
         {
             get { return _currentState; }
             set { _currentState = value % _numStates; }
@@ -208,7 +208,19 @@ namespace SpaceGame.graphics
             Scale = _defaultScale;
         }
 
-        public void Update(GameTime theGameTime)
+        public virtual void Update(GameTime theGameTime)
+        {
+            animate(theGameTime);
+
+            handleFlash(theGameTime);
+
+            if (_teleportTimer > 0)
+            {
+                _teleportTimer -= (float)theGameTime.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+        protected void animate(GameTime theGameTime)
         {
             _timeTillNext -= theGameTime.ElapsedGameTime;
 
@@ -220,14 +232,6 @@ namespace SpaceGame.graphics
                 _timeTillNext = _animationInterval;
                 _currentFrame = (_currentFrame + 1) % _framesPerAnimation;
             }
-
-            handleFlash(theGameTime);
-
-            if (_teleportTimer > 0)
-            {
-                _teleportTimer -= (float)theGameTime.ElapsedGameTime.TotalSeconds;
-            }
-
         }
 
         void handleFlash(GameTime theGameTime)

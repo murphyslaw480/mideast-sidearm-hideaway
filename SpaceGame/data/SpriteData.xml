@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SpriteDatas>
-  <SpriteData Name="Spaceman" AssetName="Spaceman" FrameWidth="724" FrameHeight="863" NumFrames="1" NumStates="4" DefaultScale ="0.05" SecondsPerAnimation="0.5" ZLayer="0" />
+  <!--SpriteData Name="Spaceman" AssetName="Spaceman" FrameWidth="724" FrameHeight="863" NumFrames="1" NumStates="4" DefaultScale ="0.05" SecondsPerAnimation="0.5" ZLayer="0" /-->
+  <SpriteData Name="Spaceman" AssetName="spritesheet_template" FrameWidth="64" FrameHeight="64" NumFrames="4" NumStates="5" DefaultScale ="2.00" SecondsPerAnimation="0.25" ZLayer="0" />
   <SpriteData Name="Goblin" AssetName="Goblin1" FrameWidth="217" FrameHeight="287" NumFrames="1" NumStates="1" DefaultScale ="0.15" SecondsPerAnimation="0.5" ZLayer="0" />
   <SpriteData Name="Projectile" AssetName="Projectile" FrameWidth="32" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="0.5" SecondsPerAnimation="0.5" ZLayer="0" />
   <SpriteData Name="HookClaw" AssetName="HookClaw" FrameWidth="256" FrameHeight="266" NumFrames="1" NumStates="1" DefaultScale ="0.1" SecondsPerAnimation="0.5" ZLayer="0" />
