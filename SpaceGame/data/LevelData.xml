@@ -80,4 +80,12 @@
     </Waves>
   </Level>
 
+  <Level LevelNumber="0" LevelWidth="1200" LevelHeight="800">
+	<!--Test level with no enemies-->
+    <Player X="800" Y="100"/>
+    <BlackHole X="200" Y="700" Gravity="000" Radius="100" Capacity="200"/>
+    <Waves>
+    </Waves>
+  </Level>
+
 </Levels>
