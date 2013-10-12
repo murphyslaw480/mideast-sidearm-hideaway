@@ -79,7 +79,7 @@ namespace SpaceGame.graphics
         //2Darray of rects to select from sprite sheet
         Rectangle[,] _rects;
         //origin used for rotation
-        Vector2 _textureCenter;
+        Vector2 _origin;
 
         //for Flash(Color, Time)
         Color _flashColor;
@@ -111,9 +111,9 @@ namespace SpaceGame.graphics
             }
         }
 
-        public Vector2 TextureCenter
+        public Vector2 Origin
         {
-            get { return _textureCenter; }
+            get { return _origin; }
         }
 
         //scale relative to default scale
@@ -162,7 +162,7 @@ namespace SpaceGame.graphics
             SpriteData spriteData = Data[spriteName];
             _frameWidth = spriteData.FrameWidth; 
             _frameHeight = spriteData.FrameHeight;
-            _textureCenter = new Vector2(_frameWidth / 2.0f, _frameHeight / 2.0f);
+            _origin = new Vector2(_frameWidth / 2.0f, _frameHeight / 2.0f);
             _framesPerAnimation = spriteData.NumFrames;
             _numStates = spriteData.NumStates;
             _defaultScale = spriteData.DefaultScale;
@@ -299,7 +299,7 @@ namespace SpaceGame.graphics
                 tempRect.X = (int)(_teleportStartPos.X);
                 tempRect.Y = (int)(_teleportStartPos.Y);
 
-                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _textureCenter, effects, _zLayer);
+                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _origin, effects, _zLayer);
                     
                 //draw current location
                 tempRect.Width = (int)(Width * (1 - _teleportTimer / c_teleportTime));   //width grows back to normal
@@ -307,11 +307,11 @@ namespace SpaceGame.graphics
                 tempRect.X = (int)(position.X);
                 tempRect.Y = (int)(position.Y);
 
-                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _textureCenter, effects, _zLayer);
+                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _origin, effects, _zLayer);
             }
             else
             {
-                batch.Draw(_spriteSheet, position, _rects[_currentState, _currentFrame], Shade, rotation, _textureCenter,
+                batch.Draw(_spriteSheet, position, _rects[_currentState, _currentFrame], Shade, rotation, _origin,
                     Scale, effects, _zLayer);
             }
         }
@@ -324,7 +324,7 @@ namespace SpaceGame.graphics
             tempRect.Width /= numDivisions;
             tempRect.Height /= numDivisions;
             batch.Draw(_spriteSheet, drawRect, tempRect, Color.Lerp(Color.Transparent, Color.White, opacity),
-                angle, _textureCenter / numDivisions, SpriteEffects.None, _zLayer);
+                angle, _origin / numDivisions, SpriteEffects.None, _zLayer);
         }
 
         public void DrawIce(SpriteBatch batch, Rectangle rect, float angle, float opacity)

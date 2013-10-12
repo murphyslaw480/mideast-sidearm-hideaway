@@ -135,7 +135,7 @@ namespace SpaceGame.graphics.hud
         public void draw(SpriteBatch batch)
         {
             //Draw health and void bars first so they are under the wheels
-            healthBar.Draw(batch, player.health, player.maxHealth);
+            healthBar.Draw(batch, player.Health, player.MaxHealth);
             voidBar.Draw(batch, blackhole.capacityUsed, blackhole.totalCapacity);
 
             batch.Draw(targetWheel, targetWheelRec, Color.White);
