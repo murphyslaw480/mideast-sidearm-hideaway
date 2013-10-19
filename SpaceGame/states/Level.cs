@@ -83,8 +83,6 @@ namespace SpaceGame.states
                 _waves[i + data.TrickleWaveData.Length] = new Wave(data.BurstWaveData[i], false, _levelBounds);
             }
             //Test code to set weapons 1-6 to created weapons
-            im.setPrimaryWeapon(new ProjectileWeapon("Rocket", _player));
-            im.setSecondaryWeapon(new ThrowableWeapon("Cryonade", _player));
             im.setPrimaryGadget(new Gadget("Teleporter", this));
             im.setSecondaryGadget(new Gadget("Stopwatch", this));
             im.setSlot(1, new ThrowableWeapon("Cryonade", _player));
@@ -129,7 +127,7 @@ namespace SpaceGame.states
                 new ProjectileWeapon("Shotgun", _player),
                 new ProjectileWeapon("Gatling", _player),
                 new ProjectileWeapon("Flamethrower", _player),
-                new ProjectileWeapon("Rocket", _player),
+                new ProjectileWeapon("RocketLauncher", _player),
             };
             _primaryWeapon = weapons[rand1];
             _secondaryWeapon = weapons[rand2];

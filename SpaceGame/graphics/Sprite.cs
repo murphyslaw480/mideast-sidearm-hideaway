@@ -12,9 +12,9 @@ namespace SpaceGame.graphics
     class Sprite
     {
         #region constant
-        const string c_SpritePath = "spritesheets/";
-        const string c_unitSpritePath = "spritesheets/units/";
-        const string c_projectileSpritePath = "spritesheets/projectiles/";
+        protected const string c_SpritePath = "spritesheets/";
+        protected const string c_unitSpritePath = "spritesheets/units/";
+        protected const string c_projectileSpritePath = "spritesheets/projectiles/";
         const float ICE_OPACITY_FACTOR = 0.5f;
         //time it takes to complete a teleport
         const float c_teleportTime = 0.25f;
@@ -153,13 +153,12 @@ namespace SpaceGame.graphics
         #endregion properties
 
         #region methods
-        /// <summary>
-        /// Create a new animated sprite
-        /// </summary>
-        /// <param name="spriteName">key used to find sprite data in SpriteData Dictionary</param>
         public Sprite(string spriteName, SpriteType type = SpriteType.None)
+            : this(Data[spriteName], type)
+        { }
+
+        protected Sprite(SpriteData spriteData, SpriteType type = SpriteType.None)
         {
-            SpriteData spriteData = Data[spriteName];
             _frameWidth = spriteData.FrameWidth; 
             _frameHeight = spriteData.FrameHeight;
             _origin = new Vector2(_frameWidth / 2.0f, _frameHeight / 2.0f);
@@ -283,12 +282,12 @@ namespace SpaceGame.graphics
             _halfFlashTime = TimeSpan.FromSeconds(timePerFlash.TotalSeconds / 2);
         }
 
-        public void Draw(SpriteBatch batch, Vector2 position)
+        public virtual void Draw(SpriteBatch batch, Vector2 position)
         {
             Draw(batch, position, _angle);
         }
 
-        public void Draw(SpriteBatch batch, Vector2 position, float rotation)
+        public virtual void Draw(SpriteBatch batch, Vector2 position, float rotation)
         {
             SpriteEffects effects = (FlipH ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (FlipV ? SpriteEffects.FlipVertically : SpriteEffects.None);
             if (_teleportTimer > 0)

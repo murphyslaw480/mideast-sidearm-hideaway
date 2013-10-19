@@ -22,7 +22,7 @@
   -->
 <Weapons>
 
-  <ProjectileWeapon Name="Rocket" FireRate="2.0" ProjectilesPerFire="1" Spread="0">
+  <ProjectileWeapon Name="RocketLauncher" FireRate="2.0" ProjectilesPerFire="1" Spread="0">
     <ProjectileInfo SpriteName="Rocket" Speed="300" Acceleration="3000" SecondsToLive="3" 
                     Penetration="1" Mass="10" >
       <ContactEffect ParticleEffectName="RocketExplosion" Duration="0.1" Radius="100" Damage="30" Force="6000"/>
