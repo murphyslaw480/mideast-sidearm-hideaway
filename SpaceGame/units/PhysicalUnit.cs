@@ -187,7 +187,6 @@ namespace SpaceGame.units
             get { return _lookDirection; }
             set { _lookDirection = Panicked ? _lookDirection : value; }
         }
-
         //behavioral properties
         public bool Collides
         {
@@ -460,7 +459,6 @@ namespace SpaceGame.units
             controlVelocity(_maxSpeed, gameTime.ElapsedGameTime);
             _sprite.Angle += _angularVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            LookDirection = Vector2.Zero;
             MoveDirection = Vector2.Zero;
             _acceleration = Vector2.Zero;
 

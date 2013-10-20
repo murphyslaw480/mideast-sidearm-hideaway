@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceGame.units;
+using SpaceGame.utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace SpaceGame.graphics
         PhysicalUnit _unit;
         Texture2D _armTexture;
 		//position of shoulder relative to unit center, shoulder relative to arm, and hand relative to arm
-        Vector2 _unitShoulderOffset, _armShoulderPos, _armHandPos;
+        Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset, _armShoulderPos, _armHandPos;
 
         public override int AnimationState
         {
@@ -39,6 +40,7 @@ namespace SpaceGame.graphics
                 throw new Exception(String.Format("UnitSprite {0} has an even number of states along the horizontal axis", data.Name));
             }
             _unitShoulderOffset = new Vector2(data.ShoulderX, data.ShoulderY);
+            _flippedUnitShoulderOffset = new Vector2(-data.ShoulderX, data.ShoulderY);
             _armTexture = Content.Load<Texture2D>(c_armSpritePath + data.SpriteArmData.Name);
             _armShoulderPos = new Vector2(data.SpriteArmData.ShoulderX, data.SpriteArmData.ShoulderY);
             _armHandPos = new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
@@ -55,7 +57,9 @@ namespace SpaceGame.graphics
             float velocityFactor = _unit.Velocity.X / _unit.MaxSpeed;
 
             if (!FlipH)	//if flipped, velocity response is opposite
-                velocityFactor *=  -1;
+            {
+                velocityFactor *= -1;
+            }
 
 			//convert to positive scale
             velocityFactor = MathHelper.Clamp(velocityFactor, -1, 1) + 1;	//scale from 0 to 2 (1 being stationary)
@@ -67,7 +71,15 @@ namespace SpaceGame.graphics
         public override void Draw(SpriteBatch batch, Vector2 position)
         {
             base.Draw(batch, position);
-            batch.Draw(_armTexture, position + _unitShoulderOffset, null, Color.White, 0, _armShoulderPos, Scale, SpriteEffects.None, 0);
+            float aimAngle = XnaHelper.RadiansFromVector(_unit.LookDirection);
+            if (FlipH)
+            {
+                batch.Draw(_armTexture, position + _flippedUnitShoulderOffset, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+            }
+            else
+            {
+                batch.Draw(_armTexture, position + _unitShoulderOffset, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+            }
         }
 
     }

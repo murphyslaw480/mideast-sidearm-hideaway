@@ -3,8 +3,8 @@
   <!--SpriteData Name="Spaceman" AssetName="Spaceman" FrameWidth="724" FrameHeight="863" NumFrames="1" NumStates="4" DefaultScale ="0.05" SecondsPerAnimation="0.5" ZLayer="0" /-->
 
   <UnitSpriteData Name="Spaceman" AssetName="spritesheet_template" FrameWidth="64" FrameHeight="64" NumFrames="4" NumStates="5" DefaultScale ="2.00"
-              SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="0" ShoulderY="-15">
-    <SpriteArmData Name="basic_arm" ShoulderX="5" ShoulderY="15" HandX="1" HandY="1"/>
+              SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="-5" ShoulderY="-15">
+    <SpriteArmData Name="basic_arm" ShoulderX="1" ShoulderY="15" HandX="1" HandY="1"/>
   </UnitSpriteData>
 
   <UnitSpriteData Name="Goblin" AssetName="Goblin1" FrameWidth="217" FrameHeight="287" NumFrames="1" NumStates="1" DefaultScale ="0.15"
