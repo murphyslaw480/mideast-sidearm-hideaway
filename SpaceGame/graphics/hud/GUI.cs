@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using SpaceGame.units;
 
 namespace SpaceGame.graphics.hud
 {
-    class GUI
+    class Hud
     {
         //Ugly constants for figuring things out about the health and void wheels
         public static float ARC_ADJUST = 2.38f;
@@ -55,7 +56,7 @@ namespace SpaceGame.graphics.hud
         private SpaceGame.units.Spaceman player;
         private SpaceGame.units.BlackHole blackhole;
 
-        public GUI(SpaceGame.units.Spaceman player, SpaceGame.units.BlackHole blackhole)
+        public Hud(SpaceGame.units.Spaceman player, SpaceGame.units.BlackHole blackhole, Wave[] waves)
         {
             this.screenHeight = Game1.SCREENHEIGHT;
             this.screenWidth = Game1.SCREENWIDTH;

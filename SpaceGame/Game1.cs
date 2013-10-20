@@ -98,18 +98,18 @@ namespace SpaceGame
             SpaceGame.graphics.hud.RadialBar.GameGraphicsDevice = GraphicsDevice;
 
             //Load GUI textures
-            SpaceGame.graphics.hud.GUI.targetWheel = Content.Load<Texture2D>("gui/Minimap_&_Health_Bar_00");
-            SpaceGame.graphics.hud.GUI.leftClick = Content.Load<Texture2D>("gui/Left Click");
-            SpaceGame.graphics.hud.GUI.rightClick = Content.Load<Texture2D>("gui/Right Click");
-            SpaceGame.graphics.hud.GUI.spaceClick = Content.Load<Texture2D>("gui/Space Bar");
-            SpaceGame.graphics.hud.GUI.shiftClick = Content.Load<Texture2D>("gui/Shift");
-            SpaceGame.graphics.hud.GUI.button1 = Content.Load<Texture2D>("gui/Numer 1");
-            SpaceGame.graphics.hud.GUI.button3 = Content.Load<Texture2D>("gui/Numer 3");
-            SpaceGame.graphics.hud.GUI.button5 = Content.Load<Texture2D>("gui/Numer 5");
-            SpaceGame.graphics.hud.GUI.button2 = Content.Load<Texture2D>("gui/Numer 2");
-            SpaceGame.graphics.hud.GUI.button4 = Content.Load<Texture2D>("gui/Numer 4");
-            SpaceGame.graphics.hud.GUI.button6 = Content.Load<Texture2D>("gui/Numer 6");
-            SpaceGame.graphics.hud.GUI.voidWheel = Content.Load<Texture2D>("gui/Score_&_Void_Tracker");
+            SpaceGame.graphics.hud.Hud.targetWheel = Content.Load<Texture2D>("gui/Minimap_&_Health_Bar_00");
+            SpaceGame.graphics.hud.Hud.leftClick = Content.Load<Texture2D>("gui/Left Click");
+            SpaceGame.graphics.hud.Hud.rightClick = Content.Load<Texture2D>("gui/Right Click");
+            SpaceGame.graphics.hud.Hud.spaceClick = Content.Load<Texture2D>("gui/Space Bar");
+            SpaceGame.graphics.hud.Hud.shiftClick = Content.Load<Texture2D>("gui/Shift");
+            SpaceGame.graphics.hud.Hud.button1 = Content.Load<Texture2D>("gui/Numer 1");
+            SpaceGame.graphics.hud.Hud.button3 = Content.Load<Texture2D>("gui/Numer 3");
+            SpaceGame.graphics.hud.Hud.button5 = Content.Load<Texture2D>("gui/Numer 5");
+            SpaceGame.graphics.hud.Hud.button2 = Content.Load<Texture2D>("gui/Numer 2");
+            SpaceGame.graphics.hud.Hud.button4 = Content.Load<Texture2D>("gui/Numer 4");
+            SpaceGame.graphics.hud.Hud.button6 = Content.Load<Texture2D>("gui/Numer 6");
+            SpaceGame.graphics.hud.Hud.voidWheel = Content.Load<Texture2D>("gui/Score_&_Void_Tracker");
 
 			Level.s_CursorTexture = Content.Load<Texture2D>("gui/Cross_Hair_Basic_Green");
 

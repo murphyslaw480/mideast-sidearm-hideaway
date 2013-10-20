@@ -52,7 +52,7 @@ namespace SpaceGame.states
         Rectangle _levelBounds;
         Vector2 _mousePos;
 
-        GUI userInterface;
+        Hud userInterface;
         Rectangle _cameraLock;
         Camera2D _camera;
 
@@ -105,7 +105,7 @@ namespace SpaceGame.states
             _secondaryGadget = im.getSecondaryGadget();
             _inventoryManager = im;
             
-            userInterface = new GUI(_player, _blackHole);
+            userInterface = new Hud(_player, _blackHole, _waves);
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
             selectRandomWeapons();
