@@ -66,6 +66,8 @@ namespace SpaceGame.units
         /// Set to false when level ends to prevent spawning
         /// </summary>
         public bool SpawnEnable { get; set; }
+
+        public Enemy[] Enemies { get { return _enemies; } }
         #endregion
 
         #region constructor
