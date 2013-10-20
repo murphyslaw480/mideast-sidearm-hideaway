@@ -10,11 +10,13 @@ namespace SpaceGame.graphics
 {
     class UnitSprite : Sprite
     {
+        protected const string c_armSpritePath = c_unitSpritePath + "arms/";
+
         public static Dictionary<string, UnitSpriteData> UnitSpriteData;
         PhysicalUnit _unit;
         Texture2D _armTexture;
-		//position of shoulder relative to unit, shoulder relative to arm, and hand relative to arm
-        Vector2 _unitShoulderPos, _armShoulderPos, _armHandPos;
+		//position of shoulder relative to unit center, shoulder relative to arm, and hand relative to arm
+        Vector2 _unitShoulderOffset, _armShoulderPos, _armHandPos;
 
         public override int AnimationState
         {
@@ -36,8 +38,8 @@ namespace SpaceGame.graphics
             {
                 throw new Exception(String.Format("UnitSprite {0} has an even number of states along the horizontal axis", data.Name));
             }
-            _unitShoulderPos = new Vector2(data.ShoulderX, data.ShoulderY);
-            _armTexture = Content.Load<Texture2D>(data.SpriteArmData.Name);
+            _unitShoulderOffset = new Vector2(data.ShoulderX, data.ShoulderY);
+            _armTexture = Content.Load<Texture2D>(c_armSpritePath + data.SpriteArmData.Name);
             _armShoulderPos = new Vector2(data.SpriteArmData.ShoulderX, data.SpriteArmData.ShoulderY);
             _armHandPos = new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
         }
@@ -65,7 +67,7 @@ namespace SpaceGame.graphics
         public override void Draw(SpriteBatch batch, Vector2 position)
         {
             base.Draw(batch, position);
-            batch.Draw(_armTexture, position + _unitShoulderPos, Color.White);
+            batch.Draw(_armTexture, position + _unitShoulderOffset, null, Color.White, 0, _armShoulderPos, Scale, SpriteEffects.None, 0);
         }
 
     }

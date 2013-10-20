@@ -115,6 +115,7 @@
     </None>
     <None Include="data\SpriteData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="data\UnitData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

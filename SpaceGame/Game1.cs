@@ -132,7 +132,7 @@ namespace SpaceGame
                 DataLoader.SPRITE_PATH, "SpriteData").ToDictionary(t => t.Name);
 
             UnitSprite.UnitSpriteData = DataLoader.CollectData<UnitSpriteData>(
-                DataLoader.SPRITE_PATH, "SpriteData").ToDictionary(t => t.Name);
+                DataLoader.SPRITE_PATH, "UnitSpriteData").ToDictionary(t => t.Name);
 
             ProjectileWeapon.DataDict = DataLoader.CollectData<ProjectileWeaponData>( 
                     DataLoader.WEAPON_DATA_PATH, "ProjectileWeapon").ToDictionary(t => t.Name);
