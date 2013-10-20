@@ -106,7 +106,8 @@ namespace SpaceGame.states
             userInterface = new GUI(_player, _blackHole);
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
-            selectRandomWeapons();
+            _primaryWeapon = new ProjectileWeapon("RocketLauncher", _player);
+            //selectRandomWeapons();
 			/*
             Song song = content.Load<Song>("music/gravitational_conflict");
             MediaPlayer.Play(song);
