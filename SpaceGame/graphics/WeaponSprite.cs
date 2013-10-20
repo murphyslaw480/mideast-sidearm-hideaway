@@ -11,7 +11,7 @@ namespace SpaceGame.graphics
     {
 		public static Dictionary<string,WeaponSpriteData> WeaponSpriteDict;
 
-		Vector2 _handlePos, muzzlePos;
+		Vector2 _handlePos, _muzzlePos;
 
         public WeaponSprite(string name)
 			:this(WeaponSpriteDict[name])
@@ -20,13 +20,14 @@ namespace SpaceGame.graphics
 		protected WeaponSprite(WeaponSpriteData data)
 			:base(data, SpriteType.None)
         {
-			_handlePos = new Vector2(data.
+            _handlePos = new Vector2(data.HandleX, data.HandleY);
+			_muzzlePos =  new Vector2(data.MuzzleX, data.MuzzleY);
         }
     }
 
     class WeaponSpriteData : SpriteData
     {
-        int handleX, handleY;
-        int muzzleX, muzzleY;
+        public int HandleX, HandleY;
+        public int MuzzleX, MuzzleY;
     }
 }

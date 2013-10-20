@@ -12,8 +12,9 @@
     <SpriteArmData Name="basic_arm" ShoulderX="1" ShoulderY="8" HandX="1" HandY="1"/>
   </UnitSpriteData>
 
-  <SpriteData Name="RocketLauncher" AssetName="spritesheet_template" FrameWidth="64" FrameHeight="64" NumFrames="4" NumStates="5" DefaultScale ="2.00" 
-              SecondsPerAnimation="0.25" ZLayer="0"/>
+  <WeaponSpriteData Name="RocketLauncher" AssetName="spritesheet_template" FrameWidth="64" FrameHeight="64" NumFrames="1" NumStates="1" DefaultScale ="2.00" 
+					SecondsPerAnimation="0.25" ZLayer="0"
+                    HandleX="-20" HandleY="-10" MuzzleX="20" MuzzleY="10"/>
 
   <SpriteData Name="Projectile" AssetName="Projectile" FrameWidth="32" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="0.5" 
               SecondsPerAnimation="0.5" ZLayer="0" />
@@ -51,4 +52,19 @@
   <SpriteData Name="Boomerang" AssetName="Boomerang" FrameWidth="48" FrameHeight="48" NumFrames="1" NumStates="1" DefaultScale ="0.40" 
               SecondsPerAnimation="0.5" ZLayer="0" />
 
+	<!--PlaceHolder graphics-->
+  <UnitSpriteData Name="Placeholder" AssetName="Placeholder" FrameWidth="10" FrameHeight="20" NumFrames="1" NumStates="1" DefaultScale ="1.00"
+              SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="-5" ShoulderY="-15">
+    <SpriteArmData Name="basic_arm" ShoulderX="1" ShoulderY="15" HandX="1" HandY="1"/>
+  </UnitSpriteData>
+
+
+  <WeaponSpriteData Name="Placeholder" AssetName="Placeholder" FrameWidth="10" FrameHeight="20" NumFrames="1" NumStates="1" DefaultScale ="1.00"
+              SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="-5" ShoulderY="-15"
+			  HandleX="-20" HandleY="-10" MuzzleX="20" MuzzleY="10">
+  </WeaponSpriteData>
+
+  <SpriteData Name="Placeholder" AssetName="Placeholder" FrameWidth="10" FrameHeight="20" NumFrames="1" NumStates="1" DefaultScale ="1.00"
+              SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="-5" ShoulderY="-15">
+  </SpriteData>
 </SpriteDatas>
