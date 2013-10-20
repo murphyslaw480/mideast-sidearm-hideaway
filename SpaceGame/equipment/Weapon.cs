@@ -34,6 +34,7 @@ namespace SpaceGame.equipment
 
         protected PhysicalUnit _owner;
 
+        WeaponSprite _sprite;
         #endregion
 
         #region constructor
@@ -68,6 +69,9 @@ namespace SpaceGame.equipment
                 _targetDestination = targetPosition;
 
                 _tillNextFire = _fireDelay;
+
+				//animate fire
+                _sprite.PlayAnimation(0, false);
                 return true;
             }
             return false;

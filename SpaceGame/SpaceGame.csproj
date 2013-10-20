@@ -55,6 +55,7 @@
     <Compile Include="graphics\Sprite.cs" />
     <Compile Include="graphics\SpriteData.cs" />
     <Compile Include="graphics\UnitSprite.cs" />
+    <Compile Include="graphics\WeaponSprite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="states\Gamemenu.cs" />

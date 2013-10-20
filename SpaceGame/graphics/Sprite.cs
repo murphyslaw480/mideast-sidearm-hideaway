@@ -80,6 +80,8 @@ namespace SpaceGame.graphics
         Rectangle[,] _rects;
         //origin used for rotation
         Vector2 _origin;
+		//whether to loop animation
+        bool _loopAnimation;
 
         //for Flash(Color, Time)
         Color _flashColor;
@@ -224,7 +226,14 @@ namespace SpaceGame.graphics
             _timeTillNext -= theGameTime.ElapsedGameTime;
 
             if (Animating && _timeTillNext <= TimeSpan.Zero && _currentFrame == _framesPerAnimation - 1)
-                AnimationOver = true;
+            {
+				if (!_loopAnimation)
+                {
+                    AnimationOver = true;
+                    Animating = false;
+                    _currentFrame = 0;
+                }
+            }
 
             if (_timeTillNext < TimeSpan.Zero)
             {
@@ -260,10 +269,11 @@ namespace SpaceGame.graphics
             }
         }
 
-        public void PlayAnimation(int animationNumber)
+        public void PlayAnimation(int animationNumber, bool loop)
         {
             Animating = true;
             AnimationOver = false;
+            _loopAnimation = loop;
             AnimationState = animationNumber % _numStates;
             _currentFrame = 0;
         }
