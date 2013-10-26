@@ -11,17 +11,17 @@ namespace SpaceGame.graphics
     {
 		public static Dictionary<string,WeaponSpriteData> WeaponSpriteData;
 
-		Vector2 _handlePos, _muzzlePos;
+		public Vector2 HandleOffset, MuzzleOffset;
 
         public WeaponSprite(string name)
 			:this(WeaponSpriteData[name])
         {}
 
 		protected WeaponSprite(WeaponSpriteData data)
-			:base(data, SpriteType.None)
+			:base(data, SpriteType.Weapon)
         {
-            _handlePos = new Vector2(data.HandleX, data.HandleY);
-			_muzzlePos =  new Vector2(data.MuzzleX, data.MuzzleY);
+            HandleOffset = new Vector2(data.HandleX, data.HandleY);
+			MuzzleOffset =  new Vector2(data.MuzzleX, data.MuzzleY);
         }
     }
 

@@ -24,7 +24,22 @@ namespace SpaceGame.units
 
         #region members
         ParticleEffect thrusterParticleEffect;
-        Weapon PrimaryWeapon, SecondaryWeapon;
+        Weapon _primaryWeapon, _secondaryWeapon;
+        public Weapon PrimaryWeapon { 
+            get { return _primaryWeapon; } 
+            set { 
+                _primaryWeapon = value; 
+                if (value != null) {CurrentWeapon = value;}
+            }
+        }
+        public Weapon SecondaryWeapon { 
+            get { return _secondaryWeapon; } 
+            set { 
+                _secondaryWeapon = value; 
+                if (value != null) {CurrentWeapon = value;}
+            }
+        }
+
         #endregion
 
         public Spaceman(Vector2 startPosition)
@@ -36,5 +51,20 @@ namespace SpaceGame.units
             CurrentWeapon = PrimaryWeapon;
         }
 
+        /// <summary>
+        /// Select a weapon as primary if it is possesed
+        /// </summary>
+        /// <param name="weaponNum">0 = primary, 1 = secondary</param>
+        public void SelectWeapon(int weaponNum)
+        {
+            if (weaponNum == 0 && PrimaryWeapon != null)
+            {
+                CurrentWeapon = SecondaryWeapon;
+            }
+            else if (weaponNum == 1 && SecondaryWeapon != null)
+            {
+                CurrentWeapon = PrimaryWeapon;
+            }
+        }
     }
 }

@@ -49,11 +49,11 @@ namespace SpaceGame.equipment
 
         #region constructor
         public ProjectileWeapon(string name, PhysicalUnit owner)
-            : this(DataDict[name], owner)
+            : this(DataDict[name], owner, name)
         { }
 
-        protected ProjectileWeapon(ProjectileWeaponData data, PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner, data.Name)
+        protected ProjectileWeapon(ProjectileWeaponData data, PhysicalUnit owner, string spriteName)
+            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner, spriteName)
         {
             _name = data.Name;
             _projectilesPerFire = data.ProjectilesPerFire;

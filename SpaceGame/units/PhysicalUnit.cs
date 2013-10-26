@@ -117,6 +117,10 @@ namespace SpaceGame.units
         public float MaxHealth { get { return _maxHealth; } }
         public float MaxSpeed { get { return _maxSpeed; } }
         public Weapon CurrentWeapon { get; protected set; }
+        public WeaponSprite WeaponSprite
+        {
+            get { return CurrentWeapon == null ? null : CurrentWeapon.Sprite; }
+        }
 
         public float Mass { get { return _mass + _additionalMass; } }
         Rectangle _hitRect;

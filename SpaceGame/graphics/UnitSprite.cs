@@ -17,7 +17,9 @@ namespace SpaceGame.graphics
         PhysicalUnit _unit;
         Texture2D _armTexture;
 		//position of shoulder relative to unit center, shoulder relative to arm, and hand relative to arm
-        Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset, _armShoulderPos, _armHandPos;
+        Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset, _armShoulderPos;
+        Vector2 _handOffset;
+        Vector2 _weaponOffset;
 
         public override int AnimationState
         {
@@ -43,7 +45,7 @@ namespace SpaceGame.graphics
             _flippedUnitShoulderOffset = new Vector2(-data.ShoulderX, data.ShoulderY);
             _armTexture = Content.Load<Texture2D>(c_armSpritePath + data.SpriteArmData.Name);
             _armShoulderPos = new Vector2(data.SpriteArmData.ShoulderX, data.SpriteArmData.ShoulderY);
-            _armHandPos = new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
+            _handOffset = _unitShoulderOffset + new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
         }
 
         public UnitSprite(string name, PhysicalUnit unit)
@@ -66,12 +68,15 @@ namespace SpaceGame.graphics
 
 			//set state based on velocity
             _currentState = (int)(velocityFactor / 2 * _numStates);
+
+            _weaponOffset = _unit.WeaponSprite.HandleOffset + _handOffset;
         }
 
         public override void Draw(SpriteBatch batch, Vector2 position)
         {
             base.Draw(batch, position);
             float aimAngle = XnaHelper.RadiansFromVector(_unit.LookDirection);
+            //draw arm
             if (FlipH)
             {
                 batch.Draw(_armTexture, position + _flippedUnitShoulderOffset, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
@@ -79,6 +84,11 @@ namespace SpaceGame.graphics
             else
             {
                 batch.Draw(_armTexture, position + _unitShoulderOffset, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+            }
+            //draw weapon
+            if (_unit.WeaponSprite != null)
+            {
+                _unit.WeaponSprite.Draw(batch, position + _weaponOffset, aimAngle);
             }
         }
 

@@ -44,7 +44,6 @@ namespace SpaceGame.states
         Spaceman _player;
         InventoryManager _inventoryManager;
         BlackHole _blackHole;
-        Weapon _primaryWeapon, _secondaryWeapon;
         Gadget _primaryGadget, _secondaryGadget;
         Wave[] _waves;
         Unicorn[] _unicorns;
@@ -87,10 +86,6 @@ namespace SpaceGame.states
             im.setSecondaryGadget(new Gadget("Stopwatch", this));
             im.setSlot(1, new ThrowableWeapon("Cryonade", _player));
 
-            //Set Weapon holders in level
-            _primaryWeapon = im.getPrimaryWeapon();
-            _secondaryWeapon = im.getSecondaryWeapon();
-
             _unicorns = new Unicorn[data.Unicorns.Length];
             for (int j = 0; j < data.Unicorns.Length; j++)
             {
@@ -106,7 +101,7 @@ namespace SpaceGame.states
             userInterface = new GUI(_player, _blackHole);
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
-            _primaryWeapon = new ProjectileWeapon("RocketLauncher", _player);
+            _player.PrimaryWeapon = new ProjectileWeapon("RocketLauncher", _player);
             //selectRandomWeapons();
 			/*
             Song song = content.Load<Song>("music/gravitational_conflict");
@@ -130,8 +125,6 @@ namespace SpaceGame.states
                 new ProjectileWeapon("Flamethrower", _player),
                 new ProjectileWeapon("RocketLauncher", _player),
             };
-            _primaryWeapon = weapons[rand1];
-            _secondaryWeapon = weapons[rand2];
         }
         #endregion
 
@@ -193,7 +186,7 @@ namespace SpaceGame.states
           
             for (int i = 0; i < _waves.Length; i++)
             {
-                _waves[i].Update(gameTime, _player, _blackHole, _primaryWeapon, _secondaryWeapon, _inventoryManager, _unicorns);
+                _waves[i].Update(gameTime, _player, _blackHole, _player.PrimaryWeapon, _player.SecondaryWeapon, _inventoryManager, _unicorns);
                 //check cross-wave collisions
                 if (_waves[i].Active)
                 {
@@ -218,20 +211,15 @@ namespace SpaceGame.states
             for (int i = 0; i < _foodCarts.Length; i++)
             {
                 _foodCarts[i].Update(gameTime, _levelBounds, _blackHole.Position);
-                _primaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
-                _secondaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
+                _player.CurrentWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
                 _inventoryManager.CheckCollisions(gameTime, _foodCarts[i]);
                 _blackHole.ApplyToUnit(_foodCarts[i], gameTime);
             }
 
             //Update Weapons 
-            if (_primaryWeapon != null)
+            if (_player.CurrentWeapon != null)
             {
-                _primaryWeapon.Update(gameTime);
-            }
-            if (_secondaryWeapon != null)
-            {
-                _secondaryWeapon.Update(gameTime);
+                _player.CurrentWeapon.Update(gameTime);
             }
             //update all items
             _inventoryManager.Update(gameTime, input);
@@ -252,11 +240,13 @@ namespace SpaceGame.states
             {
                 if (input.FirePrimary)
                 {
-                    _primaryWeapon.Trigger(_player.Position, input.MouseLocation);
+                    _player.SelectWeapon(0);
+                    _player.CurrentWeapon.Trigger(_player.Position, input.MouseLocation);
                 }
                 else if (input.FireSecondary)
                 {
-                    _secondaryWeapon.Trigger(_player.Position, input.MouseLocation);
+                    _player.SelectWeapon(1);
+                    _player.CurrentWeapon.Trigger(_player.Position, input.MouseLocation);
                 }
                 if (input.UseItem)
                 {
@@ -280,15 +270,10 @@ namespace SpaceGame.states
             
             _blackHole.Draw(spriteBatch);
             _player.Draw(spriteBatch);
-            if (_primaryWeapon != null)
+            if (_player.CurrentWeapon != null)
             {
-                _primaryWeapon.Draw(spriteBatch);
+                _player.CurrentWeapon.Draw(spriteBatch);
             }
-            if (_secondaryWeapon != null)
-            {
-                _secondaryWeapon.Draw(spriteBatch);
-            }
-
             if (_inventoryManager.CurrentItem != null)
             {
                 _inventoryManager.CurrentItem.Draw(spriteBatch);
