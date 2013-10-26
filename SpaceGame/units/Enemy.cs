@@ -25,7 +25,6 @@ namespace SpaceGame.units
         #endregion
 
         #region fields
-        MeleeWeapon _meleeWeapon;
         #endregion
 
         #region constructor
@@ -34,12 +33,12 @@ namespace SpaceGame.units
         {
         }
 
-
         protected Enemy(EnemyData data, Rectangle levelBounds)
             : base(data.PhysicalData)
         {
             if (data.MeleeWeaponName != null)
-                _meleeWeapon = new MeleeWeapon(data.MeleeWeaponName, this);
+                CurrentWeapon = new MeleeWeapon(data.MeleeWeaponName, this);
+
         }
         #endregion
 
@@ -49,26 +48,26 @@ namespace SpaceGame.units
             Vector2 directionToPlayer = XnaHelper.DirectionBetween(Position, playerPosition);
             MoveDirection = directionToPlayer;
             LookDirection = directionToPlayer;
-            if (_meleeWeapon != null)
+            if (CurrentWeapon != null)
             {
-                _meleeWeapon.Update(gameTime);
+                CurrentWeapon.Update(gameTime);
 
-                if ((playerPosition - Position).Length() <= _meleeWeapon.Range && _lifeState == LifeState.Living)
-                    _meleeWeapon.Trigger(Center, playerPosition);
+                if ((playerPosition - Position).Length() <= CurrentWeapon.Range && _lifeState == LifeState.Living)
+                    CurrentWeapon.Trigger(Center, playerPosition);
             }
             base.Update(gameTime, levelBounds);
         }
 
         public void CheckAndApplyWeaponCollision(PhysicalUnit unit, TimeSpan time)
         {
-            if (_meleeWeapon != null)
-                _meleeWeapon.CheckAndApplyCollision(unit, time);
+            if (CurrentWeapon != null)
+                CurrentWeapon.CheckAndApplyCollision(unit, time);
         }
 
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            _meleeWeapon.Draw(sb);
+            CurrentWeapon.Draw(sb);
         }
         #endregion
     }

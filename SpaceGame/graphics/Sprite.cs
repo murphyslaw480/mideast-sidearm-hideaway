@@ -294,10 +294,15 @@ namespace SpaceGame.graphics
 
         public virtual void Draw(SpriteBatch batch, Vector2 position)
         {
-            Draw(batch, position, _angle);
+            Draw(batch, position, _angle, _origin);
         }
 
         public virtual void Draw(SpriteBatch batch, Vector2 position, float rotation)
+        {
+            Draw(batch, position, rotation, _origin);
+        }
+
+        public virtual void Draw(SpriteBatch batch, Vector2 position, float rotation, Vector2 origin)
         {
             SpriteEffects effects = (FlipH ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (FlipV ? SpriteEffects.FlipVertically : SpriteEffects.None);
             if (_teleportTimer > 0)
@@ -308,7 +313,7 @@ namespace SpaceGame.graphics
                 tempRect.X = (int)(_teleportStartPos.X);
                 tempRect.Y = (int)(_teleportStartPos.Y);
 
-                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _origin, effects, _zLayer);
+                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, origin, effects, _zLayer);
                     
                 //draw current location
                 tempRect.Width = (int)(Width * (1 - _teleportTimer / c_teleportTime));   //width grows back to normal
@@ -316,11 +321,11 @@ namespace SpaceGame.graphics
                 tempRect.X = (int)(position.X);
                 tempRect.Y = (int)(position.Y);
 
-                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _origin, effects, _zLayer);
+                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, origin, effects, _zLayer);
             }
             else
             {
-                batch.Draw(_spriteSheet, position, _rects[_currentState, _currentFrame], Shade, rotation, _origin,
+                batch.Draw(_spriteSheet, position, _rects[_currentState, _currentFrame], Shade, rotation, origin,
                     Scale, effects, _zLayer);
             }
         }
@@ -342,9 +347,6 @@ namespace SpaceGame.graphics
                 Color.Lerp(Color.Transparent, Color.White, opacity * ICE_OPACITY_FACTOR),
                 angle, iceCubeTextureCenter, SpriteEffects.None, 0);
         }
-
         #endregion
-
     }
-
 }

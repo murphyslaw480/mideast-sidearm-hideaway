@@ -116,6 +116,7 @@ namespace SpaceGame.units
         public float Health { get { return _health; } }
         public float MaxHealth { get { return _maxHealth; } }
         public float MaxSpeed { get { return _maxSpeed; } }
+        public Weapon CurrentWeapon { get; protected set; }
 
         public float Mass { get { return _mass + _additionalMass; } }
         Rectangle _hitRect;

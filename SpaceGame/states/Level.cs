@@ -225,8 +225,14 @@ namespace SpaceGame.states
             }
 
             //Update Weapons 
-            _primaryWeapon.Update(gameTime);
-            _secondaryWeapon.Update(gameTime);
+            if (_primaryWeapon != null)
+            {
+                _primaryWeapon.Update(gameTime);
+            }
+            if (_secondaryWeapon != null)
+            {
+                _secondaryWeapon.Update(gameTime);
+            }
             //update all items
             _inventoryManager.Update(gameTime, input);
         }
@@ -274,8 +280,15 @@ namespace SpaceGame.states
             
             _blackHole.Draw(spriteBatch);
             _player.Draw(spriteBatch);
-            _primaryWeapon.Draw(spriteBatch);
-            _secondaryWeapon.Draw(spriteBatch);
+            if (_primaryWeapon != null)
+            {
+                _primaryWeapon.Draw(spriteBatch);
+            }
+            if (_secondaryWeapon != null)
+            {
+                _secondaryWeapon.Draw(spriteBatch);
+            }
+
             if (_inventoryManager.CurrentItem != null)
             {
                 _inventoryManager.CurrentItem.Draw(spriteBatch);

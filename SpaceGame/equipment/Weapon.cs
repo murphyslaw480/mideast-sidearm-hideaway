@@ -19,6 +19,8 @@ namespace SpaceGame.equipment
         #endregion
 
         #region properties
+        public abstract float Range { get; }
+        public WeaponSprite Sprite { get; private set; }
         #endregion
 
         #region fields
@@ -33,8 +35,6 @@ namespace SpaceGame.equipment
         protected Vector2 _targetDestination;
 
         protected PhysicalUnit _owner;
-
-        WeaponSprite _sprite;
         #endregion
 
         #region constructor
@@ -46,10 +46,14 @@ namespace SpaceGame.equipment
         /// <param name="ammoConsumption">Ammo used per shot. Set to 0 for infinite ammo.</param>
         /// <param name="levelWidth">Width of the level in which this weapon is instantiated.</param>
         /// <param name="levelHeight">Height of the level in which this weapon is instantiated.</param>
-        public Weapon(TimeSpan fireDelay, PhysicalUnit owner)
+        public Weapon(TimeSpan fireDelay, PhysicalUnit owner, string spriteName = null)
         {
             _fireDelay = fireDelay;
             _owner = owner;
+            if (spriteName != null)
+            {
+                Sprite = new WeaponSprite(spriteName);
+            }
         }
         #endregion
 
@@ -71,7 +75,7 @@ namespace SpaceGame.equipment
                 _tillNextFire = _fireDelay;
 
 				//animate fire
-                _sprite.PlayAnimation(0, false);
+                Sprite.PlayAnimation(0, false);
                 return true;
             }
             return false;

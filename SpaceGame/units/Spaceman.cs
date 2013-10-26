@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using SpaceGame.graphics;
+using SpaceGame.equipment;
 
 namespace SpaceGame.units
 {
@@ -23,6 +24,7 @@ namespace SpaceGame.units
 
         #region members
         ParticleEffect thrusterParticleEffect;
+        Weapon PrimaryWeapon, SecondaryWeapon;
         #endregion
 
         public Spaceman(Vector2 startPosition)
@@ -31,6 +33,7 @@ namespace SpaceGame.units
             thrusterParticleEffect = new ParticleEffect(THRUSTER_EFFECT_NAME);
             _lifeState = LifeState.Living;      //astronaut starts pre-spawned
             Position = startPosition;
+            CurrentWeapon = PrimaryWeapon;
         }
 
     }

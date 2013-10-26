@@ -9,12 +9,12 @@ namespace SpaceGame.graphics
 {
     class WeaponSprite : Sprite
     {
-		public static Dictionary<string,WeaponSpriteData> WeaponSpriteDict;
+		public static Dictionary<string,WeaponSpriteData> WeaponSpriteData;
 
 		Vector2 _handlePos, _muzzlePos;
 
         public WeaponSprite(string name)
-			:this(WeaponSpriteDict[name])
+			:this(WeaponSpriteData[name])
         {}
 
 		protected WeaponSprite(WeaponSpriteData data)
