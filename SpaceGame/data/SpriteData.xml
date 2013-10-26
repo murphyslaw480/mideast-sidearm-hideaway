@@ -4,7 +4,7 @@
 
   <UnitSpriteData Name="Spaceman" AssetName="Spaceman_Body" FrameWidth="52" FrameHeight="86" NumFrames="1" NumStates="1" DefaultScale ="1.00"
               SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="0" ShoulderY="10">
-    <SpriteArmData Name="Spaceman_Arm_Right" ShoulderX="8" ShoulderY="25" HandX="9" HandY="6"/>
+    <SpriteArmData Name="Spaceman_Arm_Right" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-30"/>
   </UnitSpriteData>
 
   <UnitSpriteData Name="Goblin" AssetName="Goblin1" FrameWidth="217" FrameHeight="287" NumFrames="1" NumStates="1" DefaultScale ="0.15"
@@ -12,9 +12,10 @@
     <SpriteArmData Name="basic_arm" ShoulderX="1" ShoulderY="8" HandX="1" HandY="1"/>
   </UnitSpriteData>
 
-  <WeaponSpriteData Name="RocketLauncher" AssetName="rocket_launcher" FrameWidth="227" FrameHeight="109" NumFrames="1" NumStates="1" DefaultScale ="1.00" 
-					SecondsPerAnimation="0.25" ZLayer="0"
-                    HandleX="-57" HandleY="31" MuzzleX="112" MuzzleY="0"/>
+  <WeaponSpriteData Name="RocketLauncher" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
+              SecondsPerAnimation="0.25" ZLayer="0" 
+			  HandleX="0" HandleY="0" MuzzleX="0" MuzzleY="-15">
+  </WeaponSpriteData>
 
   <SpriteData Name="Projectile" AssetName="Projectile" FrameWidth="32" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="0.5" 
               SecondsPerAnimation="0.5" ZLayer="0" />
@@ -59,9 +60,9 @@
   </UnitSpriteData>
 
 
-  <WeaponSpriteData Name="Placeholder" AssetName="Placeholder" FrameWidth="10" FrameHeight="20" NumFrames="1" NumStates="1" DefaultScale ="1.00"
+  <WeaponSpriteData Name="Placeholder" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
               SecondsPerAnimation="0.25" ZLayer="0" 
-			  HandleX="-20" HandleY="-10" MuzzleX="20" MuzzleY="10">
+			  HandleX="0" HandleY="15" MuzzleX="0" MuzzleY="-15">
   </WeaponSpriteData>
 
   <SpriteData Name="Placeholder" AssetName="Placeholder" FrameWidth="10" FrameHeight="20" NumFrames="1" NumStates="1" DefaultScale ="1.00"

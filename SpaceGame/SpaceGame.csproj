@@ -150,7 +150,9 @@
     <Content Include="Content\spritesheets\units\Spaceman_Body.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\spritesheets\weapons\Placeholder.png" />
+    <Content Include="Content\spritesheets\weapons\Placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\spritesheets\weapons\rocket_launcher.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

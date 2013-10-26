@@ -88,8 +88,9 @@ namespace SpaceGame.graphics
             //draw weapon
             if (_unit.WeaponSprite != null)
             {
-                _unit.WeaponSprite.Draw(batch, position + _weaponOffset, aimAngle);
+                _unit.WeaponSprite.Draw(batch, position + _weaponOffset, aimAngle, _armShoulderPos);
             }
+            XnaHelper.DrawRect(Color.Red, position + _unitShoulderOffset + _handOffset, 5, 5, batch);
         }
 
     }
