@@ -119,6 +119,7 @@ namespace SpaceGame.graphics
         public Vector2 Origin
         {
             get { return _origin; }
+            protected set { _origin = value; }
         }
 
         //scale relative to default scale

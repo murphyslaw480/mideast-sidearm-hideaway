@@ -14,7 +14,7 @@
 
   <WeaponSpriteData Name="RocketLauncher" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
               SecondsPerAnimation="0.25" ZLayer="0" 
-			  HandleX="0" HandleY="0" MuzzleX="0" MuzzleY="-15">
+			  HandleX="8" HandleY="26" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
 
   <SpriteData Name="Projectile" AssetName="Projectile" FrameWidth="32" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="0.5" 
