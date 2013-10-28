@@ -52,6 +52,17 @@ namespace SpaceGame.graphics
             }
         }
 
+        public Vector2 WeaponMuzzlePos
+        {
+            get 
+            {
+                float angle = XnaHelper.RadiansFromVector(_unit.LookDirection);
+                Matrix rot = Matrix.CreateRotationZ(angle);
+                Vector2 muzzlePos = _shoulderToHand + _unit.WeaponSprite.HandleToMuzzle;
+                return _absShoulderPos + Vector2.Transform(muzzlePos, rot);
+            }
+        }
+
         protected UnitSprite(UnitSpriteData data, PhysicalUnit unit)
 			:base(data, SpriteType.Unit)
         {
@@ -112,7 +123,7 @@ namespace SpaceGame.graphics
             //draw weapon
             if (_unit.WeaponSprite != null)
             {
-                _unit.WeaponSprite.Draw(batch, position + _unitShoulderOffset, aimAngle, _weaponOrigin);
+                _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
             }
         }
 

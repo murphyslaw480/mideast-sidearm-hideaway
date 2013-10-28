@@ -108,7 +108,7 @@ namespace SpaceGame.equipment
                 {
                     float rotAngle = XnaHelper.RandomAngle(0, _spread);
                     Matrix.CreateRotationZ(MathHelper.ToRadians(rotAngle), out tempMatrix);
-                    p.Initialize(_owner.Position, Vector2.Transform(_fireDirection, tempMatrix),
+                    p.Initialize(_fireLocation, Vector2.Transform(_fireDirection, tempMatrix),
                         _projectileInfo, _targetDestination, _owner.Velocity,
                         _contactEffect, _destinationEffect,
                         _proximityEffect);

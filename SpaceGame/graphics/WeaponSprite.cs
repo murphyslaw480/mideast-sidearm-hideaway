@@ -12,7 +12,7 @@ namespace SpaceGame.graphics
     {
 		public static Dictionary<string,WeaponSpriteData> WeaponSpriteData;
 
-		public Vector2 HandleOffset, MuzzleOffset;
+		public Vector2 HandleOffset, HandleToMuzzle;
 
         public WeaponSprite(string name)
 			:this(WeaponSpriteData[name])
@@ -22,15 +22,9 @@ namespace SpaceGame.graphics
 			:base(data, SpriteType.Weapon)
         {
             HandleOffset = new Vector2(data.HandleX, data.HandleY);
-			MuzzleOffset =  new Vector2(data.MuzzleX, data.MuzzleY);
+			HandleToMuzzle =  new Vector2(data.MuzzleX, data.MuzzleY) - HandleOffset;
         }
 
-        public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Vector2 position, float rotation, Vector2 origin)
-        {
-            base.Draw(batch, position, rotation, origin);
-            XnaHelper.DrawRect(Color.Blue, position + origin, 5, 5, batch);
-            XnaHelper.DrawRect(Color.Green, position, 5, 5, batch);
-        }
     }
 
     class WeaponSpriteData : SpriteData

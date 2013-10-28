@@ -31,6 +31,7 @@ namespace SpaceGame.equipment
         //set during Weapon.Trigger
         //check and apply during weapon.Update()
         protected bool _firing;
+        protected Vector2 _fireLocation;
         protected Vector2 _fireDirection;
         protected Vector2 _targetDestination;
 
@@ -70,6 +71,7 @@ namespace SpaceGame.equipment
             {
                 _firing = true;
                 _fireDirection = XnaHelper.DirectionBetween(firePosition, targetPosition);
+                _fireLocation = firePosition;
                 _targetDestination = targetPosition;
 
                 _tillNextFire = _fireDelay;

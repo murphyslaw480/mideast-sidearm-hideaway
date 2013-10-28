@@ -51,20 +51,18 @@ namespace SpaceGame.units
             CurrentWeapon = PrimaryWeapon;
         }
 
-        /// <summary>
-        /// Select a weapon as primary if it is possesed
-        /// </summary>
-        /// <param name="weaponNum">0 = primary, 1 = secondary</param>
-        public void SelectWeapon(int weaponNum)
+        public override void TriggerWeapon(Vector2 target, int num = 0)
         {
-            if (weaponNum == 0 && PrimaryWeapon != null)
+            if (num == 0 && PrimaryWeapon != null)
             {
                 CurrentWeapon = PrimaryWeapon;
             }
-            else if (weaponNum == 1 && SecondaryWeapon != null)
+            else if (num == 1 && SecondaryWeapon != null)
             {
                 CurrentWeapon = SecondaryWeapon;
             }
+
+            base.TriggerWeapon(target, num);
         }
     }
 }

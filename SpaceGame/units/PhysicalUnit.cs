@@ -693,6 +693,15 @@ namespace SpaceGame.units
                 _sprite.DrawIce(sb, tempRec, _sprite.Angle, _statusEffects.Cryo / MAX_STAT_EFFECT);
             }
         }
+
+        public virtual void TriggerWeapon(Vector2 target, int num = 0)
+        {
+            if (CurrentWeapon != null)
+            {
+                CurrentWeapon.Trigger(_sprite.WeaponMuzzlePos, target);
+            }
+        }
+
         #endregion
         #endregion
     }
