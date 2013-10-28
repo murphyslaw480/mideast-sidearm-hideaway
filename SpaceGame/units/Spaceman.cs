@@ -59,11 +59,11 @@ namespace SpaceGame.units
         {
             if (weaponNum == 0 && PrimaryWeapon != null)
             {
-                CurrentWeapon = SecondaryWeapon;
+                CurrentWeapon = PrimaryWeapon;
             }
             else if (weaponNum == 1 && SecondaryWeapon != null)
             {
-                CurrentWeapon = PrimaryWeapon;
+                CurrentWeapon = SecondaryWeapon;
             }
         }
     }

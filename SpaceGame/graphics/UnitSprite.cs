@@ -16,10 +16,29 @@ namespace SpaceGame.graphics
         public static Dictionary<string, UnitSpriteData> UnitSpriteData;
         PhysicalUnit _unit;
         Texture2D _armTexture;
-		//position of shoulder relative to unit center, shoulder relative to arm, and hand relative to arm
-        Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset, _armShoulderPos;
-        Vector2 _handOffset;
-        Vector2 _weaponOffset;
+
+        /* Explaination of these crazy vectors
+         * 
+         * unitShoulderOffset is unit's shoulder position relative to center
+         * armShoulderPos is the arm texture's shoulder position relative to top-left
+         * cornet of the texture.
+         * The arm is drawn at absShoulderPos where
+         * absShoulderPos = unitShoulderOffset + unit.Position
+         * its origin is armShoulderPos
+         * 
+         * shoulderToHand is the vector from armShoulderPos to the hand.
+         * It is all relative to the arm.
+         * 
+         * Weapon.HandleOffset is the handle position relative to topleft of the texture
+         * The weapon is drawn at absShoulderPos (from above)
+         * The weapon origin is 
+         * _weaponOrigin = Weapon.Handle - shoulderToHand
+         */
+
+        Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset;    //unit vectors
+        Vector2 _shoulderToHand, _armShoulderPos;                   //arm vectors
+        Vector2 _absShoulderPos;             //absolute shoulder draw position. dynamic
+        Vector2 _weaponOrigin;                                      //weapon vectors
 
         public override int AnimationState
         {
@@ -45,7 +64,7 @@ namespace SpaceGame.graphics
             _flippedUnitShoulderOffset = new Vector2(-data.ShoulderX, data.ShoulderY);
             _armTexture = Content.Load<Texture2D>(c_armSpritePath + data.SpriteArmData.Name);
             _armShoulderPos = new Vector2(data.SpriteArmData.ShoulderX, data.SpriteArmData.ShoulderY);
-            _handOffset = _unitShoulderOffset + new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
+            _shoulderToHand = new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
         }
 
         public UnitSprite(string name, PhysicalUnit unit)
@@ -55,6 +74,10 @@ namespace SpaceGame.graphics
         public override void Update(GameTime theGameTime)
         {
             base.Update(theGameTime);
+
+            //update current weapon origin
+            _weaponOrigin = _unit.WeaponSprite.HandleOffset - _shoulderToHand;
+
 			//update sprite based on unit's x velocity
             float velocityFactor = _unit.Velocity.X / _unit.MaxSpeed;
 
@@ -68,30 +91,29 @@ namespace SpaceGame.graphics
 
 			//set state based on velocity
             _currentState = (int)(velocityFactor / 2 * _numStates);
-
-            _weaponOffset = _unit.WeaponSprite.HandleOffset + _handOffset;
         }
 
         public override void Draw(SpriteBatch batch, Vector2 position)
         {
             base.Draw(batch, position);
+
+            _absShoulderPos = position + _unitShoulderOffset;
             float aimAngle = XnaHelper.RadiansFromVector(_unit.LookDirection);
+
             //draw arm
             if (FlipH)
             {
-                batch.Draw(_armTexture, position + _flippedUnitShoulderOffset, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
             }
             else
             {
-                batch.Draw(_armTexture, position + _unitShoulderOffset, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
             }
             //draw weapon
             if (_unit.WeaponSprite != null)
             {
-                Vector2 o = _unit.WeaponSprite.HandleOffset + new Vector2(0,_armTexture.Height);
-                _unit.WeaponSprite.Draw(batch, position + _unitShoulderOffset, aimAngle, o);
+                _unit.WeaponSprite.Draw(batch, position + _unitShoulderOffset, aimAngle, _weaponOrigin);
             }
-            XnaHelper.DrawRect(Color.Red, position + _unitShoulderOffset + _handOffset, 5, 5, batch);
         }
 
     }

@@ -4,7 +4,7 @@
 
   <UnitSpriteData Name="Spaceman" AssetName="Spaceman_Body" FrameWidth="52" FrameHeight="86" NumFrames="1" NumStates="1" DefaultScale ="1.00"
               SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="0" ShoulderY="10">
-    <SpriteArmData Name="Spaceman_Arm_Right" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-30"/>
+    <SpriteArmData Name="Spaceman_Arm_Right" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-25"/>
   </UnitSpriteData>
 
   <UnitSpriteData Name="Goblin" AssetName="Goblin1" FrameWidth="217" FrameHeight="287" NumFrames="1" NumStates="1" DefaultScale ="0.15"
@@ -14,7 +14,7 @@
 
   <WeaponSpriteData Name="RocketLauncher" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
               SecondsPerAnimation="0.25" ZLayer="0" 
-			  HandleX="8" HandleY="26" MuzzleX="12" MuzzleY="0">
+			  HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
 
   <SpriteData Name="Projectile" AssetName="Projectile" FrameWidth="32" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="0.5" 
