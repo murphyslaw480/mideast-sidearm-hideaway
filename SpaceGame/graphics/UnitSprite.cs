@@ -106,25 +106,33 @@ namespace SpaceGame.graphics
 
         public override void Draw(SpriteBatch batch, Vector2 position)
         {
-            base.Draw(batch, position);
-
-            _absShoulderPos = position + _unitShoulderOffset;
             float aimAngle = XnaHelper.RadiansFromVector(_unit.LookDirection);
+            _absShoulderPos = position + _unitShoulderOffset;
 
-            //draw arm
+            if (!FlipH)
+            {   //draw arm behind unit
+                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+
+                if (_unit.WeaponSprite != null)
+                {   //draw weapon behind unit
+                    _unit.WeaponSprite.FlipH = false;
+                    _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
+                }
+            }
+
+            base.Draw(batch, position);
+            
             if (FlipH)
-            {
+            {   //draw arm in front of unit
                 batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+
+                if (_unit.WeaponSprite != null)
+                {   //draw weapon behind unit
+                    _unit.WeaponSprite.FlipH = true;
+                    _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
+                }
             }
-            else
-            {
-                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
-            }
-            //draw weapon
-            if (_unit.WeaponSprite != null)
-            {
-                _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
-            }
+
         }
 
     }

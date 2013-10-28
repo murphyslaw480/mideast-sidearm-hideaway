@@ -49,7 +49,7 @@ namespace SpaceGame.states
         Unicorn[] _unicorns;
         FoodCart[] _foodCarts;
         Rectangle _levelBounds;
-        Vector2 _mousePos;
+        Vector2 _absMousePos, _relMousePos;
 
         GUI userInterface;
         Rectangle _cameraLock;
@@ -140,7 +140,8 @@ namespace SpaceGame.states
             {
                 ReplaceState = new Gamemenu(_content);
             }
-            _mousePos = input.MouseLocation;
+            _absMousePos = input.AbsoluteMousePos;
+            _relMousePos = input.RelativeMousePos;
             input.SetCameraOffset(_camera.Position);
             handleInput(input);
             _camera.Update(gameTime, _player.Position);
@@ -234,21 +235,21 @@ namespace SpaceGame.states
                 return;
 
             _player.MoveDirection = input.MoveDirection;
-            _player.LookDirection = XnaHelper.DirectionBetween(_player.Center, input.MouseLocation);
+            _player.LookDirection = XnaHelper.DirectionBetween(_player.Position, input.AbsoluteMousePos);
 
             if (_player.UnitLifeState == PhysicalUnit.LifeState.Living)
             {
                 if (input.FirePrimary)
                 {
-                    _player.TriggerWeapon(input.MouseLocation, 0);
+                    _player.TriggerWeapon(input.AbsoluteMousePos, 0);
                 }
                 else if (input.FireSecondary)
                 {
-                    _player.TriggerWeapon(input.MouseLocation, 1);
+                    _player.TriggerWeapon(input.AbsoluteMousePos, 1);
                 }
                 if (input.UseItem)
                 {
-                    _inventoryManager.CurrentItem.Use(input.MouseLocation);
+                    _inventoryManager.CurrentItem.Use(input.AbsoluteMousePos);
                 }
                 if (input.TriggerGadget1)
                 {
@@ -295,7 +296,7 @@ namespace SpaceGame.states
 
             spriteBatch.Begin();
             userInterface.draw(spriteBatch);
-			spriteBatch.Draw(s_CursorTexture, _mousePos - _cursorTextureCenter, Color.White);
+			spriteBatch.Draw(s_CursorTexture, _relMousePos - _cursorTextureCenter, Color.White);
             spriteBatch.End();
 
         }
@@ -308,7 +309,7 @@ namespace SpaceGame.states
         }
         public void TeleportAction(bool active)
         {
-            _player.Teleport(_mousePos);
+            _player.Teleport(_absMousePos);
         }
         #endregion
     }

@@ -138,11 +138,18 @@ namespace SpaceGame.utility
             get {return (currentKeyboardState.IsKeyDown(Keys.Space)
                             && previousKeyboardState.IsKeyUp(Keys.Space));}
         }
-        public Vector2 MouseLocation
+        public Vector2 AbsoluteMousePos
         {
             get 
             { 
                 return new Vector2(currentMouseState.X + _cameraOffset.X, currentMouseState.Y + _cameraOffset.Y); 
+            }
+        }
+        public Vector2 RelativeMousePos
+        {
+            get 
+            { 
+                return new Vector2(currentMouseState.X, currentMouseState.Y); 
             }
         }
         public bool Exit
