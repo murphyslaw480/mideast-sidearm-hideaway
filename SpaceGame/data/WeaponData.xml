@@ -81,8 +81,7 @@
     </ProjectileInfo>
   </ThrowableWeapon>
 
-
-  <MeleeWeapon Name="Gravity Gauntlet" 
+  <MeleeWeapon Name="Axe" 
                FireRate ="1" HitArc="30" Range="75" Damage="15" Impact="5000" Recoil="1500" 
                AttackParticleEffect="PunchWave"/>
 </Weapons>

@@ -56,6 +56,7 @@ namespace SpaceGame.graphics
         {
             get 
             {
+                if (_unit.WeaponSprite == null) { throw new Exception("Cannot ask for WeaponMuzzlePos of null WeaponSprite"); }
                 float angle = XnaHelper.RadiansFromVector(_unit.LookDirection);
                 Matrix rot = Matrix.CreateRotationZ(angle);
                 Vector2 muzzlePos = _shoulderToHand + _unit.WeaponSprite.HandleToMuzzle;
@@ -87,7 +88,10 @@ namespace SpaceGame.graphics
             base.Update(theGameTime);
 
             //update current weapon origin
-            _weaponOrigin = _unit.WeaponSprite.HandleOffset - _shoulderToHand;
+            if (_unit.WeaponSprite != null)
+            {
+                _weaponOrigin = _unit.WeaponSprite.HandleOffset - _shoulderToHand;
+            }
 
 			//update sprite based on unit's x velocity
             float velocityFactor = _unit.Velocity.X / _unit.MaxSpeed;
