@@ -82,7 +82,7 @@ namespace SpaceGame.states
                     {
                         //load game
                         //ReplaceState = new Shop(wm);
-                        ReplaceState = new Level(_content, 1, wm);
+                        ReplaceState = new Level(_content, 0, wm);
                     }
                     else if (this.Iterator == 1)
                     {

@@ -345,5 +345,11 @@ namespace SpaceGame.utility
         {
             sb.Draw(PixelTexture, rect, color);
         }
+
+        public static void DrawRect(Color color, Vector2 center, int width, int height, SpriteBatch sb)
+        {
+            Rectangle rect = new Rectangle((int)(center.X - width / 2), (int)(center.Y - height / 2), width, height);
+            sb.Draw(PixelTexture, rect, color);
+        }
     }
 }

@@ -116,6 +116,11 @@ namespace SpaceGame.units
         public float Health { get { return _health; } }
         public float MaxHealth { get { return _maxHealth; } }
         public float MaxSpeed { get { return _maxSpeed; } }
+        public Weapon CurrentWeapon { get; protected set; }
+        public WeaponSprite WeaponSprite
+        {
+            get { return CurrentWeapon == null ? null : CurrentWeapon.Sprite; }
+        }
 
         public float Mass { get { return _mass + _additionalMass; } }
         Rectangle _hitRect;
@@ -187,7 +192,6 @@ namespace SpaceGame.units
             get { return _lookDirection; }
             set { _lookDirection = Panicked ? _lookDirection : value; }
         }
-
         //behavioral properties
         public bool Collides
         {
@@ -460,7 +464,6 @@ namespace SpaceGame.units
             controlVelocity(_maxSpeed, gameTime.ElapsedGameTime);
             _sprite.Angle += _angularVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            LookDirection = Vector2.Zero;
             MoveDirection = Vector2.Zero;
             _acceleration = Vector2.Zero;
 
@@ -690,6 +693,15 @@ namespace SpaceGame.units
                 _sprite.DrawIce(sb, tempRec, _sprite.Angle, _statusEffects.Cryo / MAX_STAT_EFFECT);
             }
         }
+
+        public virtual void TriggerWeapon(Vector2 target, int num = 0)
+        {
+            if (CurrentWeapon != null)
+            {
+                CurrentWeapon.Trigger(_sprite.WeaponMuzzlePos, target);
+            }
+        }
+
         #endregion
         #endregion
     }

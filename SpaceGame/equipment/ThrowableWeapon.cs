@@ -20,7 +20,7 @@ namespace SpaceGame.equipment
         public static Dictionary<string, ThrowableWeaponData> DataDict;
 
         public ThrowableWeapon(string name, PhysicalUnit owner)
-            : base(DataDict[name], owner)
+            : base(DataDict[name], owner, null)
         {
             _maxAmmo = DataDict[name].UsesPerStack;
             NumUses = _maxAmmo;

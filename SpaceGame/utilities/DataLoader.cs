@@ -63,6 +63,10 @@ namespace SpaceGame.utility
             {
                 string fieldName = at.Name.LocalName;
                 System.Reflection.FieldInfo p = dataType.GetField(fieldName);
+				if (p == null) 
+                {
+                    throw new Exception(String.Format("DataLoader could not parse {0} from {1}", fieldName, el.Name));
+                }
                 dataType.GetField(fieldName).SetValue(data, Convert.ChangeType(at.Value, p.FieldType));
             }
 

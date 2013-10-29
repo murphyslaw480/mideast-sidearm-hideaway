@@ -12,9 +12,11 @@ namespace SpaceGame.graphics
     class Sprite
     {
         #region constant
-        const string c_SpritePath = "spritesheets/";
-        const string c_unitSpritePath = "spritesheets/units/";
-        const string c_projectileSpritePath = "spritesheets/projectiles/";
+        protected const string c_SpritePath = "spritesheets/";
+        protected const string c_unitSpritePath = "spritesheets/units/";
+        protected const string c_projectileSpritePath = "spritesheets/projectiles/";
+        protected const string c_weaponSpritePath = "spritesheets/weapons/";
+
         const float ICE_OPACITY_FACTOR = 0.5f;
         //time it takes to complete a teleport
         const float c_teleportTime = 0.25f;
@@ -27,7 +29,8 @@ namespace SpaceGame.graphics
         {
             None,
             Unit,
-            Projectile
+            Projectile,
+            Weapon
         }
         public static ContentManager Content;
         static Rectangle tempRect;   //temporary rectangle for cross instance use
@@ -79,7 +82,9 @@ namespace SpaceGame.graphics
         //2Darray of rects to select from sprite sheet
         Rectangle[,] _rects;
         //origin used for rotation
-        Vector2 _textureCenter;
+        Vector2 _origin;
+		//whether to loop animation
+        bool _loopAnimation;
 
         //for Flash(Color, Time)
         Color _flashColor;
@@ -111,9 +116,10 @@ namespace SpaceGame.graphics
             }
         }
 
-        public Vector2 TextureCenter
+        public Vector2 Origin
         {
-            get { return _textureCenter; }
+            get { return _origin; }
+            protected set { _origin = value; }
         }
 
         //scale relative to default scale
@@ -153,16 +159,15 @@ namespace SpaceGame.graphics
         #endregion properties
 
         #region methods
-        /// <summary>
-        /// Create a new animated sprite
-        /// </summary>
-        /// <param name="spriteName">key used to find sprite data in SpriteData Dictionary</param>
         public Sprite(string spriteName, SpriteType type = SpriteType.None)
+            : this(Data[spriteName], type)
+        { }
+
+        protected Sprite(SpriteData spriteData, SpriteType type = SpriteType.None)
         {
-            SpriteData spriteData = Data[spriteName];
             _frameWidth = spriteData.FrameWidth; 
             _frameHeight = spriteData.FrameHeight;
-            _textureCenter = new Vector2(_frameWidth / 2.0f, _frameHeight / 2.0f);
+            _origin = new Vector2(_frameWidth / 2.0f, _frameHeight / 2.0f);
             _framesPerAnimation = spriteData.NumFrames;
             _numStates = spriteData.NumStates;
             _defaultScale = spriteData.DefaultScale;
@@ -179,6 +184,9 @@ namespace SpaceGame.graphics
                     break;
                 case SpriteType.Unit:
                     _spriteSheet = Content.Load<Texture2D>(c_unitSpritePath + spriteData.AssetName);
+                    break;
+                case SpriteType.Weapon:
+                    _spriteSheet = Content.Load<Texture2D>(c_weaponSpritePath + spriteData.AssetName);
                     break;
                 default:
                     _spriteSheet = Content.Load<Texture2D>(c_SpritePath + spriteData.AssetName);
@@ -225,7 +233,14 @@ namespace SpaceGame.graphics
             _timeTillNext -= theGameTime.ElapsedGameTime;
 
             if (Animating && _timeTillNext <= TimeSpan.Zero && _currentFrame == _framesPerAnimation - 1)
-                AnimationOver = true;
+            {
+				if (!_loopAnimation)
+                {
+                    AnimationOver = true;
+                    Animating = false;
+                    _currentFrame = 0;
+                }
+            }
 
             if (_timeTillNext < TimeSpan.Zero)
             {
@@ -261,10 +276,11 @@ namespace SpaceGame.graphics
             }
         }
 
-        public void PlayAnimation(int animationNumber)
+        public void PlayAnimation(int animationNumber, bool loop)
         {
             Animating = true;
             AnimationOver = false;
+            _loopAnimation = loop;
             AnimationState = animationNumber % _numStates;
             _currentFrame = 0;
         }
@@ -283,12 +299,17 @@ namespace SpaceGame.graphics
             _halfFlashTime = TimeSpan.FromSeconds(timePerFlash.TotalSeconds / 2);
         }
 
-        public void Draw(SpriteBatch batch, Vector2 position)
+        public virtual void Draw(SpriteBatch batch, Vector2 position)
         {
-            Draw(batch, position, _angle);
+            Draw(batch, position, _angle, _origin);
         }
 
-        public void Draw(SpriteBatch batch, Vector2 position, float rotation)
+        public virtual void Draw(SpriteBatch batch, Vector2 position, float rotation)
+        {
+            Draw(batch, position, rotation, _origin);
+        }
+
+        public virtual void Draw(SpriteBatch batch, Vector2 position, float rotation, Vector2 origin)
         {
             SpriteEffects effects = (FlipH ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (FlipV ? SpriteEffects.FlipVertically : SpriteEffects.None);
             if (_teleportTimer > 0)
@@ -299,7 +320,7 @@ namespace SpaceGame.graphics
                 tempRect.X = (int)(_teleportStartPos.X);
                 tempRect.Y = (int)(_teleportStartPos.Y);
 
-                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _textureCenter, effects, _zLayer);
+                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, origin, effects, _zLayer);
                     
                 //draw current location
                 tempRect.Width = (int)(Width * (1 - _teleportTimer / c_teleportTime));   //width grows back to normal
@@ -307,11 +328,11 @@ namespace SpaceGame.graphics
                 tempRect.X = (int)(position.X);
                 tempRect.Y = (int)(position.Y);
 
-                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, _textureCenter, effects, _zLayer);
+                batch.Draw(_spriteSheet, tempRect, _rects[_currentState, _currentFrame], Shade, rotation, origin, effects, _zLayer);
             }
             else
             {
-                batch.Draw(_spriteSheet, position, _rects[_currentState, _currentFrame], Shade, rotation, _textureCenter,
+                batch.Draw(_spriteSheet, position, _rects[_currentState, _currentFrame], Shade, rotation, origin,
                     Scale, effects, _zLayer);
             }
         }
@@ -324,7 +345,7 @@ namespace SpaceGame.graphics
             tempRect.Width /= numDivisions;
             tempRect.Height /= numDivisions;
             batch.Draw(_spriteSheet, drawRect, tempRect, Color.Lerp(Color.Transparent, Color.White, opacity),
-                angle, _textureCenter / numDivisions, SpriteEffects.None, _zLayer);
+                angle, _origin / numDivisions, SpriteEffects.None, _zLayer);
         }
 
         public void DrawIce(SpriteBatch batch, Rectangle rect, float angle, float opacity)
@@ -333,9 +354,6 @@ namespace SpaceGame.graphics
                 Color.Lerp(Color.Transparent, Color.White, opacity * ICE_OPACITY_FACTOR),
                 angle, iceCubeTextureCenter, SpriteEffects.None, 0);
         }
-
         #endregion
-
     }
-
 }

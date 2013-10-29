@@ -205,8 +205,14 @@ namespace SpaceGame.units
 
                 _enemies[i].Update(gameTime, player.Position, Vector2.Zero, _levelBounds);
                 blackHole.ApplyToUnit(_enemies[i], gameTime);
-                weapon1.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
-                weapon2.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
+                if (weapon1 != null)
+                {
+                    weapon1.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
+                }
+                if (weapon2 != null)
+                {
+                    weapon2.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
+                }
                 inventory.CheckCollisions(gameTime, _enemies[i]);
             }
             //stay active unless it is not a trickle wave and all enemies are destroyed

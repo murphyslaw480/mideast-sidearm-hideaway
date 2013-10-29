@@ -43,7 +43,7 @@ namespace SpaceGame.equipment
         #endregion
 
         #region properties
-        public float Range { get { return _range; } }
+        public override float Range { get { return _range; } }
         #endregion
 
         #region constructor
@@ -52,7 +52,7 @@ namespace SpaceGame.equipment
         { }
 
         protected MeleeWeapon(MeleeWeaponData data, PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner)
+            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner, data.Name)
         {
             _damage = data.Damage;
             _force = data.Impact;

@@ -23,6 +23,16 @@ namespace SpaceGame.equipment
         #endregion
 
         #region properties
+        public override float Range
+        {
+            get 
+            { 
+				float v = _projectileInfo.Speed;
+				float a = _projectileInfo.Acceleration;
+				float t = _projectileInfo.SecondsToLive;
+                return 0.5f * a * (float)Math.Pow(t,2) + v * t; 
+            }
+        } 
         #endregion
 
         #region fields
@@ -39,11 +49,11 @@ namespace SpaceGame.equipment
 
         #region constructor
         public ProjectileWeapon(string name, PhysicalUnit owner)
-            : this(DataDict[name], owner)
+            : this(DataDict[name], owner, name)
         { }
 
-        protected ProjectileWeapon(ProjectileWeaponData data, PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner)
+        protected ProjectileWeapon(ProjectileWeaponData data, PhysicalUnit owner, string spriteName)
+            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner, spriteName)
         {
             _name = data.Name;
             _projectilesPerFire = data.ProjectilesPerFire;
@@ -98,7 +108,7 @@ namespace SpaceGame.equipment
                 {
                     float rotAngle = XnaHelper.RandomAngle(0, _spread);
                     Matrix.CreateRotationZ(MathHelper.ToRadians(rotAngle), out tempMatrix);
-                    p.Initialize(_owner.Position, Vector2.Transform(_fireDirection, tempMatrix),
+                    p.Initialize(_fireLocation, Vector2.Transform(_fireDirection, tempMatrix),
                         _projectileInfo, _targetDestination, _owner.Velocity,
                         _contactEffect, _destinationEffect,
                         _proximityEffect);

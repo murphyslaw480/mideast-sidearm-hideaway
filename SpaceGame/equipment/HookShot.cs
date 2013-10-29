@@ -21,6 +21,11 @@ namespace SpaceGame.equipment
         const float HOOK_FORCE = 12000.0f;
         const float FIRE_DELAY = 0.5f;
 
+        public override float Range
+        {
+            get { return MAX_RANGE; }
+        }
+
         #region fields
         enum HookState
         {
@@ -46,8 +51,8 @@ namespace SpaceGame.equipment
             :base(TimeSpan.FromSeconds(FIRE_DELAY), owner)
         {
             _hookState = HookState.Idle;
-            _hookSprite = new Sprite("HookClaw", Sprite.SpriteType.Projectile);
-            _chainSprite = new Sprite("HookChain", Sprite.SpriteType.Projectile);
+            _hookSprite = new Sprite("HookClaw", SpaceGame.graphics.Sprite.SpriteType.Projectile);
+            _chainSprite = new Sprite("HookChain", SpaceGame.graphics.Sprite.SpriteType.Projectile);
             _hookHitRect = new Rectangle(0, 0, (int)_hookSprite.Width, (int)_hookSprite.Height);
         }
         #endregion

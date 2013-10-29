@@ -44,13 +44,12 @@ namespace SpaceGame.states
         Spaceman _player;
         InventoryManager _inventoryManager;
         BlackHole _blackHole;
-        Weapon _primaryWeapon, _secondaryWeapon;
         Gadget _primaryGadget, _secondaryGadget;
         Wave[] _waves;
         Unicorn[] _unicorns;
         FoodCart[] _foodCarts;
         Rectangle _levelBounds;
-        Vector2 _mousePos;
+        Vector2 _absMousePos, _relMousePos;
 
         Hud userInterface;
         Rectangle _cameraLock;
@@ -83,15 +82,9 @@ namespace SpaceGame.states
                 _waves[i + data.TrickleWaveData.Length] = new Wave(data.BurstWaveData[i], false, _levelBounds);
             }
             //Test code to set weapons 1-6 to created weapons
-            im.setPrimaryWeapon(new ProjectileWeapon("Rocket", _player));
-            im.setSecondaryWeapon(new ThrowableWeapon("Cryonade", _player));
             im.setPrimaryGadget(new Gadget("Teleporter", this));
             im.setSecondaryGadget(new Gadget("Stopwatch", this));
             im.setSlot(1, new ThrowableWeapon("Cryonade", _player));
-
-            //Set Weapon holders in level
-            _primaryWeapon = im.getPrimaryWeapon();
-            _secondaryWeapon = im.getSecondaryWeapon();
 
             _unicorns = new Unicorn[data.Unicorns.Length];
             for (int j = 0; j < data.Unicorns.Length; j++)
@@ -108,7 +101,8 @@ namespace SpaceGame.states
             userInterface = new Hud(_player, _blackHole, _waves);
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
-            selectRandomWeapons();
+            _player.PrimaryWeapon = new ProjectileWeapon("RocketLauncher", _player);
+            //selectRandomWeapons();
 			/*
             Song song = content.Load<Song>("music/gravitational_conflict");
             MediaPlayer.Play(song);
@@ -129,10 +123,8 @@ namespace SpaceGame.states
                 new ProjectileWeapon("Shotgun", _player),
                 new ProjectileWeapon("Gatling", _player),
                 new ProjectileWeapon("Flamethrower", _player),
-                new ProjectileWeapon("Rocket", _player),
+                new ProjectileWeapon("RocketLauncher", _player),
             };
-            _primaryWeapon = weapons[rand1];
-            _secondaryWeapon = weapons[rand2];
         }
         #endregion
 
@@ -148,7 +140,8 @@ namespace SpaceGame.states
             {
                 ReplaceState = new Gamemenu(_content);
             }
-            _mousePos = input.MouseLocation;
+            _absMousePos = input.AbsoluteMousePos;
+            _relMousePos = input.RelativeMousePos;
             input.SetCameraOffset(_camera.Position);
             handleInput(input);
             _camera.Update(gameTime, _player.Position);
@@ -194,7 +187,7 @@ namespace SpaceGame.states
           
             for (int i = 0; i < _waves.Length; i++)
             {
-                _waves[i].Update(gameTime, _player, _blackHole, _primaryWeapon, _secondaryWeapon, _inventoryManager, _unicorns);
+                _waves[i].Update(gameTime, _player, _blackHole, _player.PrimaryWeapon, _player.SecondaryWeapon, _inventoryManager, _unicorns);
                 //check cross-wave collisions
                 if (_waves[i].Active)
                 {
@@ -219,15 +212,16 @@ namespace SpaceGame.states
             for (int i = 0; i < _foodCarts.Length; i++)
             {
                 _foodCarts[i].Update(gameTime, _levelBounds, _blackHole.Position);
-                _primaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
-                _secondaryWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
+                _player.CurrentWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
                 _inventoryManager.CheckCollisions(gameTime, _foodCarts[i]);
                 _blackHole.ApplyToUnit(_foodCarts[i], gameTime);
             }
 
             //Update Weapons 
-            _primaryWeapon.Update(gameTime);
-            _secondaryWeapon.Update(gameTime);
+            if (_player.CurrentWeapon != null)
+            {
+                _player.CurrentWeapon.Update(gameTime);
+            }
             //update all items
             _inventoryManager.Update(gameTime, input);
         }
@@ -241,21 +235,21 @@ namespace SpaceGame.states
                 return;
 
             _player.MoveDirection = input.MoveDirection;
-            _player.LookDirection = XnaHelper.DirectionBetween(_player.Center, input.MouseLocation);
+            _player.LookDirection = XnaHelper.DirectionBetween(_player.Position, input.AbsoluteMousePos);
 
             if (_player.UnitLifeState == PhysicalUnit.LifeState.Living)
             {
                 if (input.FirePrimary)
                 {
-                    _primaryWeapon.Trigger(_player.Position, input.MouseLocation);
+                    _player.TriggerWeapon(input.AbsoluteMousePos, 0);
                 }
                 else if (input.FireSecondary)
                 {
-                    _secondaryWeapon.Trigger(_player.Position, input.MouseLocation);
+                    _player.TriggerWeapon(input.AbsoluteMousePos, 1);
                 }
                 if (input.UseItem)
                 {
-                    _inventoryManager.CurrentItem.Use(input.MouseLocation);
+                    _inventoryManager.CurrentItem.Use(input.AbsoluteMousePos);
                 }
                 if (input.TriggerGadget1)
                 {
@@ -275,8 +269,10 @@ namespace SpaceGame.states
             
             _blackHole.Draw(spriteBatch);
             _player.Draw(spriteBatch);
-            _primaryWeapon.Draw(spriteBatch);
-            _secondaryWeapon.Draw(spriteBatch);
+            if (_player.CurrentWeapon != null)
+            {
+                _player.CurrentWeapon.Draw(spriteBatch);
+            }
             if (_inventoryManager.CurrentItem != null)
             {
                 _inventoryManager.CurrentItem.Draw(spriteBatch);
@@ -300,7 +296,7 @@ namespace SpaceGame.states
 
             spriteBatch.Begin();
             userInterface.draw(spriteBatch);
-			spriteBatch.Draw(s_CursorTexture, _mousePos - _cursorTextureCenter, Color.White);
+			spriteBatch.Draw(s_CursorTexture, _relMousePos - _cursorTextureCenter, Color.White);
             spriteBatch.End();
 
         }
@@ -313,7 +309,7 @@ namespace SpaceGame.states
         }
         public void TeleportAction(bool active)
         {
-            _player.Teleport(_mousePos);
+            _player.Teleport(_absMousePos);
         }
         #endregion
     }
