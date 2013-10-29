@@ -77,7 +77,10 @@ namespace SpaceGame.equipment
                 _tillNextFire = _fireDelay;
 
 				//animate fire
-                Sprite.PlayAnimation(0, false);
+                if (Sprite != null)
+                {
+                    Sprite.PlayAnimation(0, false);
+                }
                 return true;
             }
             return false;
