@@ -22,13 +22,13 @@
   <WeaponSpriteData Name="Gatling" AssetName="Gatling_Gun" 
                     FrameWidth="28" FrameHeight="54" NumFrames="1" NumStates="1" 
                     DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
-			              HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
+			              HandleX="18" HandleY="40" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
 
   <WeaponSpriteData Name="Flamethrower" AssetName="Flamethrower" 
                     FrameWidth="25" FrameHeight="60" NumFrames="1" NumStates="1" 
                     DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
-			              HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
+			              HandleX="12" HandleY="51" MuzzleX="8" MuzzleY="10">
   </WeaponSpriteData>
 
   <WeaponSpriteData Name="Shotgun" AssetName="Shotgun" 
