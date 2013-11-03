@@ -41,6 +41,7 @@ namespace SpaceGame.equipment
         float _spread;
         ProjectileData _projectileInfo;
         ParticleEffect _fireParticleEffect;
+        ParticleEffect _shellParticleEffect;
         Projectile[] _projectiles;
         ProjectileEffect _contactEffect;
         ProjectileEffect _proximityEffect;
@@ -69,6 +70,10 @@ namespace SpaceGame.equipment
 
             _fireParticleEffect = data.FireParticleEffectName == null ? 
                 null : new ParticleEffect(data.FireParticleEffectName);
+
+            _shellParticleEffect = data.ShellParticleEffectName == null ? 
+                null : new ParticleEffect(data.ShellParticleEffectName);
+
             float maxProjLife = data.ProjectileInfo.SecondsToLive +
                 Math.Max((float)_contactEffect.Duration.TotalSeconds, (float)_destinationEffect.Duration.TotalSeconds);
             float maxProjectiles = data.FireRate * maxProjLife * data.ProjectilesPerFire;
@@ -131,12 +136,33 @@ namespace SpaceGame.equipment
                 }
                 _fireParticleEffect.Update(gameTime);
             }
+
+            if (_shellParticleEffect != null)
+            {
+                if (_firing)
+                {
+                    //spawn shells halfway between owner and muzzle
+                    Vector2 spawnShellLocation = (_fireLocation + _owner.Position) / 2;
+                    _shellParticleEffect.Spawn(
+                        spawnShellLocation, XnaHelper.DegreesFromVector(_fireDirection),
+                        gameTime.ElapsedGameTime, _owner.Velocity);
+                }
+                _shellParticleEffect.Update(gameTime);
+            }
         }
 
+        /// <summary>
+        /// Draw the projectiles and particle effects of the weapon
+        /// Drawing of the WeaponSprite is handled by UnitSprite
+        /// </summary>
+        /// <param name="sb"></param>
         public override void Draw(SpriteBatch sb)
         {
             if (_fireParticleEffect != null)
                 _fireParticleEffect.Draw(sb);
+
+            if (_shellParticleEffect != null)
+                _shellParticleEffect.Draw(sb);
 
             _contactEffect.Draw(sb);
             _proximityEffect.Draw(sb);
@@ -157,7 +183,8 @@ namespace SpaceGame.equipment
         public float Spread;
         public int ProjectilesPerFire;
         public ProjectileData ProjectileInfo;
-        public string FireParticleEffectName;
+        public string FireParticleEffectName;   //particle effect that exits barrel
+        public string ShellParticleEffectName;  //particle effect for ejected shell
     }
 
 }
