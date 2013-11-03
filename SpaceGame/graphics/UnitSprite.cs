@@ -135,7 +135,7 @@ namespace SpaceGame.graphics
                     _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
                 }
 
-                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.FlipHorizontally, 0);
             }
 
         }
