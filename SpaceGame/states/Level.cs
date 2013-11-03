@@ -101,7 +101,8 @@ namespace SpaceGame.states
             userInterface = new Hud(_player, _blackHole, _waves);
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
-            _player.PrimaryWeapon = new ProjectileWeapon("RocketLauncher", _player);
+            _player.PrimaryWeapon = new ProjectileWeapon("Shotgun", _player);
+            _player.SecondaryWeapon = new ProjectileWeapon("Gatling", _player);
             //selectRandomWeapons();
 			/*
             Song song = content.Load<Song>("music/gravitational_conflict");
@@ -220,7 +221,8 @@ namespace SpaceGame.states
             //Update Weapons 
             if (_player.CurrentWeapon != null)
             {
-                _player.CurrentWeapon.Update(gameTime);
+                _player.PrimaryWeapon.Update(gameTime);
+                _player.SecondaryWeapon.Update(gameTime);
             }
             //update all items
             _inventoryManager.Update(gameTime, input);
