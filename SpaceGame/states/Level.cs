@@ -273,7 +273,8 @@ namespace SpaceGame.states
             _player.Draw(spriteBatch);
             if (_player.CurrentWeapon != null)
             {
-                _player.CurrentWeapon.Draw(spriteBatch);
+                _player.PrimaryWeapon.Draw(spriteBatch);
+                _player.SecondaryWeapon.Draw(spriteBatch);
             }
             if (_inventoryManager.CurrentItem != null)
             {
