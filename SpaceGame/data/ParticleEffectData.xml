@@ -14,13 +14,17 @@
 <ParticleEffectDatas>
   <!--Particle Effects-->
 
-  <ParticleEffectData Name="GatlingEffect">
+  <ParticleEffectData Name="GatlingFireEffect">
     <ParticleGenerator Name="Sparks" StartColor="128,255,255,0" Offset="0"/>
+  </ParticleEffectData>
+  <ParticleEffectData Name="GatlingShellEffect">
     <ParticleGenerator Name="EmptyShells" StartColor="255,255,255,255" Offset="180"/>
   </ParticleEffectData>
 
-  <ParticleEffectData Name="ShotgunEffect">
+  <ParticleEffectData Name="ShotgunFireEffect">
     <ParticleGenerator Name="Sparks" SpawnRate="3600" Speed="1000" StartColor="128,255,255,0" Offset="0"/>
+  </ParticleEffectData>
+  <ParticleEffectData Name="ShotgunShellEffect">
     <ParticleGenerator Name="EmptyShells" SpawnRate="60" StartColor="255,255,255,255" StartScale="5" Offset="180" ParticleRotation="100"/>
   </ParticleEffectData>
 
@@ -167,9 +171,9 @@
                       Reversed="False"/>
 
   <ParticleGeneratorData Name="EmptyShells" 
-                      Speed="300.0" SpeedVariance="0.3" DecelerationFactor="0.5" ParticleRotation="500.0" 
+                      Speed="500.0" SpeedVariance="0.3" DecelerationFactor="0.7" ParticleRotation="500.0" 
                       StartScale ="3.0" ScaleVariance="0.3" EndScale="0.0" 
-                      SpawnArc="90" SpawnRate="20" ParticleLife="1.0" ParticleLifeVariance="0.8"
+                      SpawnArc="90" SpawnRate="20" ParticleLife="0.8" ParticleLifeVariance="0.8"
                       StartColor="255,255,255,0" EndColor ="0,0,0,0"
                       UniqueParticle="EmptyShell"
                       Reversed="False"/>

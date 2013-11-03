@@ -12,10 +12,31 @@
     <SpriteArmData Name="basic_arm" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-25"/>
   </UnitSpriteData>
 
-  <WeaponSpriteData Name="RocketLauncher" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
-              SecondsPerAnimation="0.25" ZLayer="0" 
-			  HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
+  <!-- Projectile Weapon Sprites-->
+  <WeaponSpriteData Name="RocketLauncher" AssetName="Rocket_Launcher" 
+                    FrameWidth="31" FrameHeight="64" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Gatling" AssetName="Gatling_Gun" 
+                    FrameWidth="28" FrameHeight="54" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Flamethrower" AssetName="Flamethrower" 
+                    FrameWidth="25" FrameHeight="60" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Shotgun" AssetName="Shotgun" 
+                    FrameWidth="18" FrameHeight="57" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="8" HandleY="36" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+  <!-- Projectile Weapon Sprites-->
 
   <WeaponSpriteData Name="Axe" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
               SecondsPerAnimation="0.25" ZLayer="0" 
