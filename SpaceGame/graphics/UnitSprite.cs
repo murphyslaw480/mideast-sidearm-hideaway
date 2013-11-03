@@ -114,27 +114,28 @@ namespace SpaceGame.graphics
             _absShoulderPos = position + _unitShoulderOffset;
 
             if (!FlipH)
-            {   //draw arm behind unit
-                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
-
+            {   //draw arm and weapon behind unit
                 if (_unit.WeaponSprite != null)
                 {   //draw weapon behind unit
                     _unit.WeaponSprite.FlipH = false;
                     _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
                 }
+
+                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
             }
 
             base.Draw(batch, position);
             
             if (FlipH)
-            {   //draw arm in front of unit
-                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
+            {   //draw arm and weapon in front of unit
 
                 if (_unit.WeaponSprite != null)
                 {   //draw weapon behind unit
                     _unit.WeaponSprite.FlipH = true;
                     _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
                 }
+
+                batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.None, 0);
             }
 
         }
