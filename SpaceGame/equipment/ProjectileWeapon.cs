@@ -126,7 +126,7 @@ namespace SpaceGame.equipment
                 if (_firing)
                 {
                     _fireParticleEffect.Spawn(
-                        _owner.Position, XnaHelper.DegreesFromVector(_fireDirection),
+                        _fireLocation, XnaHelper.DegreesFromVector(_fireDirection),
                         gameTime.ElapsedGameTime, _owner.Velocity);
                 }
                 _fireParticleEffect.Update(gameTime);
