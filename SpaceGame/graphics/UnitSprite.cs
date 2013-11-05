@@ -39,11 +39,12 @@ namespace SpaceGame.graphics
          */
 
         Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset;    //unit arm positioning vectors
-        Vector2 _unitHipOffset, _flippedUnitHipOffset, _legOrigin;  //unit hip leg vectors
+        Vector2 _unitHipOffset, _flippedUnitHipOffset;              //unit hip vectors
+        Vector2 _legOrigin, _flippedLegOrigin;                      //leg vectors
         Vector2 _shoulderToHand, _armShoulderPos;                   //arm vectors
         Vector2 _absShoulderPos, _absHipPos;                        //absolute shoulder/leg draw position. dynamic
         Vector2 _weaponOrigin;                                      //weapon vectors
-        float _legAngle;                            //angle of legs based on velocity
+        float _legAngle;                                            //angle of legs based on velocity
 
         public override int AnimationState
         {
@@ -89,11 +90,11 @@ namespace SpaceGame.graphics
             _armShoulderPos = new Vector2(data.SpriteArmData.ShoulderX, data.SpriteArmData.ShoulderY);
             _shoulderToHand = new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
             //leg positioning
+            _legTexture = Content.Load<Texture2D>(c_legSpritePath + data.SpriteLegData.Name);
             _unitHipOffset = new Vector2(data.HipX, data.HipY);
             _flippedUnitHipOffset = new Vector2(-data.HipX, data.HipY);
             _legOrigin = new Vector2(data.SpriteLegData.HipX, data.SpriteLegData.HipY);
-            _legTexture = Content.Load<Texture2D>(c_legSpritePath + data.SpriteLegData.Name);
-
+            _flippedLegOrigin = new Vector2(_legTexture.Width - data.SpriteLegData.HipX, data.SpriteLegData.HipY);
         }
 
         public UnitSprite(string name, PhysicalUnit unit)
@@ -113,7 +114,7 @@ namespace SpaceGame.graphics
 			//angle legs based on velocity
             _legAngle = _unit.Velocity.X * c_legVelFactor;
 
-			//cap let rotation
+			//cap leg rotation
             _legAngle = MathHelper.Clamp(_legAngle, -c_maxLegAngle, c_maxLegAngle);
         }
 
@@ -122,10 +123,10 @@ namespace SpaceGame.graphics
             SpriteEffects spriteEffect = FlipH ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             float aimAngle = XnaHelper.RadiansFromVector(_unit.LookDirection);
             _absShoulderPos = position + _unitShoulderOffset;
-            _absHipPos = position + _unitHipOffset;
+            _absHipPos = position + (FlipH ? _flippedUnitHipOffset : _unitHipOffset);
 
             //draw leg
-            batch.Draw(_legTexture, _absHipPos, null, Color.White, _legAngle, _legOrigin, Scale, spriteEffect, 0);
+            batch.Draw(_legTexture, _absHipPos, null, Color.White, _legAngle, (FlipH ? _flippedLegOrigin : _legOrigin), Scale, spriteEffect, 0);
 
             if (!FlipH)
             {   //draw arm and weapon, and 
@@ -152,7 +153,7 @@ namespace SpaceGame.graphics
                 batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, spriteEffect, 0);
             }
 
-                XnaHelper.DrawRect(Color.Red, _absHipPos, 5, 5, batch);
+            XnaHelper.DrawRect(Color.Red, _absHipPos, 5, 5, batch);
         }
 
     }
