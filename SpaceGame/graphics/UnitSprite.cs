@@ -60,6 +60,10 @@ namespace SpaceGame.graphics
                 float angle = XnaHelper.RadiansFromVector(_unit.LookDirection);
                 Matrix rot = Matrix.CreateRotationZ(angle);
                 Vector2 muzzlePos = _shoulderToHand + _unit.WeaponSprite.HandleToMuzzle;
+                if (FlipH)
+                {
+                    muzzlePos.X *= -1;
+                }
                 return _absShoulderPos + Vector2.Transform(muzzlePos, rot);
             }
         }

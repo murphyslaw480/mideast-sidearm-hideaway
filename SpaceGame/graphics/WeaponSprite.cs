@@ -12,7 +12,29 @@ namespace SpaceGame.graphics
     {
 		public static Dictionary<string,WeaponSpriteData> WeaponSpriteData;
 
-		public Vector2 HandleOffset, HandleToMuzzle;
+        private Vector2 _handleOffset;
+        public Vector2 HandleOffset
+        {
+            get 
+            {
+                if (FlipH)
+                {
+                    return new Vector2(FrameWidth - _handleOffset.X, _handleOffset.Y);
+                }
+                return _handleOffset; 
+            }
+            set { _handleOffset = value; }
+        }
+
+        private Vector2 _handleToMuzzle;
+        public Vector2 HandleToMuzzle
+        {
+            get 
+            {
+                return _handleToMuzzle; 
+            }
+            set { _handleToMuzzle = value; }
+        }
 
         public WeaponSprite(string name)
 			:this(WeaponSpriteData[name])
