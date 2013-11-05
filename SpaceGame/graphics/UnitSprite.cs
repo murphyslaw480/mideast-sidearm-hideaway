@@ -12,10 +12,11 @@ namespace SpaceGame.graphics
     class UnitSprite : Sprite
     {
         protected const string c_armSpritePath = c_unitSpritePath + "arms/";
+        protected const string c_legSpritePath = c_unitSpritePath + "legs/";
 
         public static Dictionary<string, UnitSpriteData> UnitSpriteData;
         PhysicalUnit _unit;
-        Texture2D _armTexture;
+        Texture2D _armTexture, _legTexture;
 
         /* Explaination of these crazy vectors
          * 
@@ -35,9 +36,10 @@ namespace SpaceGame.graphics
          * _weaponOrigin = Weapon.Handle - shoulderToHand
          */
 
-        Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset;    //unit vectors
+        Vector2 _unitShoulderOffset, _flippedUnitShoulderOffset;    //unit arm positioning vectors
+        Vector2 _unitHipOffset, _flippedUnitHipOffset, _legOrigin;  //unit hip leg vectors
         Vector2 _shoulderToHand, _armShoulderPos;                   //arm vectors
-        Vector2 _absShoulderPos;             //absolute shoulder draw position. dynamic
+        Vector2 _absShoulderPos, _absHipPos;                        //absolute shoulder/leg draw position. dynamic
         Vector2 _weaponOrigin;                                      //weapon vectors
 
         public override int AnimationState
@@ -76,11 +78,19 @@ namespace SpaceGame.graphics
             {
                 throw new Exception(String.Format("UnitSprite {0} has an even number of states along the horizontal axis", data.Name));
             }
+            //shoulder positioning
             _unitShoulderOffset = new Vector2(data.ShoulderX, data.ShoulderY);
             _flippedUnitShoulderOffset = new Vector2(-data.ShoulderX, data.ShoulderY);
             _armTexture = Content.Load<Texture2D>(c_armSpritePath + data.SpriteArmData.Name);
+            //hand/weapon positioning
             _armShoulderPos = new Vector2(data.SpriteArmData.ShoulderX, data.SpriteArmData.ShoulderY);
             _shoulderToHand = new Vector2(data.SpriteArmData.HandX, data.SpriteArmData.HandY);
+            //leg positioning
+            _unitHipOffset = new Vector2(data.HipX, data.HipY);
+            _flippedUnitHipOffset = new Vector2(-data.HipX, data.HipY);
+            _legOrigin = new Vector2(data.SpriteLegData.HipX, data.SpriteLegData.HipY);
+            _legTexture = Content.Load<Texture2D>(c_legSpritePath + data.SpriteLegData.Name);
+
         }
 
         public UnitSprite(string name, PhysicalUnit unit)
@@ -116,9 +126,12 @@ namespace SpaceGame.graphics
         {
             float aimAngle = XnaHelper.RadiansFromVector(_unit.LookDirection);
             _absShoulderPos = position + _unitShoulderOffset;
+            _absHipPos = position + _unitHipOffset;
 
             if (!FlipH)
-            {   //draw arm and weapon behind unit
+            {   //draw arm and weapon, and legbehind unit
+                batch.Draw(_legTexture, _absHipPos, null, Color.White, aimAngle, _legOrigin, Scale, SpriteEffects.None, 0);
+
                 if (_unit.WeaponSprite != null)
                 {   //draw weapon behind unit
                     _unit.WeaponSprite.FlipH = false;
@@ -131,7 +144,9 @@ namespace SpaceGame.graphics
             base.Draw(batch, position);
             
             if (FlipH)
-            {   //draw arm and weapon in front of unit
+            {   //draw arm and weapon in front of unit, leg still behind
+
+                batch.Draw(_legTexture, _absHipPos, null, Color.White, aimAngle, _legOrigin, Scale, SpriteEffects.FlipHorizontally, 0);
 
                 if (_unit.WeaponSprite != null)
                 {   //draw weapon behind unit
@@ -142,21 +157,30 @@ namespace SpaceGame.graphics
                 batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, SpriteEffects.FlipHorizontally, 0);
             }
 
+                XnaHelper.DrawRect(Color.Red, _absHipPos, 5, 5, batch);
         }
 
     }
 
     class UnitSpriteData : SpriteData
     {
-        public int ShoulderX, ShoulderY; //where to anchor arm sprite
+        public int ShoulderX, ShoulderY;    //where to anchor arm sprite
+        public int HipX, HipY;              //where to anchor leg sprite
         public SpriteArmData SpriteArmData;
+        public SpriteLegData SpriteLegData;
     }
 
 	class SpriteArmData
     {
         public string Name;					//name of texture to use as arm
         public int ShoulderX, ShoulderY;	//place to anchor to unitsprite's shoulder
-        public int HandX, HandY;		//place to anchor weapon handle
+        public int HandX, HandY;		    //place to anchor weapon handle
+    }
+
+	class SpriteLegData
+    {
+        public string Name;					//name of texture to use as leg
+        public int HipX, HipY;	            //place to anchor to unitsprite's hip
     }
 
 }
