@@ -66,6 +66,10 @@ namespace SpaceGame.graphics
         /// If ommitted, uses blank pixel
         /// </summary>
         public string UniqueParticle;
+        /// <summary>
+        /// Reference to texture to draw under particles
+        /// </summary>
+        public string BaseTexture;
     }
 
     public class ParticleGenerator
@@ -118,8 +122,8 @@ namespace SpaceGame.graphics
         Color _startColor, _endColor;
         List<Particle> _particles;
 
-        Vector2 _textureCenter;
-        Texture2D _particleTexture;
+        Vector2 _textureCenter, _baseTextureCenter;
+        Texture2D _particleTexture, _baseTexture;
 
         ParticleGeneratorData _particleEffectData;
 
@@ -169,7 +173,13 @@ namespace SpaceGame.graphics
 
             _particleTexture = (_particleEffectData.UniqueParticle == null) ? 
                 particleTexture : Content.Load<Texture2D>(PARTICLE_TEXTURE_DIRECTORY + _particleEffectData.UniqueParticle);
-            _textureCenter = new Vector2(_particleTexture.Width / 2.0f, _particleTexture.Height / 2.0f); 
+            _textureCenter = new Vector2(_particleTexture.Width / 2.0f, _particleTexture.Height / 2.0f);
+
+            if (_particleEffectData.BaseTexture != null)
+            {
+                _baseTexture = Content.Load<Texture2D>(PARTICLE_TEXTURE_DIRECTORY + _particleEffectData.BaseTexture);
+                _baseTextureCenter = new Vector2(_baseTexture.Width / 2.0f, _baseTexture.Height / 2.0f);
+            }
 
             _particleScale = _particleEffectData.StartScale / _particleTexture.Width;
 
@@ -329,6 +339,10 @@ namespace SpaceGame.graphics
                 else
                     drawColor = Color.Lerp(_startColor, _endColor, (float)p.TimeAlive.TotalSeconds / (float)p.LifeTime.TotalSeconds);
 
+                if (_baseTexture != null)
+                {
+                    sb.Draw(_baseTexture, p.Position, null, drawColor, p.Angle, _baseTextureCenter, p.Scale, SpriteEffects.None, 0);
+                }
                 sb.Draw(_particleTexture, p.Position, null, drawColor, p.Angle, _textureCenter, p.Scale, SpriteEffects.None, 0 );
             }
         }
