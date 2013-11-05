@@ -328,36 +328,44 @@ namespace SpaceGame.graphics
             return baseFloat + baseFloat * variance * (1.0f - 2 * (float)rand.NextDouble());
         }
 
+        private void drawParticle(SpriteBatch sb, Particle p, Texture2D texture, Vector2 origin)
+        {
+            Color drawColor;
+            if (Reversed)
+                drawColor = Color.Lerp(_endColor, _startColor, (float)p.TimeAlive.TotalSeconds / (float)p.LifeTime.TotalSeconds);
+            else
+                drawColor = Color.Lerp(_startColor, _endColor, (float)p.TimeAlive.TotalSeconds / (float)p.LifeTime.TotalSeconds);
+
+            sb.Draw(texture, p.Position, null, drawColor, p.Angle, origin, p.Scale, SpriteEffects.None, 0);
+        }
+
         public void Draw(SpriteBatch sb)
         {
-
+            if (_baseTexture != null)
+            {
+                foreach (Particle p in _particles)
+                {
+                    drawParticle(sb, p, _baseTexture, _baseTextureCenter);
+                }
+            }
             foreach (Particle p in _particles)
             {
-                Color drawColor;
-                if (Reversed)
-                    drawColor = Color.Lerp(_endColor, _startColor, (float)p.TimeAlive.TotalSeconds / (float)p.LifeTime.TotalSeconds);
-                else
-                    drawColor = Color.Lerp(_startColor, _endColor, (float)p.TimeAlive.TotalSeconds / (float)p.LifeTime.TotalSeconds);
-
-                if (_baseTexture != null)
-                {
-                    sb.Draw(_baseTexture, p.Position, null, drawColor, p.Angle, _baseTextureCenter, p.Scale, SpriteEffects.None, 0);
-                }
-                sb.Draw(_particleTexture, p.Position, null, drawColor, p.Angle, _textureCenter, p.Scale, SpriteEffects.None, 0 );
+                drawParticle(sb, p, _particleTexture, _textureCenter);
             }
         }
 
         public void Draw(SpriteBatch sb, Vector2 origin)
         {
+            if (_baseTexture != null)
+            {
+                foreach (Particle p in _particles)
+                {
+                    drawParticle(sb, p, _baseTexture, origin - p.Position + _baseTextureCenter);
+                }
+            }
             foreach (Particle p in _particles)
             {
-                Color drawColor;
-                if (Reversed)
-                    drawColor = Color.Lerp(_endColor, _startColor, (float)p.TimeAlive.TotalSeconds / (float)p.LifeTime.TotalSeconds);
-                else
-                    drawColor = Color.Lerp(_startColor, _endColor, (float)p.TimeAlive.TotalSeconds / (float)p.LifeTime.TotalSeconds);
-
-                sb.Draw(_particleTexture, p.Position, null, drawColor, p.Angle, origin - p.Position + _textureCenter, p.Scale, SpriteEffects.None, 0 );
+                drawParticle(sb, p, _particleTexture, origin - p.Position + _textureCenter);
             }
         }
 

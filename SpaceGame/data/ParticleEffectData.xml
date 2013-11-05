@@ -87,6 +87,13 @@
                        SpawnArc="30.0" SpawnRate="50" ParticleLife="0.3" ParticleLifeVariance="0.5"/>
   </ParticleEffectData>
 
+  <ParticleEffectData Name="Flamethrower">
+    <ParticleGenerator Name="Flame"
+                       Speed="700.0" SpeedVariance="0.1" DecelerationFactor="0.1" ParticleRotation="0.0"
+                       StartScale ="3.0" ScaleVariance="0.3" EndScale="20.0"
+                       SpawnArc="20.0" SpawnRate="3000" ParticleLife="0.40" ParticleLifeVariance="0.5"/>
+  </ParticleEffectData>
+
   <!-- Particle Generators-->
 
   <ParticleGeneratorData  Name="Flame"
@@ -115,13 +122,6 @@
                       StartColor="255,255,255,255" EndColor ="0,0,0,0"
                       Reversed="False"/>
 
-  <ParticleGeneratorData Name="Flamethrower" 
-                      Speed="700.0" SpeedVariance="0.1" DecelerationFactor="0.1" ParticleRotation="0.0" 
-                      StartScale ="3.0" ScaleVariance="0.3" EndScale="20.0" 
-                      SpawnArc="20.0" SpawnRate="3900" ParticleLife="0.40" ParticleLifeVariance="0.5"
-                      StartColor="100,0,0,100" EndColor ="00,100,0,0"
-                      UniqueParticle="Flame_Top"
-                      Reversed="False" />
 
   <ParticleGeneratorData Name="Burning" 
                       Speed="300.0" SpeedVariance="0.3" DecelerationFactor="4.0" ParticleRotation="720.0" 
