@@ -82,10 +82,11 @@
 
   <!-- Particle Generators-->
   <ParticleGeneratorData Name="SpacemanThruster" 
-                      Speed="250.0" SpeedVariance="0.3" DecelerationFactor="1.0" ParticleRotation="720.0" 
+                      Speed="250.0" SpeedVariance="0.3" DecelerationFactor="1.0" ParticleRotation="0.0" 
                       StartScale ="5.0" ScaleVariance="0.3" EndScale="40.0" 
                       SpawnArc="30.0" SpawnRate="50" ParticleLife="0.3" ParticleLifeVariance="0.5"
-                      StartColor="255,255,0,0" EndColor ="0,50,50,50"
+                      StartColor="255,255,0,0" EndColor ="0,0,0,0"
+                      UniqueParticle="Flame_Top"
                       Reversed="False" />
 
   <ParticleGeneratorData Name="PunchWave" 
