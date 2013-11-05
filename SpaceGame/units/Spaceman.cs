@@ -15,7 +15,6 @@ namespace SpaceGame.units
     {
         #region constants
         const string SPACEMAN_NAME = "Spaceman";
-        const string THRUSTER_EFFECT_NAME = "SpacemanThruster";
         #endregion
 
         #region static
@@ -45,7 +44,6 @@ namespace SpaceGame.units
         public Spaceman(Vector2 startPosition)
             :base(AstronautData)
         {
-            thrusterParticleEffect = new ParticleEffect(THRUSTER_EFFECT_NAME);
             _lifeState = LifeState.Living;      //astronaut starts pre-spawned
             Position = startPosition;
             CurrentWeapon = PrimaryWeapon;
