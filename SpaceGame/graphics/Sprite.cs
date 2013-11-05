@@ -12,10 +12,11 @@ namespace SpaceGame.graphics
     class Sprite
     {
         #region constant
-        protected const string c_SpritePath = "spritesheets/";
-        protected const string c_unitSpritePath = "spritesheets/units/";
-        protected const string c_projectileSpritePath = "spritesheets/projectiles/";
-        protected const string c_weaponSpritePath = "spritesheets/weapons/";
+        protected const string c_spritePath = "spritesheets/";
+        protected const string c_unitSpritePath = c_spritePath + "units/";
+        protected const string c_bodySpritePath = c_unitSpritePath + "bodies/";
+        protected const string c_projectileSpritePath = c_spritePath + "projectiles/";
+        protected const string c_weaponSpritePath = c_spritePath + "weapons/";
 
         const float ICE_OPACITY_FACTOR = 0.5f;
         //time it takes to complete a teleport
@@ -189,7 +190,7 @@ namespace SpaceGame.graphics
                     _spriteSheet = Content.Load<Texture2D>(c_weaponSpritePath + spriteData.AssetName);
                     break;
                 default:
-                    _spriteSheet = Content.Load<Texture2D>(c_SpritePath + spriteData.AssetName);
+                    _spriteSheet = Content.Load<Texture2D>(c_spritePath + spriteData.AssetName);
                     break;
             }
         }
