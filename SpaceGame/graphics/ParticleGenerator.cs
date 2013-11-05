@@ -169,7 +169,7 @@ namespace SpaceGame.graphics
 
             _particleTexture = (_particleEffectData.UniqueParticle == null) ? 
                 particleTexture : Content.Load<Texture2D>(PARTICLE_TEXTURE_DIRECTORY + _particleEffectData.UniqueParticle);
-            _textureCenter = new Vector2(_particleTexture.Width / 2.0f, particleTexture.Height / 2.0f); 
+            _textureCenter = new Vector2(_particleTexture.Width / 2.0f, _particleTexture.Height / 2.0f); 
 
             _particleScale = _particleEffectData.StartScale / _particleTexture.Width;
 
@@ -335,7 +335,6 @@ namespace SpaceGame.graphics
 
         public void Draw(SpriteBatch sb, Vector2 origin)
         {
-
             foreach (Particle p in _particles)
             {
                 Color drawColor;
