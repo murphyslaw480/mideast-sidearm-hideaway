@@ -35,7 +35,7 @@
   <WeaponSpriteData Name="Shotgun" AssetName="Shotgun" 
                     FrameWidth="18" FrameHeight="57" NumFrames="1" NumStates="1" 
                     DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
-			              HandleX="8" HandleY="36" MuzzleX="12" MuzzleY="0">
+			              HandleX="5" HandleY="35" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
   <!-- Projectile Weapon Sprites-->
 
