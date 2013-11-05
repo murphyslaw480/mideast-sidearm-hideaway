@@ -535,7 +535,7 @@ namespace SpaceGame.units
             //apply movement force, taking into account cryo effect (which slows)
             ApplyForce(_moveForce * direction * (1 - _statusEffects.Cryo / MAX_STAT_EFFECT) );
             if (_movementParticleEffect != null)
-                _movementParticleEffect.Spawn(Center, XnaHelper.DegreesFromVector(-direction), gameTime.ElapsedGameTime, _velocity); 
+                _movementParticleEffect.Spawn(Center + _sprite.ExhaustOffset, XnaHelper.DegreesFromVector(-direction), gameTime.ElapsedGameTime, _velocity); 
         }
 
         public void ApplyGravity(Gravity gravity, GameTime theGameTime)

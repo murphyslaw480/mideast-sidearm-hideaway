@@ -44,6 +44,16 @@ namespace SpaceGame.graphics
         Vector2 _shoulderToHand, _armShoulderPos;                   //arm vectors
         Vector2 _absShoulderPos, _absHipPos;                        //absolute shoulder/leg draw position. dynamic
         Vector2 _weaponOrigin;                                      //weapon vectors
+
+        Vector2 _exhaustOffset;                             //where to spawn jetpack particles (offset from center)
+        public Vector2 ExhaustOffset
+        {
+            get 
+            {   //mirror exhaust position if sprite mirrored
+                return FlipH ? new Vector2(-_exhaustOffset.X, _exhaustOffset.Y) : _exhaustOffset; 
+            }
+        }
+
         float _legAngle;                                            //angle of legs based on velocity
 
         public override int AnimationState
@@ -95,6 +105,8 @@ namespace SpaceGame.graphics
             _flippedUnitHipOffset = new Vector2(-data.HipX, data.HipY);
             _legOrigin = new Vector2(data.SpriteLegData.HipX, data.SpriteLegData.HipY);
             _flippedLegOrigin = new Vector2(_legTexture.Width - data.SpriteLegData.HipX, data.SpriteLegData.HipY);
+
+            _exhaustOffset = new Vector2(data.ExhaustX, data.ExhaustY);
         }
 
         public UnitSprite(string name, PhysicalUnit unit)
@@ -162,6 +174,7 @@ namespace SpaceGame.graphics
     {
         public int ShoulderX, ShoulderY;    //where to anchor arm sprite
         public int HipX, HipY;              //where to anchor leg sprite
+        public int ExhaustX, ExhaustY;      //where to spawn jetpack particles (offset from center)
         public SpriteArmData SpriteArmData;
         public SpriteLegData SpriteLegData;
     }
