@@ -82,16 +82,16 @@
 
   <ParticleEffectData Name="Jetpack">
     <ParticleGenerator Name="Flame"
-                       Speed="250.0" SpeedVariance="0.3" DecelerationFactor="1.0" ParticleRotation="720.0"
-                       StartScale ="5.0" ScaleVariance="0.3" EndScale="40.0"
-                       SpawnArc="30.0" SpawnRate="50" ParticleLife="0.3" ParticleLifeVariance="0.5"/>
+                       Speed="200.0" SpeedVariance="0.1" DecelerationFactor="3.0" ParticleRotation="0.0"
+                       StartScale ="3.0" ScaleVariance="3.3" EndScale="40.0"
+                       SpawnArc="20.0" SpawnRate="500" ParticleLife="0.60" ParticleLifeVariance="0.2"/>
   </ParticleEffectData>
 
   <ParticleEffectData Name="Flamethrower">
     <ParticleGenerator Name="Flame"
-                       Speed="700.0" SpeedVariance="0.1" DecelerationFactor="0.1" ParticleRotation="0.0"
-                       StartScale ="3.0" ScaleVariance="0.3" EndScale="20.0"
-                       SpawnArc="20.0" SpawnRate="3000" ParticleLife="0.40" ParticleLifeVariance="0.5"/>
+                       Speed="1200.0" SpeedVariance="0.1" DecelerationFactor="3.5" ParticleRotation="0.0"
+                       StartScale ="3.0" ScaleVariance="3.3" EndScale="40.0"
+                       SpawnArc="10.0" SpawnRate="500" ParticleLife="0.60" ParticleLifeVariance="0.2"/>
   </ParticleEffectData>
 
   <!-- Particle Generators-->
