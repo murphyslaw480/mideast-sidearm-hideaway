@@ -29,7 +29,7 @@ namespace SpaceGame.units
 
         #region constructor
         public Enemy(string unitName, Rectangle levelBounds)
-            :this(EnemyDataDict[unitName], levelBounds)
+            :this(DataManager.GetData<EnemyData>(unitName), levelBounds)
         {
         }
 

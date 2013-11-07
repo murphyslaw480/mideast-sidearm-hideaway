@@ -14,15 +14,10 @@ namespace SpaceGame.units
     class Spaceman : PhysicalUnit
     {
         #region constants
-        const string SPACEMAN_NAME = "Spaceman";
-        #endregion
-
-        #region static
-        public static PhysicalData AstronautData;
+        const string c_spacemanName = "Spaceman";
         #endregion
 
         #region members
-        ParticleEffect thrusterParticleEffect;
         Weapon _primaryWeapon, _secondaryWeapon;
         public Weapon PrimaryWeapon { 
             get { return _primaryWeapon; } 
@@ -42,7 +37,7 @@ namespace SpaceGame.units
         #endregion
 
         public Spaceman(Vector2 startPosition)
-            :base(AstronautData)
+            :base(DataManager.GetData<PhysicalData>(c_spacemanName))
         {
             _lifeState = LifeState.Living;      //astronaut starts pre-spawned
             Position = startPosition;

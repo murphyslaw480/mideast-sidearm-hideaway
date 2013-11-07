@@ -146,9 +146,6 @@ namespace SpaceGame
             MeleeWeapon.MeleeWeaponDataDict = DataLoader.CollectData<MeleeWeapon.MeleeWeaponData>(
                     DataLoader.WEAPON_DATA_PATH, "MeleeWeapon").ToDictionary(t => t.Name);
                         
-            Spaceman.AstronautData = DataLoader.CollectData<PhysicalData>(
-                    DataLoader.UNIT_DATA_PATH, "AstronautData").Single<PhysicalData>();
-
             Enemy.EnemyDataDict = DataLoader.CollectData<EnemyData>(
                     DataLoader.UNIT_DATA_PATH, "EnemyData").ToDictionary(t => t.Name);
 
