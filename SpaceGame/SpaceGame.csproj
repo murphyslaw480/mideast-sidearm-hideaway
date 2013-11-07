@@ -68,6 +68,7 @@
     <Compile Include="units\BlackHole.cs" />
     <Compile Include="units\Enemy.cs" />
     <Compile Include="units\FoodCart.cs" />
+    <Compile Include="units\Obstacle.cs" />
     <Compile Include="units\PhysicalBody.cs" />
     <Compile Include="units\PhysicalData.cs" />
     <Compile Include="units\PhysicalUnit.cs" />
