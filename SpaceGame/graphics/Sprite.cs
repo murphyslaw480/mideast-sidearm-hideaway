@@ -51,8 +51,6 @@ namespace SpaceGame.graphics
         #endregion
 
         #region fields
-        //data to initialize sprites. Initialize this in Game.Initialize
-        public static Dictionary<string, SpriteData> Data;
         //length of each animation, in # of frames
         protected int _framesPerAnimation;
         //number of different animations, e.g. for facing different directions
@@ -163,7 +161,7 @@ namespace SpaceGame.graphics
 
         #region methods
         public Sprite(string spriteName, SpriteType type = SpriteType.None)
-            : this(Data[spriteName], type)
+            : this(DataManager.GetData<SpriteData>(spriteName), type)
         { }
 
         protected Sprite(SpriteData spriteData, SpriteType type = SpriteType.None)

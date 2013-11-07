@@ -128,15 +128,6 @@ namespace SpaceGame
 
             ParticleEffect.Data = DataLoader.LoadParticleEffectData(Content);
 
-            Sprite.Data = DataLoader.CollectData<SpriteData>(
-                DataLoader.SPRITE_PATH, "SpriteData").ToDictionary(t => t.Name);
-
-            UnitSprite.UnitSpriteData = DataLoader.CollectData<UnitSpriteData>(
-                DataLoader.SPRITE_PATH, "UnitSpriteData").ToDictionary(t => t.Name);
-
-            WeaponSprite.WeaponSpriteData = DataLoader.CollectData<WeaponSpriteData>(
-                DataLoader.SPRITE_PATH, "WeaponSpriteData").ToDictionary(t => t.Name);
-
             ProjectileWeapon.DataDict = DataLoader.CollectData<ProjectileWeaponData>( 
                     DataLoader.WEAPON_DATA_PATH, "ProjectileWeapon").ToDictionary(t => t.Name);
 

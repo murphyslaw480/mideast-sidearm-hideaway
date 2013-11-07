@@ -10,8 +10,6 @@ namespace SpaceGame.graphics
 {
     class WeaponSprite : Sprite
     {
-		public static Dictionary<string,WeaponSpriteData> WeaponSpriteData;
-
         private Vector2 _handleOffset;
         public Vector2 HandleOffset
         {
@@ -37,7 +35,7 @@ namespace SpaceGame.graphics
         }
 
         public WeaponSprite(string name)
-			:this(WeaponSpriteData[name])
+			:this(DataManager.GetData<WeaponSpriteData>(name))
         {}
 
 		protected WeaponSprite(WeaponSpriteData data)

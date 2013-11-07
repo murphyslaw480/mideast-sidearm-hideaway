@@ -16,7 +16,6 @@ namespace SpaceGame.graphics
         protected const float c_legVelFactor = 0.002f;
         protected const float c_maxLegAngle = MathHelper.PiOver4;
 
-        public static Dictionary<string, UnitSpriteData> UnitSpriteData;
         PhysicalUnit _unit;
         Texture2D _armTexture, _legTexture;
 
@@ -110,7 +109,7 @@ namespace SpaceGame.graphics
         }
 
         public UnitSprite(string name, PhysicalUnit unit)
-            : this(UnitSpriteData[name], unit)
+            : this(DataManager.GetData<UnitSpriteData>(name), unit)
         { }
 
         public override void Update(GameTime theGameTime)
