@@ -15,10 +15,8 @@ namespace SpaceGame.equipment
     class MeleeWeapon : Weapon
     {
         #region static
-        public class MeleeWeaponData
+        public class MeleeWeaponData : WeaponData
         {
-            public string Name;
-            public float FireRate;  //attacks/second
             public int Damage;
             public int Impact;
             public float Range;
@@ -28,7 +26,6 @@ namespace SpaceGame.equipment
             public string AttackParticleEffect;
             public string HitParticleEffect;
         }
-        public static Dictionary<string, MeleeWeaponData> MeleeWeaponDataDict;
         #endregion
 
         #region fields
@@ -48,7 +45,7 @@ namespace SpaceGame.equipment
 
         #region constructor
         public MeleeWeapon(string weaponName, PhysicalUnit owner)
-            : this(MeleeWeaponDataDict[weaponName], owner)
+            : this(DataManager.GetData<MeleeWeaponData>(weaponName), owner)
         { }
 
         protected MeleeWeapon(MeleeWeaponData data, PhysicalUnit owner)

@@ -22,57 +22,57 @@
   -->
 <Weapons>
 
-  <ProjectileWeapon Name="RocketLauncher" FireRate="2.0" ProjectilesPerFire="1" Spread="0">
+  <ProjectileWeaponData Name="RocketLauncher" FireRate="2.0" ProjectilesPerFire="1" Spread="0">
     <ProjectileInfo SpriteName="Rocket" Speed="300" Acceleration="3000" SecondsToLive="3" 
                     Penetration="1" Mass="10" >
       <ContactEffect ParticleEffectName="RocketExplosion" Duration="0.1" Radius="100" Damage="30" Force="6000"/>
       <ProximityEffect ParticleEffectName="RocketBooster"/>
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ProjectileWeaponData>
 
-  <ProjectileWeapon Name="Boomerang" FireRate="5" ProjectilesPerFire="1" Spread="45">
+  <ProjectileWeaponData Name="Boomerang" FireRate="5" ProjectilesPerFire="1" Spread="45">
     <ProjectileInfo SpriteName="Boomerang" Speed="1000" Acceleration="-1000" SecondsToLive="3" 
                     Penetration="-1" Mass="1" Rotation="360">
       <ProximityEffect Radius="5" Damage="5" ParticleEffectName="BoomerangBlur"/>
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ProjectileWeaponData>
 
-  <ProjectileWeapon Name="Flamethrower" FireRate="200" ProjectilesPerFire="1" FireParticleEffectName="Flamethrower" Spread="30" >
+  <ProjectileWeaponData Name="Flamethrower" FireRate="200" ProjectilesPerFire="1" FireParticleEffectName="Flamethrower" Spread="30" >
     <ProjectileInfo SpriteName="Flame" Speed="700" Acceleration="-12" SecondsToLive="0.6" 
                     Penetration="100" Mass="0.0" >
       <ProximityEffect Radius="1" Damage="0.5" Force="0" FireEffect="2"/>
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ProjectileWeaponData>
 
-  <ProjectileWeapon Name="Gatling" FireRate="20" ProjectilesPerFire="1" Spread="10" 
+  <ProjectileWeaponData Name="Gatling" FireRate="20" ProjectilesPerFire="1" Spread="10" 
                     FireParticleEffectName="GatlingFireEffect" ShellParticleEffectName="GatlingShellEffect">
     <ProjectileInfo SpriteName="Bullet" Speed="2500" Acceleration="0" SecondsToLive="1.5" 
                     Penetration="0" Mass="1.0" >
       <ProximityEffect Radius="5" Damage="10" Force="0" ParticleEffectName="BulletTrace" />
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ProjectileWeaponData>
 
-  <ProjectileWeapon Name="FreezeRay" FireRate="60" ProjectilesPerFire="1" Spread="0" >
+  <ProjectileWeaponData Name="FreezeRay" FireRate="60" ProjectilesPerFire="1" Spread="0" >
     <ProjectileInfo SpriteName="FreezeRay" Speed="2500" Acceleration="0" SecondsToLive="1.0" 
                     Penetration="0" Mass="0" >
       <ProximityEffect Radius="5" Damage="0" Force="0" ParticleEffectName="FreezeBeam" CryoEffect="10"/>
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ProjectileWeaponData>
 
-  <ProjectileWeapon Name="Shotgun" FireRate="1" ProjectilesPerFire="16" Spread="30" 
+  <ProjectileWeaponData Name="Shotgun" FireRate="1" ProjectilesPerFire="16" Spread="30" 
                     FireParticleEffectName="ShotgunFireEffect" ShellParticleEffectName="ShotgunShellEffect">
     <ProjectileInfo SpriteName="Bullet" Speed="2500" Acceleration="0" SecondsToLive="0.4" 
                     Penetration="0" Mass="3.0" >
       <ProximityEffect Radius="5" Damage="15" Force="0" ParticleEffectName="BulletTrace"/>
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ProjectileWeaponData>
 
-  <ProjectileWeapon Name="GravityWell" FireRate="0.5" ProjectilesPerFire="1" Spread="0" >
+  <ProjectileWeaponData Name="GravityWell" FireRate="0.5" ProjectilesPerFire="1" Spread="0" >
     <ProjectileInfo SpriteName="GravityWell" Speed="400" Acceleration="5" SecondsToLive="3.0" 
                     Penetration="-1" Mass="1.0" >
       <ProximityEffect Radius="150" Damage="0" Force="-300" ParticleEffectName="GravityWell"/>
     </ProjectileInfo>
-  </ProjectileWeapon>
+  </ProjectileWeaponData>
 
   <!-- Consumable Weapons -->
   <ThrowableWeapon Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" UsesPerStack="6">

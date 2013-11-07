@@ -18,7 +18,6 @@ namespace SpaceGame.equipment
         #endregion
 
         #region static
-        public static Dictionary<string, ProjectileWeaponData> DataDict;
         public static Matrix tempMatrix;
         #endregion
 
@@ -50,7 +49,7 @@ namespace SpaceGame.equipment
 
         #region constructor
         public ProjectileWeapon(string name, PhysicalUnit owner)
-            : this(DataDict[name], owner, name)
+            : this(DataManager.GetData<ProjectileWeaponData>(name), owner, name)
         { }
 
         protected ProjectileWeapon(ProjectileWeaponData data, PhysicalUnit owner, string spriteName)
@@ -176,10 +175,8 @@ namespace SpaceGame.equipment
         #endregion
     }
 
-    class ProjectileWeaponData
+    public class ProjectileWeaponData : WeaponData
     {
-        public string Name;
-        public float FireRate;
         public float Spread;
         public int ProjectilesPerFire;
         public ProjectileData ProjectileInfo;

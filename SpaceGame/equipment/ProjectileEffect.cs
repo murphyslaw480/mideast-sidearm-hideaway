@@ -50,7 +50,7 @@ namespace SpaceGame.equipment
         }
     }
 
-    class ProjectileEffectData
+    public class ProjectileEffectData
     {
         public int Radius;
         public float Damage;

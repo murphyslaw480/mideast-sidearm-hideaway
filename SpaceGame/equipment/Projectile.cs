@@ -216,7 +216,7 @@ namespace SpaceGame.equipment
         #endregion
     }
 
-    class ProjectileData
+    public class ProjectileData
     {
         public float Speed;
         public float Acceleration;

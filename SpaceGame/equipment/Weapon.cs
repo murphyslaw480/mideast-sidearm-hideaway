@@ -13,11 +13,14 @@ using SpaceGame.utility;
 
 namespace SpaceGame.equipment
 {
+    public class WeaponData
+    {
+        public string Name;
+        public float FireRate;
+    }
+
     abstract class Weapon
     {
-        #region static
-        #endregion
-
         #region properties
         public abstract float Range { get; }
         public WeaponSprite Sprite { get; private set; }
