@@ -68,6 +68,7 @@
     <Compile Include="units\BlackHole.cs" />
     <Compile Include="units\Enemy.cs" />
     <Compile Include="units\FoodCart.cs" />
+    <Compile Include="units\PhysicalBody.cs" />
     <Compile Include="units\PhysicalData.cs" />
     <Compile Include="units\PhysicalUnit.cs" />
     <Compile Include="units\Spaceman.cs" />
@@ -137,6 +138,7 @@
     </None>
     <None Include="data\UnitData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="data\WeaponData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

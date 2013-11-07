@@ -17,6 +17,7 @@ namespace SpaceGame.graphics
         protected const string c_bodySpritePath = c_unitSpritePath + "bodies/";
         protected const string c_projectileSpritePath = c_spritePath + "projectiles/";
         protected const string c_weaponSpritePath = c_spritePath + "weapons/";
+        protected const string c_obstacleSpritePath = c_spritePath + "obstacles/";
 
         const float ICE_OPACITY_FACTOR = 0.5f;
         //time it takes to complete a teleport
@@ -31,7 +32,8 @@ namespace SpaceGame.graphics
             None,
             Unit,
             Projectile,
-            Weapon
+            Weapon,
+            Obstacle
         }
         public static ContentManager Content;
         static Rectangle tempRect;   //temporary rectangle for cross instance use
@@ -188,6 +190,9 @@ namespace SpaceGame.graphics
                     break;
                 case SpriteType.Weapon:
                     _spriteSheet = Content.Load<Texture2D>(c_weaponSpritePath + spriteData.AssetName);
+                    break;
+                case SpriteType.Obstacle:
+                    _spriteSheet = Content.Load<Texture2D>(c_obstacleSpritePath + spriteData.AssetName);
                     break;
                 default:
                     _spriteSheet = Content.Load<Texture2D>(c_spritePath + spriteData.AssetName);
