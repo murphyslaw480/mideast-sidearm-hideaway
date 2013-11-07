@@ -116,6 +116,10 @@
     <None Include="Content\particles\Health_Gain.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\spritesheets\obstacles\Crate.xnb" />
+    <None Include="Content\spritesheets\obstacles\Cryo Barrel.xnb" />
+    <None Include="Content\spritesheets\obstacles\Flammable Barrel.xnb" />
+    <None Include="Content\spritesheets\obstacles\Space Rock.xnb" />
     <None Include="data\GadgetData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

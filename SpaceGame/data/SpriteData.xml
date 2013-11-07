@@ -13,6 +13,19 @@
     <SpriteArmData Name="basic_arm" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-25"/>
   </UnitSpriteData>
 
+  <!-- Obstacle Sprites-->
+  <SpriteData Name="Crate" AssetName="Crate" FrameWidth="57" FrameHeight="56" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="CryoBarrel" AssetName="CryoBarrel" FrameWidth="51" FrameHeight="67" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="FlameBarrel" AssetName="FlameBarrel" FrameWidth="43" FrameHeight="63" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+              
+  <SpriteData Name="SpaceRock" AssetName="SpaceRock" FrameWidth="125" FrameHeight="122" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+
   <!-- Projectile Weapon Sprites-->
   <WeaponSpriteData Name="RocketLauncher" AssetName="Rocket_Launcher" 
                     FrameWidth="31" FrameHeight="64" NumFrames="1" NumStates="1" 
