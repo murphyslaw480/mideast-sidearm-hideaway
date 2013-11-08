@@ -19,7 +19,7 @@ namespace SpaceGame.equipment
         const float MAX_RANGE = 1000.0f;
         const float HOOK_SPEED = 20.0f;
         const float HOOK_FORCE = 12000.0f;
-        const float FIRE_DELAY = 0.5f;
+        const float c_fireRate = 2.0f;
 
         public override float Range
         {
@@ -48,7 +48,12 @@ namespace SpaceGame.equipment
 
         #region constructor
         public HookShot(PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(FIRE_DELAY), owner)
+            :base(new WeaponData
+            {
+                Name = "Hookshot",
+                FireRate = c_fireRate,
+            },
+            owner)
         {
             _hookState = HookState.Idle;
             _hookSprite = new Sprite("HookClaw", SpaceGame.graphics.Sprite.SpriteType.Projectile);

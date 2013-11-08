@@ -50,9 +50,9 @@ namespace SpaceGame.equipment
         /// <param name="ammoConsumption">Ammo used per shot. Set to 0 for infinite ammo.</param>
         /// <param name="levelWidth">Width of the level in which this weapon is instantiated.</param>
         /// <param name="levelHeight">Height of the level in which this weapon is instantiated.</param>
-        public Weapon(TimeSpan fireDelay, PhysicalUnit owner, string spriteName = null)
+        public Weapon(WeaponData data, PhysicalUnit owner, string spriteName = null)
         {
-            _fireDelay = fireDelay;
+            _fireDelay = TimeSpan.FromSeconds(1.0 / data.FireRate);
             _owner = owner;
             if (spriteName != null)
             {

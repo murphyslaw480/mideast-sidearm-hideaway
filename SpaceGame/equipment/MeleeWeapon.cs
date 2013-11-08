@@ -49,7 +49,7 @@ namespace SpaceGame.equipment
         { }
 
         protected MeleeWeapon(MeleeWeaponData data, PhysicalUnit owner)
-            :base(TimeSpan.FromSeconds(1.0 / data.FireRate), owner, data.Name)
+            :base(data, owner, data.Name)
         {
             _damage = data.Damage;
             _force = data.Impact;
