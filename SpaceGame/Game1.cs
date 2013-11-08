@@ -128,9 +128,6 @@ namespace SpaceGame
 
             ParticleEffect.Data = DataLoader.LoadParticleEffectData(Content);
 
-            ThrowableWeapon.DataDict = DataLoader.CollectData<ThrowableWeaponData>( 
-                    DataLoader.WEAPON_DATA_PATH, "ThrowableWeapon").ToDictionary(t => t.Name);
-                        
             Gadget.GadgetDataDict = DataLoader.CollectData<GadgetData>(
                     DataLoader.GADGET_DATA_PATH, "GadgetData").ToDictionary(t => t.Name);
 

@@ -17,12 +17,10 @@ namespace SpaceGame.equipment
     {
         int _ammo, _maxAmmo;
 
-        public static Dictionary<string, ThrowableWeaponData> DataDict;
-
         public ThrowableWeapon(string name, PhysicalUnit owner)
-            : base(DataDict[name], owner, null)
+            : base(DataManager.GetData<ThrowableWeaponData>(name), owner, null)
         {
-            _maxAmmo = DataDict[name].UsesPerStack;
+            _maxAmmo = DataManager.GetData<ThrowableWeaponData>(name).UsesPerStack;
             NumUses = _maxAmmo;
         }
 
