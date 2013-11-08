@@ -76,7 +76,6 @@
     <Compile Include="units\Unicorn.cs" />
     <Compile Include="units\Wave.cs" />
     <Compile Include="utilities\Camera2D.cs" />
-    <Compile Include="utilities\DataLoader.cs" />
     <Compile Include="utilities\DataManager.cs" />
     <Compile Include="utilities\Gravity.cs" />
     <Compile Include="utilities\InputManager.cs" />
