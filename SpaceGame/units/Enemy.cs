@@ -11,20 +11,16 @@ using SpaceGame.equipment;
 
 namespace SpaceGame.units
 {
-    public class EnemyData
+    public class EnemyData : PhysicalData
     {
-        public string Name;
         public string MeleeWeaponName;
-        public PhysicalData PhysicalData;
+        public int Difficulty;
     }
 
     class Enemy : PhysicalUnit
     {
         #region static
         public static Dictionary<string, EnemyData> EnemyDataDict;
-        #endregion
-
-        #region fields
         #endregion
 
         #region constructor
@@ -34,7 +30,7 @@ namespace SpaceGame.units
         }
 
         protected Enemy(EnemyData data, Rectangle levelBounds)
-            : base(data.PhysicalData)
+            : base(data)
         {
             if (data.MeleeWeaponName != null)
                 CurrentWeapon = new MeleeWeapon(data.MeleeWeaponName, this);
