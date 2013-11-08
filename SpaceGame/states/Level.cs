@@ -16,24 +16,26 @@ using Microsoft.Xna.Framework.Content;
 
 namespace SpaceGame.states
 {
+    class LevelData
+    {
+        public string Name;
+        public BurstWaveData[] BurstWaves;
+        public TrickleWaveData[] TrickleWaves;
+        public UnicornData[] Unicorns;
+        public BlackHoleData BlackHole;
+        public int PlayerX, PlayerY;
+        public int Width, Height;
+    }
+
     //each gadget is associated with an action that affects the game
     public delegate void GadgetAction(bool active);
 
     class Level : Gamestate
     {
 		public static Texture2D s_CursorTexture;
+        const string c_levelNameFormat = "Level{0}";
 
         #region classes
-        public struct LevelData
-        {
-            public Wave.WaveData[] TrickleWaveData;
-            public Wave.WaveData[] BurstWaveData;
-            public UnicornData[] Unicorns;
-            public FoodCart[] FoodCarts;
-            public BlackHole BlackHole;
-            public Vector2 PlayerStartLocation;
-            public int Width, Height;
-        }
         #endregion
 
         #region constants
@@ -45,9 +47,10 @@ namespace SpaceGame.states
         InventoryManager _inventoryManager;
         BlackHole _blackHole;
         Gadget _primaryGadget, _secondaryGadget;
-        Wave[] _waves;
+        Wave[] _waves;         //collection of all trickle waves and active burst wave
+        int _burstWaveIdx;
+
         Unicorn[] _unicorns;
-        FoodCart[] _foodCarts;
         Rectangle _levelBounds;
         Vector2 _absMousePos, _relMousePos;
 
@@ -66,33 +69,40 @@ namespace SpaceGame.states
         public Level (ContentManager content, int levelNumber, InventoryManager im)
             : base(content, false)
         {
-            LevelData data = DataLoader.LoadLevel(levelNumber);
+            LevelData data = DataManager.GetData<LevelData>(String.Format(c_levelNameFormat, levelNumber));
             _levelBounds = new Rectangle(0, 0, data.Width, data.Height);
-            _player = new Spaceman(data.PlayerStartLocation);
-            _blackHole = data.BlackHole;
-            _waves = new Wave[data.TrickleWaveData.Length + data.BurstWaveData.Length];
+            _player = new Spaceman(new Vector2(data.PlayerX, data.PlayerY));
+            _blackHole = new BlackHole(data.BlackHole);
+            //store active burst wave as last tricklewave
+            _waves = new Wave[data.TrickleWaves.Length + data.BurstWaves.Length];
             _camera = new Camera2D(_player.Position, _levelBounds.Width, _levelBounds.Height);
             //construct waves
-            for (int i = 0; i < data.TrickleWaveData.Length; i++)
+            for (int i = 0; i < data.TrickleWaves.Length; i++)
             { 
-                _waves[i] = new Wave(data.TrickleWaveData[i], true, _levelBounds);
+                _waves[i] = new TrickleWave(data.TrickleWaves[i], _levelBounds);
             }
-            for (int i = 0; i < data.BurstWaveData.Length; i++)
+            for (int i = 0; i < data.BurstWaves.Length; i++)
             {
-                _waves[i + data.TrickleWaveData.Length] = new Wave(data.BurstWaveData[i], false, _levelBounds);
+                BurstWave prevWave = i == 0 ? null : (BurstWave)_waves[i-1];
+                _waves[i + data.TrickleWaves.Length] = new BurstWave(data.BurstWaves[i], _levelBounds, prevWave);
             }
             //Test code to set weapons 1-6 to created weapons
             im.setPrimaryGadget(new Gadget("Teleporter", this));
             im.setSecondaryGadget(new Gadget("Stopwatch", this));
             im.setSlot(1, new ThrowableWeapon("Cryonade", _player));
 
-            _unicorns = new Unicorn[data.Unicorns.Length];
-            for (int j = 0; j < data.Unicorns.Length; j++)
+            if (data.Unicorns == null)
             {
-                _unicorns[j] = new Unicorn(data.Unicorns[j]);
+                _unicorns = new Unicorn[0];
             }
-
-            _foodCarts = data.FoodCarts;
+            else
+            {
+                _unicorns = new Unicorn[data.Unicorns.Length];
+                for (int j = 0; j < data.Unicorns.Length; j++)
+                {
+                    _unicorns[j] = new Unicorn(data.Unicorns[j]);
+                }
+            }
 
             _primaryGadget = im.getPrimaryGadget();
             _secondaryGadget = im.getSecondaryGadget();
@@ -204,18 +214,6 @@ namespace SpaceGame.states
                 _unicorns[i].Update(gameTime, _levelBounds, _blackHole.Position, _player.Position, _player.HitRect);
                 _unicorns[i].CheckAndApplyCollision(_player, gameTime);
                 _blackHole.TryEatUnicorn(_unicorns[i], gameTime);
-                for (int j = 0; j < _foodCarts.Length; j++)
-                {
-                    _unicorns[i].CheckAndApplyCollision(_foodCarts[j], gameTime);
-                }
-            }
-
-            for (int i = 0; i < _foodCarts.Length; i++)
-            {
-                _foodCarts[i].Update(gameTime, _levelBounds, _blackHole.Position);
-                _player.CurrentWeapon.CheckAndApplyCollision(_foodCarts[i], gameTime.ElapsedGameTime);
-                _inventoryManager.CheckCollisions(gameTime, _foodCarts[i]);
-                _blackHole.ApplyToUnit(_foodCarts[i], gameTime);
             }
 
             //Update Weapons 
@@ -281,11 +279,6 @@ namespace SpaceGame.states
                 _inventoryManager.CurrentItem.Draw(spriteBatch);
             }
 			
-            foreach (FoodCart cart in _foodCarts)
-            {
-                cart.Draw(spriteBatch);
-            }
-
             foreach (Wave wave in _waves)
             {
                 wave.Draw(spriteBatch);

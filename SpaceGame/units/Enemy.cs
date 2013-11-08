@@ -23,6 +23,8 @@ namespace SpaceGame.units
         public static Dictionary<string, EnemyData> EnemyDataDict;
         #endregion
 
+        public int Difficulty { get; private set; }
+
         #region constructor
         public Enemy(string unitName, Rectangle levelBounds)
             :this(DataManager.GetData<EnemyData>(unitName), levelBounds)
@@ -34,7 +36,7 @@ namespace SpaceGame.units
         {
             if (data.MeleeWeaponName != null)
                 CurrentWeapon = new MeleeWeapon(data.MeleeWeaponName, this);
-
+            Difficulty = data.Difficulty;
         }
         #endregion
 

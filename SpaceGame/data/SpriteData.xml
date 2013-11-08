@@ -11,6 +11,7 @@
   <UnitSpriteData Name="Goblin" AssetName="Goblin1" FrameWidth="217" FrameHeight="287" NumFrames="1" NumStates="1" DefaultScale ="0.15"
               SecondsPerAnimation="0.5" ZLayer="0" >
     <SpriteArmData Name="basic_arm" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-25"/>
+    <SpriteLegData Name="Spaceman_Leg" HipX="11" HipY="6"/>
   </UnitSpriteData>
 
   <!-- Obstacle Sprites-->

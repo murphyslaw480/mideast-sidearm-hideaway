@@ -1,90 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Levels>
-  <Level LevelNumber="1" LevelWidth="1200" LevelHeight="800">
-    <Player X="800" Y="100"/>
+  <LevelData Name="Level1" Width="1200" Height="800" PlayerX="800" PlayerY="100">
     <BlackHole X="200" Y="700" Gravity="18000" Radius="100" Capacity="200"/>
     <Unicorn StartTime="4" EndTime="1000" SpawnTime="8"/>
-    <Waves>
-      <TrickleWave SpawnInterval="5" StartTime="0">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </TrickleWave> 
-      <TrickleWave SpawnInterval="5" StartTime="20">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </TrickleWave> 
-      <TrickleWave SpawnInterval="5" StartTime="40">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </TrickleWave>
-      <TrickleWave SpawnInterval="5" StartTime="60">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </TrickleWave>
-      <TrickleWave SpawnInterval="3" StartTime="80">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </TrickleWave>
-      <TrickleWave SpawnInterval="2" StartTime="120">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </TrickleWave>
-      <!-->BurstWave SpawnInterval="0.4" StartTime="5.0" >
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </BurstWave> 
-      <BurstWave SpawnInterval="0.25" StartTime="12.0">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </BurstWave> 
-      <BurstWave SpawnInterval="0.25" StartTime="20.0">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </BurstWave> 
-      <BurstWave SpawnInterval="0.4" StartTime="30.0">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </BurstWave> 
-      <BurstWave SpawnInterval="0.4" StartTime="40.0">
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-        <Enemy Name="Goblin"/>
-      </BurstWave--> 
-    </Waves>
-  </Level>
+    <BurstWaves>
+      <BurstWaveData RestDelay="5" Difficulty="3" EnemySpawnRate="1" Enemies="Goblin,Goblin,Goblin">
+      </BurstWaveData> 
+    </BurstWaves>
+    <TrickleWaves>
+    </TrickleWaves>
+  </LevelData>
 
-  <Level LevelNumber="0" LevelWidth="1200" LevelHeight="800">
+  <LevelData Name="Level0" Width="1200" Height="800" PlayerX="800" PlayerY="100">
 	<!--Test level with no enemies-->
-    <Player X="800" Y="100"/>
     <BlackHole X="200" Y="700" Gravity="000" Radius="100" Capacity="200"/>
-    <Waves>
-    </Waves>
-  </Level>
+    <BurstWaves>
+      <BurstWaveData RestDelay="5" Difficulty="3" EnemySpawnRate="1" Enemies="Goblin,Goblin,Goblin,Goblin">
+      </BurstWaveData> 
+    </BurstWaves>
+    <TrickleWaves>
+    </TrickleWaves>
+  </LevelData>
 
 </Levels>

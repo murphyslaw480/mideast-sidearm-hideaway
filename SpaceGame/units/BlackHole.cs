@@ -11,6 +11,14 @@ using SpaceGame.graphics;
 
 namespace SpaceGame.units
 {
+    class BlackHoleData
+    {
+        public int X, Y;
+        public float Gravity;
+        public float Radius;
+        public float Capacity;
+    }
+
     /// <summary>
     /// Black hole that applies gravity on all active units
     /// Units too close will be sucked in
@@ -67,13 +75,13 @@ namespace SpaceGame.units
         /// <param name="position">location of black hole center</param>
         /// <param name="gravMagnitude">strength of gravitational force</param>
         /// <param name="radius">max distance that black hole will consume units</param>
-        public BlackHole(Vector2 position, float gravMagnitude, float radius, float capacity)
+        public BlackHole(BlackHoleData data)
         {
-            Position = position;
-            Gravity = new Gravity(position, gravMagnitude);
-            _radius = radius;
+            Position = new Vector2(data.X, data.Y);
+            Gravity = new Gravity(Position, data.Gravity);
+            _radius = data.Radius;
             _particleEffect = new ParticleEffect("BlackHoleEffect");
-            _totalCapacity = capacity;
+            _totalCapacity = data.Capacity;
             _capacityUsed = 0.0f;
             _overdriveTimer = TimeSpan.FromSeconds(SECONDS_FOR_OVERDRIVE);
         }
