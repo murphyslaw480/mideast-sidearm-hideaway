@@ -31,10 +31,6 @@ namespace SpaceGame.equipment
         const float c_energyPerSecond = 10.0f;
         #endregion
 
-        #region static
-        public static Dictionary<string, GadgetData> GadgetDataDict;
-        #endregion
-
         #region properties
         public float Energy
         {
@@ -55,7 +51,7 @@ namespace SpaceGame.equipment
 
         #region constructor
         public Gadget(string name, Level level)
-            : this(GadgetDataDict[name], level)
+            : this(DataManager.GetData<GadgetData>(name), level)
         { }
 
         protected Gadget(GadgetData data, Level level)

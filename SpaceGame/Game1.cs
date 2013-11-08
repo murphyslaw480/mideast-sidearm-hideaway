@@ -128,9 +128,6 @@ namespace SpaceGame
 
             ParticleEffect.Data = DataLoader.LoadParticleEffectData(Content);
 
-            Gadget.GadgetDataDict = DataLoader.CollectData<GadgetData>(
-                    DataLoader.GADGET_DATA_PATH, "GadgetData").ToDictionary(t => t.Name);
-
             Gamemenu.LoadContent(Content);
             _stateStack.Add(new Gamemenu(Content));
         }

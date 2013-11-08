@@ -75,13 +75,13 @@
   </ProjectileWeaponData>
 
   <!-- Consumable Weapons -->
-  <ThrowableWeapon Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" UsesPerStack="6">
+  <ThrowableWeaponData Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" UsesPerStack="6">
     <ProjectileInfo SpriteName="Cryonade" Speed="800" Acceleration="-320" SecondsToLive="2.5" 
                     Penetration="-1" Mass="5.0" >
       <ProximityEffect ParticleEffectName="CryoTrace"/>
       <DestinationEffect ParticleEffectName="Cryosplosion" Radius="250" CryoEffect="100"/>
     </ProjectileInfo>
-  </ThrowableWeapon>
+  </ThrowableWeaponData>
 
   <MeleeWeapon Name="Axe" 
                FireRate ="1" HitArc="30" Range="75" Damage="15" Impact="5000" Recoil="1500" 
