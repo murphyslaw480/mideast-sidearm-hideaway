@@ -10,6 +10,7 @@ using System.IO;
 public static class DataManager
 {
     const string DataFileDir = "data/";
+    const string c_refKeyword = "Ref";
 
     static Dictionary<Type, Dictionary<string, object>> s_dataDict;
 
@@ -53,7 +54,7 @@ public static class DataManager
                                    && el.Element("Name").Value.Equals(key));
         if (data == null)
         {
-            throw new Exception(String.Format("Could not find data element {0} : {1}", key, typeName));
+            throw new DataManagerException(typeof(T), key);
         }
         return data;
     }
@@ -92,6 +93,12 @@ public static class DataManager
         return list.ToArray<T>();
     }
     
+    /// <summary>
+    /// Parse an XElement into a data object of type T
+    /// </summary>
+    /// <typeparam name="T">Data Type</typeparam>
+    /// <param name="el">XML Element</param>
+    /// <returns>A Data object of type T</returns>
     public static T ParseElement<T>(XElement el)
     {
         Type dataType = typeof(T);
@@ -105,6 +112,10 @@ public static class DataManager
             //get type of field
             //parse attributes
             T data = Activator.CreateInstance<T>();
+            if (el.Name.LocalName.EndsWith(c_refKeyword))
+            {
+                populateDataRef<T>(ref data, GetData<T>(el.Attribute("Name").Value));
+            }
 
             foreach (XAttribute at in el.Attributes())
             {
@@ -126,6 +137,10 @@ public static class DataManager
             {
                 //get field from element name
                 string fieldName = subel.Name.LocalName;
+                if (fieldName.EndsWith(c_refKeyword))
+                {   //strip ref keyword from end if present
+                    fieldName = fieldName.Remove(fieldName.Length - c_refKeyword.Length, c_refKeyword.Length);
+                }
                 System.Reflection.FieldInfo p = dataType.GetField(fieldName);
                 Type subElType = p.FieldType;
 
@@ -151,6 +166,15 @@ public static class DataManager
 
     }
 
+    static void populateDataRef<T>(ref T refData, T sourceData)
+    {
+        Type type = typeof(T);
+        foreach (FieldInfo field in type.GetFields())
+        {
+            field.SetValue(refData, field.GetValue(sourceData));
+        }
+    }
+
     public static T GetData<T>(string key)
     {
         Type dataType = typeof(T);
@@ -160,4 +184,25 @@ public static class DataManager
         }
         return (T)s_dataDict[dataType][key];
     }
+}
+
+public class DataManagerException : Exception
+{
+    Type _dataType;
+    string _dataKey;
+
+    public DataManagerException (Type dataType, string key)
+	{
+        _dataType = dataType;
+        _dataKey = key;
+	}
+
+    public override string Message
+    {
+        get
+        {
+            return String.Format("Could not find data object {0} : {1}", _dataKey, _dataType.Name);
+        }
+    }
+
 }

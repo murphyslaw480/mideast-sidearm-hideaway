@@ -79,9 +79,6 @@ namespace SpaceGame.graphics
         #endregion
 
         #region static
-        //stores all data for particle effects
-        public static Dictionary<string, ParticleGeneratorData> Data;
-
         public static ContentManager Content;
         static Texture2D particleTexture;
         //default texture to draw particles with. Hardcoded single pixel assigned in Game.LoadContent
@@ -160,7 +157,7 @@ namespace SpaceGame.graphics
         /// </summary>
         /// <param name="effectKey">string identifier used to fetch parameters. Must match Name attribute in XML</param>
         public ParticleGenerator(string effectKey)
-            :this(Data[effectKey])
+            :this(DataManager.GetData<ParticleGeneratorData>(effectKey))
         {
         }
 

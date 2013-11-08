@@ -21,11 +21,6 @@ namespace SpaceGame.graphics
 
     public class ParticleEffect
     {
-        #region static
-        //stores all data for particle effects
-        public static Dictionary<string, ParticleEffectData> Data;
-        #endregion
-
         #region fields
         float _intensityFactor;
         bool _reversed;
@@ -57,23 +52,30 @@ namespace SpaceGame.graphics
         }
         #endregion
 
-
         /// <summary>
         /// Create a new particle effect, based on parameters stored in ParticleEffectData.xml
         /// </summary>
         /// <param name="effectKey">string identifier used to fetch parameters. Must match Name attribute in XML</param>
         public ParticleEffect(string effectKey)
         {
-            if (Data.ContainsKey(effectKey))
+            try
             {
-                ParticleEffectData data = Data[effectKey];
-                _generators = new ParticleGenerator[data.ParticleGenerators.Length];
-                for (int i = 0; i < _generators.Length; i++)
+                ParticleEffectData data = DataManager.GetData<ParticleEffectData>(effectKey);
+                if (data.ParticleGenerators.Count() > 0)
                 {
-                    _generators[i] = new ParticleGenerator(data.ParticleGenerators[i]);
+                    _generators = new ParticleGenerator[data.ParticleGenerators.Length];
+                    for (int i = 0; i < _generators.Length; i++)
+                    {
+                        _generators[i] = new ParticleGenerator(data.ParticleGenerators[i]);
+                    }
+                }
+                else
+                {
+                    _generators = new ParticleGenerator[1];
+                    _generators[0] = new ParticleGenerator(effectKey);
                 }
             }
-            else
+            catch (DataManagerException)
             {
                 _generators = new ParticleGenerator[1];
                 _generators[0] = new ParticleGenerator(effectKey);

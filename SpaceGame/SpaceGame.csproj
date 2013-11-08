@@ -196,6 +196,10 @@
     <Content Include="Content\spritesheets\weapons\Shotgun.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="data\ParticleGeneratorData.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Icon.ico" />
     <Content Include="Content\music\space.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

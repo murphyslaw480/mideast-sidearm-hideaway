@@ -122,12 +122,6 @@ namespace SpaceGame
             ParticleGenerator.Content = Content;   //ParticleGenerator gets reference to content so it can load textures
             Gamestate.Content = Content;
 
-            //load data from xml
-            ParticleGenerator.Data = DataLoader.CollectData<ParticleGeneratorData>(
-                DataLoader.PARTICLE_EFFECT_PATH, "ParticleGeneratorData").ToDictionary(t => t.Name);
-
-            ParticleEffect.Data = DataLoader.LoadParticleEffectData(Content);
-
             Gamemenu.LoadContent(Content);
             _stateStack.Add(new Gamemenu(Content));
         }
