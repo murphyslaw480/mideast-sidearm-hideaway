@@ -181,6 +181,14 @@ namespace SpaceGame.units
         {
             get { return !(_lifeState == LifeState.Dormant || _lifeState == LifeState.Destroyed); }
         }
+        public bool CanRespawn
+        {
+            get {return _lifeState == LifeState.Dormant || _lifeState == LifeState.Destroyed;}
+        }
+        public bool CanMove
+        {
+            get { return _lifeState == LifeState.Living || _lifeState == LifeState.Ghost;}
+        }
         #endregion
 
         #region other members
@@ -374,18 +382,15 @@ namespace SpaceGame.units
                 case LifeState.Living:
                 case LifeState.Ghost:
                     {
-
                         //handle burning
                         ApplyDamage(_statusEffects.Fire * (float)gameTime.ElapsedGameTime.TotalSeconds * FIRE_DPS);
-
                         break;
                     }
-                case LifeState.Disabled:
                 case LifeState.Frozen:
                     {
                         if (_statusEffects.Cryo <= 0)
                         {
-                            _lifeState = LifeState.Living;
+                            _lifeState = Health > 0 ? LifeState.Living : LifeState.Destroyed;
                             //still cold after defrosting
                             _statusEffects.Cryo = MAX_STAT_EFFECT / 2;
                         }
@@ -418,10 +423,11 @@ namespace SpaceGame.units
                         break;
                     }
                 case LifeState.Destroyed:
-                default:
                     {
-                        return;     //don't update anything
+                        return;
                     }
+                default:
+                    break;     //don't update anything
             }
 
             stayInBounds(levelBounds.Width, levelBounds.Height);

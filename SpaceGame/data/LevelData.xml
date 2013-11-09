@@ -2,12 +2,16 @@
 <Levels>
   <LevelData Name="Level1" Width="1200" Height="800" PlayerX="800" PlayerY="100">
     <BlackHole X="200" Y="700" Gravity="18000" Radius="100" Capacity="200"/>
-    <Unicorn StartTime="4" EndTime="1000" SpawnTime="8"/>
+    <!--Unicorn StartTime="4" EndTime="1000" SpawnTime="8"/-->
     <BurstWaves>
-      <BurstWaveData RestDelay="5" Difficulty="3" EnemySpawnRate="1" Enemies="Goblin,Goblin,Goblin">
-      </BurstWaveData> 
+      <BurstWaveData RestDelay="2" Difficulty="3" EnemySpawnRate="1"
+                     Enemies="Goblin,Goblin,Goblin">
+      </BurstWaveData>
     </BurstWaves>
     <TrickleWaves>
+      <TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" 
+                     Enemies="Goblin,Goblin,Goblin,Goblin">
+      </TrickleWaveData> 
     </TrickleWaves>
   </LevelData>
 
@@ -15,10 +19,14 @@
 	<!--Test level with no enemies-->
     <BlackHole X="200" Y="700" Gravity="000" Radius="100" Capacity="200"/>
     <BurstWaves>
-      <BurstWaveData RestDelay="5" Difficulty="3" EnemySpawnRate="1" Enemies="Goblin,Goblin,Goblin,Goblin">
+      <BurstWaveData RestDelay="5" Difficulty="3" EnemySpawnRate="1" 
+                     Enemies="Goblin,Goblin,Goblin,Goblin">
       </BurstWaveData> 
     </BurstWaves>
     <TrickleWaves>
+      <TrickleWaveData StartTime="3" Duration="3" EnemySpawnRate="1" 
+                     Enemies="Goblin,Goblin,Goblin,Goblin">
+      </TrickleWaveData> 
     </TrickleWaves>
   </LevelData>
 

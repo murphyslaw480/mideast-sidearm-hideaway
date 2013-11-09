@@ -90,6 +90,10 @@ namespace SpaceGame.units
         protected bool trySpawn(TimeSpan time, Vector2 blackHolePosition)
         {
             Debug.Assert(_enemySpawnIndex <= _enemies.Length - 1, "_enemySpawnIndex out of range");
+            if (!SpawnEnable || !_enemies[_enemySpawnIndex].CanRespawn)
+            {   //cannot spawn or enemy already spawned
+                return false;
+            }
             _enemySpawnValue += _enemySpawnRate * (float)time.TotalSeconds;
             Enemy enemy = _enemies[_enemySpawnIndex];
             if (_enemySpawnValue >= enemy.Difficulty)
@@ -243,9 +247,13 @@ namespace SpaceGame.units
 
         BurstWave _previousWave;
 
-        public override bool Active { 
-            get { return _restTimer <= TimeSpan.Zero && !_allDestroyed && 
-                (_previousWave == null || _previousWave._allDestroyed); } 
+        public override bool Active
+        {
+            get
+            {
+                return _restTimer <= TimeSpan.Zero && !_allDestroyed &&
+                    (_previousWave == null || _previousWave._allDestroyed);
+            }
         }
 
         public BurstWave(BurstWaveData data, Rectangle levelBounds, BurstWave previousWave)
@@ -258,13 +266,12 @@ namespace SpaceGame.units
             _portalEffect = new ParticleEffect(c_portalEffectName);
             _previousWave = previousWave;
             _allDestroyed = false;
-
         }
 
         public override void Update(GameTime gameTime, Spaceman player, BlackHole blackHole, Weapon weapon1, Weapon weapon2, InventoryManager inventory, Unicorn[] unicorns)
         {
             //Waiting for previous or already complete
-            if (_allDestroyed || _previousWave != null && !_previousWave._allDestroyed) {return;}
+            if (!Active) { return; }
 
             //resting stage
             if (_restTimer >= TimeSpan.Zero)        //not started yet
@@ -295,7 +302,7 @@ namespace SpaceGame.units
 
         public override void Draw(SpriteBatch sb)
         {
-            if (_portalEffect != null)
+            if (Active && _portalEffect != null)
                 _portalEffect.Draw(sb);
 
             base.Draw(sb);
@@ -308,7 +315,7 @@ namespace SpaceGame.units
 
         public override bool Active
         {
-            get { return _startTimer <= TimeSpan.Zero && _endTimer >= TimeSpan.Zero; }
+            get { return _startTimer <= TimeSpan.Zero && !_allDestroyed; }
         }
 
         public TrickleWave(TrickleWaveData data, Rectangle levelBounds)
@@ -325,8 +332,14 @@ namespace SpaceGame.units
                 _startTimer -= gameTime.ElapsedGameTime;
                 return;
             }
-            if (_endTimer <= TimeSpan.Zero) { return; }     //wave over
-            _endTimer -= gameTime.ElapsedGameTime;
+            if (_endTimer <= TimeSpan.Zero)
+            {
+                SpawnEnable = false;
+            }
+            else
+            {
+                _endTimer -= gameTime.ElapsedGameTime;
+            }
 
             if (trySpawn(gameTime.ElapsedGameTime, blackHole.Position))
             {   //reposition if enemy spawned successfully

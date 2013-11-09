@@ -81,7 +81,7 @@ namespace SpaceGame.units
         public override void Update(GameTime gameTime, Rectangle levelBounds)
         {
             base.Update(gameTime, levelBounds);
-            if (_lifeState == LifeState.Living || _lifeState == LifeState.Ghost)
+            if (CanMove)
             {
                 if (Panicked)
                 {
@@ -110,20 +110,26 @@ namespace SpaceGame.units
         /// <param name="direction">Direction to move. Should be normalized for normal movement.</param>
         private void moveThisWay(Vector2 direction, GameTime gameTime)
         {
-            //apply movement force, taking into account cryo effect (which slows)
-            ApplyForce(_moveForce * direction * (1 - _statusEffects.Cryo / MAX_STAT_EFFECT) );
-            if (_movementParticleEffect != null)
-                _movementParticleEffect.Spawn(Center + (_sprite as UnitSprite).ExhaustOffset, XnaHelper.DegreesFromVector(-direction), gameTime.ElapsedGameTime, Velocity); 
+            if (CanMove)
+            {
+                //apply movement force, taking into account cryo effect (which slows)
+                ApplyForce(_moveForce * direction * (1 - _statusEffects.Cryo / MAX_STAT_EFFECT));
+                if (_movementParticleEffect != null)
+                    _movementParticleEffect.Spawn(Center + (_sprite as UnitSprite).ExhaustOffset, XnaHelper.DegreesFromVector(-direction), gameTime.ElapsedGameTime, Velocity);
+            }
         }
 
         protected void lookThisWay(Vector2 direction)
         {
-            float angle = XnaHelper.RadiansFromVector(direction);
+            if (CanMove)
+            {
+                float angle = XnaHelper.RadiansFromVector(direction);
 
-            if (angle > 0 && angle < Math.PI)
-                _sprite.FlipH = true;
-            else
-                _sprite.FlipH = false;
+                if (angle > 0 && angle < Math.PI)
+                    _sprite.FlipH = true;
+                else
+                    _sprite.FlipH = false;
+            }
         }
 
         #endregion
