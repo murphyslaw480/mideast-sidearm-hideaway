@@ -270,9 +270,6 @@ namespace SpaceGame.units
 
         public override void Update(GameTime gameTime, Spaceman player, BlackHole blackHole, Weapon weapon1, Weapon weapon2, InventoryManager inventory, Unicorn[] unicorns)
         {
-            //Waiting for previous or already complete
-            if (!Active) { return; }
-
             //resting stage
             if (_restTimer >= TimeSpan.Zero)        //not started yet
             {
@@ -283,6 +280,9 @@ namespace SpaceGame.units
                 }
                 return;         //not ready to start
             }
+
+            //Waiting for previous or already complete
+            if (!Active) { return; }
 
             //active stage
             //spawning

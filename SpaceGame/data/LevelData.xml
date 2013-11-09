@@ -9,9 +9,9 @@
       </BurstWaveData>
     </BurstWaves>
     <TrickleWaves>
-      <TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" 
+      <!--TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" 
                      Enemies="Goblin,Goblin,Goblin,Goblin">
-      </TrickleWaveData> 
+      </TrickleWaveData--> 
     </TrickleWaves>
   </LevelData>
 
