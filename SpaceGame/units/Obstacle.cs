@@ -5,9 +5,17 @@ using System.Text;
 
 namespace SpaceGame.units
 {
+    class ObstacleData : PhysicalData
+    {
+    }
+
     class Obstacle : PhysicalBody
     {
-        public Obstacle(PhysicalData pd)
+        public Obstacle(string name)
+            :this(DataManager.GetData<ObstacleData>(name))
+        { }
+
+        protected Obstacle(PhysicalData pd)
             :base(pd, graphics.Sprite.SpriteType.Obstacle)
         {
         }

@@ -119,9 +119,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\spritesheets\obstacles\Crate.xnb" />
-    <None Include="Content\spritesheets\obstacles\Cryo Barrel.xnb" />
-    <None Include="Content\spritesheets\obstacles\Flammable Barrel.xnb" />
-    <None Include="Content\spritesheets\obstacles\Space Rock.xnb" />
+    <None Include="Content\spritesheets\obstacles\CryoBarrel.xnb" />
+    <None Include="Content\spritesheets\obstacles\FlameBarrel.xnb" />
+    <None Include="Content\spritesheets\obstacles\SpaceRock.xnb" />
     <None Include="data\GadgetData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
