@@ -131,7 +131,7 @@ namespace SpaceGame.units
         /// call on each unit during unit update loop
         /// </summary>
         /// <param name="unit">unit to affect. Should be called after updating unit</param>
-        public void ApplyToUnit(PhysicalUnit unit, GameTime gameTime)
+        public void ApplyToUnit(PhysicalBody unit, GameTime gameTime)
         {
             float massEaten;
             if (_state != BlackHoleState.Pulling && _state != BlackHoleState.Overdrive)

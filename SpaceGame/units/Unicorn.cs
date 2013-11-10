@@ -197,7 +197,7 @@ namespace SpaceGame.units
                     
         }
 
-        public void CheckAndApplyCollision(PhysicalUnit unit, GameTime gameTime)
+        public void CheckAndApplyCollision(PhysicalBody unit, GameTime gameTime)
         {
             switch (_state)
             {

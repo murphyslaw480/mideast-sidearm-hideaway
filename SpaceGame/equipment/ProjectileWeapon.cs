@@ -86,7 +86,7 @@ namespace SpaceGame.equipment
         #endregion
 
         #region methods
-        public override void CheckAndApplyCollision(PhysicalUnit unit, TimeSpan time)
+        public override void CheckAndApplyCollision(PhysicalBody unit, TimeSpan time)
         {
             if (!unit.Collides)
                 return;

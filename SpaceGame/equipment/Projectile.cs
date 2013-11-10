@@ -166,7 +166,7 @@ namespace SpaceGame.equipment
             }
         }
 
-        public void CheckAndApplyCollision(PhysicalUnit u, TimeSpan time)
+        public void CheckAndApplyCollision(PhysicalBody u, TimeSpan time)
         {
             if (!u.Collides)
                 return;

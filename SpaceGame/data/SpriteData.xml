@@ -15,16 +15,16 @@
   </UnitSpriteData>
 
   <!-- Obstacle Sprites-->
-  <SpriteData Name="Crate" AssetName="Crate" FrameWidth="57" FrameHeight="56" 
+  <SpriteData Name="Crate" AssetName="Crate" FrameWidth="57" FrameHeight="56" NumFrames="1" NumStates="1" 
               DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
 
-  <SpriteData Name="CryoBarrel" AssetName="CryoBarrel" FrameWidth="51" FrameHeight="67" 
+  <SpriteData Name="CryoBarrel" AssetName="CryoBarrel" FrameWidth="51" FrameHeight="67" NumFrames="1" NumStates="1" 
               DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
 
-  <SpriteData Name="FlameBarrel" AssetName="FlameBarrel" FrameWidth="43" FrameHeight="63" 
+  <SpriteData Name="FlameBarrel" AssetName="FlameBarrel" FrameWidth="43" FrameHeight="63" NumFrames="1" NumStates="1" 
               DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
               
-  <SpriteData Name="SpaceRock" AssetName="SpaceRock" FrameWidth="125" FrameHeight="122" 
+  <SpriteData Name="SpaceRock" AssetName="SpaceRock" FrameWidth="125" FrameHeight="122" NumFrames="1" NumStates="1" 
               DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
 
   <!-- Projectile Weapon Sprites-->

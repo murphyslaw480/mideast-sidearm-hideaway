@@ -64,7 +64,7 @@ namespace SpaceGame.equipment
         #endregion
 
         #region methods
-        public override void CheckAndApplyCollision(PhysicalUnit unit, TimeSpan time)
+        public override void CheckAndApplyCollision(PhysicalBody unit, TimeSpan time)
         {
             if (!_firing || !unit.Collides)
                 return;     //don't check collisions if not firing

@@ -341,6 +341,11 @@ namespace SpaceGame.utility
             return rand.Next(min, max + 1);
         }
 
+        public static TimeSpan RandomTime(float min, float max)
+        {
+            return TimeSpan.FromSeconds(min + rand.NextDouble() * (max - min));
+        }
+
         public static void DrawRect(Color color, Rectangle rect, SpriteBatch sb)
         {
             sb.Draw(PixelTexture, rect, color);

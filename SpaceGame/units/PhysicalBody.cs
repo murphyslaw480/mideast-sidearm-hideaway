@@ -181,7 +181,7 @@ namespace SpaceGame.units
         {
             get { return !(_lifeState == LifeState.Dormant || _lifeState == LifeState.Destroyed); }
         }
-        public bool CanRespawn
+        public virtual bool CanRespawn
         {
             get {return _lifeState == LifeState.Dormant || _lifeState == LifeState.Destroyed;}
         }

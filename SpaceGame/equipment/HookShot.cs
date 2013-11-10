@@ -35,7 +35,7 @@ namespace SpaceGame.equipment
             Retracting
         }
 
-        PhysicalUnit _hookedUnit;
+        PhysicalBody _hookedUnit;
         HookState _hookState;
 
         Vector2 _hookPosition, _hookVelocity;
@@ -117,7 +117,7 @@ namespace SpaceGame.equipment
 
         }
 
-        public override void CheckAndApplyCollision(PhysicalUnit unit, TimeSpan time)
+        public override void CheckAndApplyCollision(PhysicalBody unit, TimeSpan time)
         {
             if (_hookState == HookState.Fired || _hookState == HookState.Retracting)
             { 

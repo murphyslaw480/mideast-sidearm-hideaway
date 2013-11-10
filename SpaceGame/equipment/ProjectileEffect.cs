@@ -116,7 +116,7 @@ namespace SpaceGame.equipment
         /// </summary>
         /// <param name="effectPos">origin of effect</param>
         /// <param name="target">target unit</param>
-        public void TryApply(Vector2 effectPos, PhysicalUnit target, TimeSpan time)
+        public void TryApply(Vector2 effectPos, PhysicalBody target, TimeSpan time)
         {
             if (utility.XnaHelper.RectangleIntersectsCircle(target.HitRect, effectPos, _radius))
             {

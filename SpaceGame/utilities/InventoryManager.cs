@@ -133,7 +133,7 @@ namespace SpaceGame.utility
             }
         }
 
-        public void CheckCollisions(GameTime gameTime, PhysicalUnit unit)
+        public void CheckCollisions(GameTime gameTime, PhysicalBody unit)
         {
             foreach (IConsumable item in _slots)
             {

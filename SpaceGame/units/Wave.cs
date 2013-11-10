@@ -46,9 +46,11 @@ namespace SpaceGame.units
         #endregion
 
         #region fields
+        PhysicalBody[] _bodies;
+        Enemy[] _enemies;
+        Obstacle[] _obstacles;
         protected int _numEnemies;      //total number of enemies in wave
         protected int _enemySpawnIndex;    //next enemy to spawn
-        Enemy[] _enemies;
         float _enemySpawnValue;         //spawn when this > next enemy's difficulty
         float _enemySpawnRate;          //rate to accumulate spawnValue
         protected Vector2 _spawnLocation;         //where in level to spawn enemies
@@ -66,16 +68,21 @@ namespace SpaceGame.units
         public bool SpawnEnable { get; set; }
 
         public Enemy[] Enemies { get { return _enemies; } }
+        public Obstacle[] Obstacles { get { return _obstacles; } }
         #endregion
 
         #region constructor
         public Wave(WaveData data, bool trickleWave, Rectangle levelBounds)
         {
+            _bodies = new PhysicalBody[data.Enemies.Length + 1];
             _enemies = new Enemy[data.Enemies.Length];
-            for (int j = 0; j < _enemies.Length; j++)
+            for (int j = 0; j < data.Enemies.Length; j++)
             {
                 _enemies[j] = new Enemy(data.Enemies[j], levelBounds);
+                _bodies[j] = _enemies[j];
             }
+            _obstacles = new Obstacle[] { new Obstacle("SpaceRock") };
+            _bodies[_bodies.Length - 1] = _obstacles[0];
             _numEnemies = _enemies.Length;
             _enemySpawnRate = data.EnemySpawnRate;
             _enemySpawnIndex = 0;
@@ -87,10 +94,10 @@ namespace SpaceGame.units
         #endregion
 
         #region methods
-        protected bool trySpawn(TimeSpan time, Vector2 blackHolePosition)
+        protected bool trySpawnEnemy(TimeSpan time, Vector2 blackHolePosition)
         {
-            Debug.Assert(_enemySpawnIndex <= _enemies.Length - 1, "_enemySpawnIndex out of range");
-            if (!Active || !SpawnEnable || !_enemies[_enemySpawnIndex].CanRespawn)
+            Debug.Assert(_enemySpawnIndex <= _bodies.Length - 1, "_enemySpawnIndex out of range");
+            if (!Active || !SpawnEnable || !_bodies[_enemySpawnIndex].CanRespawn)
             {   //cannot spawn or enemy already spawned
                 return false;
             }
@@ -98,11 +105,27 @@ namespace SpaceGame.units
             Enemy enemy = _enemies[_enemySpawnIndex];
             if (_enemySpawnValue >= enemy.Difficulty)
             {
-                _enemies[_enemySpawnIndex++].Respawn(_spawnLocation);
+                _bodies[_enemySpawnIndex++].Respawn(_spawnLocation);
                 _enemySpawnValue = 0;
                 return true;
             }
             return false;
+        }
+
+        protected void trySpawnObstacle(TimeSpan time, Vector2 blackHolePosition)
+        {
+            if (!Active || !SpawnEnable)
+            {   //cannot spawn or enemy already spawned
+                return;
+            }
+            for (int i = 0; i < _obstacles.Length; i++)
+            {
+                if (_obstacles[i].CanRespawn)
+                {
+                    _obstacles[i].Respawn(_spawnLocation);
+                    setPosition(blackHolePosition, false);
+                }
+            }
         }
 
         /// <summary>
@@ -122,57 +145,66 @@ namespace SpaceGame.units
 
             //update all enemies in wave
             bool allDestroyed = true;   //check if all enemies destroyed
-            for (int i = _enemies.Length - 1; i >= 0; i--)
+            for (int i = _bodies.Length - 1; i >= 0; i--)
             {
-                if (_enemies[i].UnitLifeState != PhysicalBody.LifeState.Destroyed)
+                if (_bodies[i].UnitLifeState != PhysicalBody.LifeState.Destroyed)
                 {
                     allDestroyed = false;       //found one that isn't destroyed
                 }
 
-                if (!_enemies[i].Updates)
+                if (!_bodies[i].Updates)
                     continue;   //don't update units that shouldn't be updated
 
                 for (int j = i - 1; j >= 0; j--)
                 {
                     //check collision against other enemies in same wave
-                    _enemies[i].CheckAndApplyUnitCollision(_enemies[j]);
+                    _bodies[i].CheckAndApplyUnitCollision(_bodies[j]);
                 }
 
                 for (int j = 0; j < unicorns.Length; j++)
                 {
                     //check collision against unicorns
-                    unicorns[j].CheckAndApplyCollision(_enemies[i], gameTime);
+                    unicorns[j].CheckAndApplyCollision(_bodies[i], gameTime);
                 }
-                _enemies[i].CheckAndApplyUnitCollision(player);
-                _enemies[i].CheckAndApplyWeaponCollision(player, gameTime.ElapsedGameTime);
+                _bodies[i].CheckAndApplyUnitCollision(player);
+                if (_bodies[i] is Enemy)
+                {
+                    (_bodies[i] as Enemy).CheckAndApplyWeaponCollision(player, gameTime.ElapsedGameTime);
+                    (_bodies[i] as Enemy).Update(gameTime, player.Position, Vector2.Zero, _levelBounds);
+                }
+                else
+                {
+                    _bodies[i].Update(gameTime, _levelBounds);
+                }
 
-                _enemies[i].Update(gameTime, player.Position, Vector2.Zero, _levelBounds);
-                blackHole.ApplyToUnit(_enemies[i], gameTime);
+                blackHole.ApplyToUnit(_bodies[i], gameTime);
                 if (weapon1 != null)
                 {
-                    weapon1.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
+                    weapon1.CheckAndApplyCollision(_bodies[i], gameTime.ElapsedGameTime);
                 }
                 if (weapon2 != null)
                 {
-                    weapon2.CheckAndApplyCollision(_enemies[i], gameTime.ElapsedGameTime);
+                    weapon2.CheckAndApplyCollision(_bodies[i], gameTime.ElapsedGameTime);
                 }
-                inventory.CheckCollisions(gameTime, _enemies[i]);
+                inventory.CheckCollisions(gameTime, _bodies[i]);
             }
+
+            trySpawnObstacle(gameTime.ElapsedGameTime, blackHole.Position);
 
             _allDestroyed = allDestroyed;
         }
 
         public void CheckAndApplyCollisions(Wave otherWave)
         {
-            for (int i = 0; i < _enemies.Length; i++)
+            for (int i = 0; i < _bodies.Length; i++)
             {
-                if (!_enemies[i].Collides)
+                if (!_bodies[i].Collides)
                     continue;   //don't check enemies that shouldn't collide
 
-                for (int j = 0; j < otherWave._enemies.Length; j++)
+                for (int j = 0; j < otherWave._bodies.Length; j++)
                 {
                     //check collision against other enemies 
-                    _enemies[i].CheckAndApplyUnitCollision(otherWave._enemies[j]);
+                    _bodies[i].CheckAndApplyUnitCollision(otherWave._bodies[j]);
                 }
             }
         }
@@ -227,9 +259,9 @@ namespace SpaceGame.units
 
         public virtual void Draw(SpriteBatch sb)
         {
-            foreach (Enemy e in _enemies)
+            foreach (PhysicalBody b in _bodies)
             {
-                e.Draw(sb);
+                b.Draw(sb);
             }
         }
         #endregion
@@ -291,7 +323,7 @@ namespace SpaceGame.units
             {
                 _portalEffect.Spawn(_spawnLocation, 90.0f + _portalAngle, gameTime.ElapsedGameTime, Vector2.Zero);
                 _portalEffect.Spawn(_spawnLocation, -90.0f + _portalAngle, gameTime.ElapsedGameTime, Vector2.Zero);
-                trySpawn(gameTime.ElapsedGameTime, blackHole.Position);
+                trySpawnEnemy(gameTime.ElapsedGameTime, blackHole.Position);
             }
             _portalAngle += (float)gameTime.ElapsedGameTime.TotalSeconds * c_portalRotationRate;
             _portalEffect.Update(gameTime);
@@ -341,7 +373,7 @@ namespace SpaceGame.units
                 _endTimer -= gameTime.ElapsedGameTime;
             }
 
-            if (trySpawn(gameTime.ElapsedGameTime, blackHole.Position))
+            if (trySpawnEnemy(gameTime.ElapsedGameTime, blackHole.Position))
             {   //reposition if enemy spawned successfully
                 setPosition(blackHole.Position, false);
             }

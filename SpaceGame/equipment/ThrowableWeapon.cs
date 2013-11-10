@@ -37,15 +37,5 @@ namespace SpaceGame.equipment
                 NumUses--;
             }
         }
-
-        public void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public void Draw(SpriteBatch sb)
-        {
-            base.Draw(sb);
-        }
     }
 }

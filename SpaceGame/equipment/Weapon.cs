@@ -103,7 +103,7 @@ namespace SpaceGame.equipment
         /// Call during the update loop on each unit
         /// </summary>
         /// <param name="unit"></param>
-        public abstract void CheckAndApplyCollision(PhysicalUnit unit, TimeSpan time);
+        public abstract void CheckAndApplyCollision(PhysicalBody unit, TimeSpan time);
         //update projectiles and add new projectiles if _firing
         protected abstract void UpdateWeapon(GameTime gameTime);
         public abstract void Draw(SpriteBatch sb);
