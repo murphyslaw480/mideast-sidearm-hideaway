@@ -4,14 +4,14 @@
     <BlackHole X="200" Y="700" Gravity="18000" Radius="100" Capacity="200"/>
     <!--Unicorn StartTime="4" EndTime="1000" SpawnTime="8"/-->
     <BurstWaves>
-      <BurstWaveData RestDelay="2" Difficulty="3" EnemySpawnRate="1"
+      <!--BurstWaveData RestDelay="2" Difficulty="3" EnemySpawnRate="1"
                      Enemies="Goblin,Goblin,Goblin">
-      </BurstWaveData>
+      </BurstWaveData-->
     </BurstWaves>
     <TrickleWaves>
-      <!--TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" 
-                     Enemies="Goblin,Goblin,Goblin,Goblin">
-      </TrickleWaveData--> 
+      <TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" 
+                     Enemies="Goblin">
+      </TrickleWaveData> 
     </TrickleWaves>
   </LevelData>
 
@@ -24,8 +24,8 @@
       </BurstWaveData> 
     </BurstWaves>
     <TrickleWaves>
-      <TrickleWaveData StartTime="3" Duration="3" EnemySpawnRate="1" 
-                     Enemies="Goblin,Goblin,Goblin,Goblin">
+      <TrickleWaveData StartTime="3" Duration="30" EnemySpawnRate="1" 
+                     Enemies="Goblin, Goblin, Goblin">
       </TrickleWaveData> 
     </TrickleWaves>
   </LevelData>

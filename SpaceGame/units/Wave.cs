@@ -90,7 +90,7 @@ namespace SpaceGame.units
         protected bool trySpawn(TimeSpan time, Vector2 blackHolePosition)
         {
             Debug.Assert(_enemySpawnIndex <= _enemies.Length - 1, "_enemySpawnIndex out of range");
-            if (!SpawnEnable || !_enemies[_enemySpawnIndex].CanRespawn)
+            if (!Active || !SpawnEnable || !_enemies[_enemySpawnIndex].CanRespawn)
             {   //cannot spawn or enemy already spawned
                 return false;
             }
@@ -315,7 +315,7 @@ namespace SpaceGame.units
 
         public override bool Active
         {
-            get { return _startTimer <= TimeSpan.Zero && !_allDestroyed; }
+            get { return _startTimer <= TimeSpan.Zero && !(_endTimer <= TimeSpan.Zero && _allDestroyed); }
         }
 
         public TrickleWave(TrickleWaveData data, Rectangle levelBounds)
