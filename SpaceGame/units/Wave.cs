@@ -17,6 +17,8 @@ namespace SpaceGame.units
     {
         public string[] Enemies;
         public float EnemySpawnRate;     //difficulty / second
+
+        public ObstacleData[] Obstacles;
     }
 
     class BurstWaveData : WaveData
@@ -74,16 +76,20 @@ namespace SpaceGame.units
         #region constructor
         public Wave(WaveData data, bool trickleWave, Rectangle levelBounds)
         {
-            _bodies = new PhysicalBody[data.Enemies.Length + 1];
-            _enemies = new Enemy[data.Enemies.Length];
+            _enemies = data.Enemies == null ? new Enemy[0] : new Enemy[data.Enemies.Length];
+            _obstacles = data.Obstacles == null ? new Obstacle[0] : new Obstacle[data.Obstacles.Length];
+            _bodies = new PhysicalBody[_enemies.Length + _obstacles.Length];
+            _numEnemies = _enemies.Length;
             for (int j = 0; j < data.Enemies.Length; j++)
             {
                 _enemies[j] = new Enemy(data.Enemies[j], levelBounds);
                 _bodies[j] = _enemies[j];
             }
-            _obstacles = new Obstacle[] { new Obstacle("SpaceRock") };
-            _bodies[_bodies.Length - 1] = _obstacles[0];
-            _numEnemies = _enemies.Length;
+            for (int j = 0; j < _obstacles.Length; j++)
+            {
+                _obstacles[j] = new Obstacle(data.Obstacles[j]);
+                _bodies[j + _numEnemies] = _obstacles[j];
+            }
             _enemySpawnRate = data.EnemySpawnRate;
             _enemySpawnIndex = 0;
             _enemySpawnValue = 0;

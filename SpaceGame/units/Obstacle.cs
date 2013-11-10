@@ -22,11 +22,7 @@ namespace SpaceGame.units
         TimeSpan _respawnTimer;
         bool _isSpawned;
 
-        public Obstacle(string name)
-            :this(DataManager.GetData<ObstacleData>(name))
-        { }
-
-        protected Obstacle(ObstacleData data)
+        public Obstacle(ObstacleData data)
             :base(data, graphics.Sprite.SpriteType.Obstacle)
         {
             MinSpawnTime = data.MinSpawnTime;

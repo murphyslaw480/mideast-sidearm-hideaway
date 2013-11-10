@@ -74,7 +74,7 @@ public static class DataManager
     public static T[] ParseArray<T>(XElement el) 
     {
         List<T> list = new List<T>();
-        foreach (XElement x in el.Descendants())
+        foreach (XElement x in el.Elements())
         {
             list.Add((T)ParseElement<T>(x));
         }

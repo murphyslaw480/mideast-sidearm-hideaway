@@ -9,8 +9,11 @@
       </BurstWaveData-->
     </BurstWaves>
     <TrickleWaves>
-      <TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" 
-                     Enemies="Goblin">
+      <TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" Enemies="Goblin">
+        <Obstacles>
+          <ObstacleDataRef Name="SpaceRock" MinSpawnTime="1" MaxSpawnTime="5"/>
+          <ObstacleDataRef Name="SpaceRock" MinSpawnTime="1" MaxSpawnTime="5"/>
+        </Obstacles>
       </TrickleWaveData> 
     </TrickleWaves>
   </LevelData>
