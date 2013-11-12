@@ -131,6 +131,10 @@ namespace SpaceGame.units
                     _obstacles[i].Respawn(_spawnLocation);
                     setPosition(blackHolePosition, false);
                 }
+                else
+                {
+                    _obstacles[i].UpdateRespawnTimer(time);
+                }
             }
         }
 
@@ -180,7 +184,7 @@ namespace SpaceGame.units
                 }
                 else
                 {
-                    _bodies[i].Update(gameTime, _levelBounds);
+                    (_bodies[i] as Obstacle).Update(gameTime, _levelBounds);
                 }
 
                 blackHole.ApplyToUnit(_bodies[i], gameTime);

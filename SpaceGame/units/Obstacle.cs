@@ -16,8 +16,8 @@ namespace SpaceGame.units
 
     class Obstacle : PhysicalBody
     {
-        public float MinSpawnTime;
-        public float MaxSpawnTime;
+        float _minSpawnTime;
+        float _maxSpawnTime;
 
         TimeSpan _respawnTimer;
         bool _isSpawned;
@@ -25,8 +25,9 @@ namespace SpaceGame.units
         public Obstacle(ObstacleData data)
             :base(data, graphics.Sprite.SpriteType.Obstacle)
         {
-            MinSpawnTime = data.MinSpawnTime;
-            MaxSpawnTime = data.MaxSpawnTime;
+            _minSpawnTime = data.MinSpawnTime;
+            _maxSpawnTime = data.MaxSpawnTime;
+            _respawnTimer = XnaHelper.RandomTime(_minSpawnTime, _maxSpawnTime);
             _isSpawned = false;
         }
 
@@ -38,17 +39,16 @@ namespace SpaceGame.units
             }
         }
 
-        public override void Update(GameTime gameTime, Rectangle levelBounds)
+        public void UpdateRespawnTimer(TimeSpan time)
         {
-            base.Update(gameTime, levelBounds);
-            if (_lifeState == LifeState.Destroyed)
+            if (_lifeState == LifeState.Destroyed || _lifeState == LifeState.Dormant)
             {
                 if (_isSpawned)
                 {   //just destroyed
                     _isSpawned = false;
-                    _respawnTimer = XnaHelper.RandomTime(MinSpawnTime, MaxSpawnTime);
+                    _respawnTimer = XnaHelper.RandomTime(_minSpawnTime, _maxSpawnTime);
                 }
-                _respawnTimer -= gameTime.ElapsedGameTime;
+                _respawnTimer -= time;
             }
         }
     }
