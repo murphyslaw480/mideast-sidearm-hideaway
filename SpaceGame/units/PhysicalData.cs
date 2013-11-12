@@ -13,6 +13,7 @@ namespace SpaceGame.units
         public String Name;
         public String MovementParticleEffectName;
         public float Mass;
+        public float GravitySensitivity;
         public float MoveForce;
         public float MaxSpeed;
         public float DecelerationFactor;
@@ -26,6 +27,7 @@ namespace SpaceGame.units
             FireResist = DEFAULT_STAT_RESIST;
             CryoResist = DEFAULT_STAT_RESIST;
             ShockResist = DEFAULT_STAT_RESIST;
+            GravitySensitivity = 1f;
         }
     }
 }

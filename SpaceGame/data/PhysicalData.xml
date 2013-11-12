@@ -17,18 +17,22 @@ Health: How much damage a unit can take before dying
 
   <ObstacleData Name="Crate" Mass ="10" MaxSpeed="500" 
                 DecelerationFactor="1.00" Health ="50"
-                MinSpawnTime="1" MaxSpawnTime="3"/>
+                MinSpawnTime="1" MaxSpawnTime="10"
+                GravitySensitivity="0.3"/>
 
   <ObstacleData Name="CryoBarrel" Mass ="10" MaxSpeed="500" 
                 DecelerationFactor="1.00" Health ="50"
-                MinSpawnTime="1" MaxSpawnTime="3"/>
+                MinSpawnTime="1" MaxSpawnTime="10"
+                GravitySensitivity="0.3"/>
 
   <ObstacleData Name="FlameBarrel" Mass ="10" MaxSpeed="500" 
                 DecelerationFactor="1.00" Health ="50"
-                MinSpawnTime="1" MaxSpawnTime="3"/>
+                MinSpawnTime="1" MaxSpawnTime="10"
+                GravitySensitivity="0.3"/>
 
   <ObstacleData Name="SpaceRock" Mass ="50" MaxSpeed="500" 
                 DecelerationFactor="1.00" Health ="500"
-                MinSpawnTime="1" MaxSpawnTime="3"/>
+                MinSpawnTime="1" MaxSpawnTime="10"
+                GravitySensitivity="0.3"/>
 
 </UnitData>

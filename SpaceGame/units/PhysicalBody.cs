@@ -96,6 +96,7 @@ namespace SpaceGame.units
         float _angularVelocity = 0;
         float _mass;
         float _additionalMass;
+        float _gravitySensitivity;
         float _health, _maxHealth;
         float _maxSpeed;
         //force applied for movement
@@ -241,6 +242,7 @@ namespace SpaceGame.units
             _burningParticleEffect = new ParticleEffect("Burning");
 
             _mass = pd.Mass;
+            _gravitySensitivity = pd.GravitySensitivity;
             _moveForce = pd.MoveForce;
             _maxSpeed = pd.MaxSpeed;
             _maxHealth = pd.Health;
@@ -511,7 +513,7 @@ namespace SpaceGame.units
             //float distance = direction.Length();
             direction.Normalize();
             //_acceleration += gravity.Magnitude * direction * (float)theGameTime.ElapsedGameTime.TotalSeconds / (distance * 0.01f);
-            _acceleration += direction * gravity.Magnitude * (float)theGameTime.ElapsedGameTime.TotalSeconds;
+            _acceleration += direction * gravity.Magnitude * _gravitySensitivity * (float)theGameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void Respawn(Vector2 newPosition)
