@@ -169,6 +169,10 @@ namespace SpaceGame.units
                 {
                     //check collision against other enemies in same wave
                     _bodies[i].CheckAndApplyUnitCollision(_bodies[j]);
+                    if (_bodies[i] is Obstacle)
+                    {
+                        (_bodies[i] as Obstacle).CheckAndApplyEffect(_bodies[j], gameTime.ElapsedGameTime);
+                    }
                 }
 
                 for (int j = 0; j < unicorns.Length; j++)
@@ -176,7 +180,9 @@ namespace SpaceGame.units
                     //check collision against unicorns
                     unicorns[j].CheckAndApplyCollision(_bodies[i], gameTime);
                 }
+
                 _bodies[i].CheckAndApplyUnitCollision(player);
+
                 if (_bodies[i] is Enemy)
                 {
                     (_bodies[i] as Enemy).CheckAndApplyWeaponCollision(player, gameTime.ElapsedGameTime);
@@ -185,6 +191,7 @@ namespace SpaceGame.units
                 else
                 {
                     (_bodies[i] as Obstacle).Update(gameTime, _levelBounds);
+                    (_bodies[i] as Obstacle).CheckAndApplyEffect(player, gameTime.ElapsedGameTime);
                 }
 
                 blackHole.ApplyToUnit(_bodies[i], gameTime);

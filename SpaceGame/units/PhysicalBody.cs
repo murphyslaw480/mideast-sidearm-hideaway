@@ -546,7 +546,7 @@ namespace SpaceGame.units
             }
         }
 
-        public void CheckAndApplyUnitCollision(PhysicalBody other)
+        public virtual void CheckAndApplyUnitCollision(PhysicalBody other)
         {
             if (!Collides)
                 return;     //don't check collision if unit shouldn't collide
