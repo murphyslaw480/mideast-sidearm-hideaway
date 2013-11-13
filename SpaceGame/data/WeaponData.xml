@@ -64,6 +64,7 @@
     <ProjectileInfo SpriteName="Bullet" Speed="2500" Acceleration="0" SecondsToLive="0.4" 
                     Penetration="0" Mass="3.0" >
       <ProximityEffect Radius="5" Damage="15" Force="0" ParticleEffectName="BulletTrace"/>
+      <ContactEffect Duration="0.1" ParticleEffectName="BulletImpact"/>
     </ProjectileInfo>
   </ProjectileWeaponData>
 

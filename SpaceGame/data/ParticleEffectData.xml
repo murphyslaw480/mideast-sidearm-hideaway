@@ -35,6 +35,12 @@
       <ParticleGeneratorDataRef Name="EmptyShells" SpawnRate="60" StartColor="255,255,255,255" StartScale="5" Offset="180" ParticleRotation="100"/>
     </ParticleGenerators>
   </ParticleEffectData>
+  <ParticleEffectData Name="BulletImpact">
+    <ParticleGenerators>
+      <ParticleGeneratorDataRef Name="Sparks" SpawnRate="60" StartColor="255,255,255,255" StartScale="5" Offset="180" ParticleRotation="100"/>
+    </ParticleGenerators>
+  </ParticleEffectData>
+
 
   <ParticleEffectData Name="BulletTrace">
     <ParticleGenerators>

@@ -24,6 +24,8 @@ namespace SpaceGame.units
 
         TimeSpan _respawnTimer;
         bool _isSpawned;
+        Vector2 _destroyPosition;
+        TimeSpan _explodeTimer;
 
         ProjectileEffect _destroyEffect;
 
@@ -51,7 +53,11 @@ namespace SpaceGame.units
             if (_lifeState == LifeState.Disabled && _destroyEffect != null)
             {
                 _destroyEffect.Update(gameTime);
-                _destroyEffect.SpawnParticles(gameTime.ElapsedGameTime, _position, 0.0f, Vector2.Zero);
+                if (_explodeTimer > TimeSpan.Zero)
+                {
+                    _destroyEffect.SpawnParticles(gameTime.ElapsedGameTime, _destroyPosition, 0.0f, Vector2.Zero);
+                    _explodeTimer -= gameTime.ElapsedGameTime;
+                }
             }
         }
 
@@ -70,17 +76,27 @@ namespace SpaceGame.units
 
         public void CheckAndApplyEffect(PhysicalBody other, TimeSpan time)
         {
-            if (_lifeState == LifeState.Disabled && _destroyEffect != null)
+            if (_lifeState == LifeState.Disabled && _destroyEffect != null && _explodeTimer > TimeSpan.Zero)
             {
-                _destroyEffect.TryApply(_position, other, time);
+                _destroyEffect.TryApply(_destroyPosition, other, time);
+                _explodeTimer -= time;
             }
         }
 
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            if (_destroyEffect != null)
+            if (_destroyEffect != null && Updates)
                 _destroyEffect.Draw(sb);
+        }
+
+        protected override void OnDisable()
+        {
+            if (_destroyEffect != null)
+            {
+                _destroyPosition = _position;   //save position on destruction
+                _explodeTimer = _destroyEffect.Duration;
+            }
         }
     }
 }

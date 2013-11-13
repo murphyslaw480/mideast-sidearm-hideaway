@@ -24,14 +24,14 @@ Health: How much damage a unit can take before dying
                 DecelerationFactor="1.00" Health ="50"
                 MinSpawnTime="1" MaxSpawnTime="10"
                 GravitySensitivity="0.3">
-    <DestroyEffect ParticleEffectName="Cryosplosion" Duration="0.2" Radius="300" Damage="0" Force="6000" CryoEffect="100"/>
+    <DestroyEffect ParticleEffectName="Cryosplosion" Duration="0.2" Radius="100" Damage="0" Force="6000" CryoEffect="100"/>
   </ObstacleData>
 
   <ObstacleData Name="FlameBarrel" Mass ="10" MaxSpeed="500"
                 DecelerationFactor="1.00" Health ="50"
                 MinSpawnTime="1" MaxSpawnTime="10"
                 GravitySensitivity="0.3">
-    <DestroyEffect ParticleEffectName="RocketExplosion" Duration="0.2" Radius="300" Damage="10" Force="6000" FireEffect="50"/>
+    <DestroyEffect ParticleEffectName="RocketExplosion" Duration="0.2" Radius="100" Damage="10" Force="6000" FireEffect="50"/>
   </ObstacleData>
 
   <ObstacleData Name="SpaceRock" Mass ="50" MaxSpeed="500"

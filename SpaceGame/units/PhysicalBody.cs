@@ -305,6 +305,7 @@ namespace SpaceGame.units
             if (_health <= 0)
             {
                 _lifeState = LifeState.Disabled;
+                OnDisable();
                 _sprite.Shade = Color.Gray;
                 _angularVelocity = (float)MathHelper.PiOver4 * _health;
             }
@@ -595,6 +596,14 @@ namespace SpaceGame.units
                 this._velocity = (this._velocity * (this.Mass - other.Mass) + 2 * other.Mass * temp) /
                                     (this.Mass + other.Mass);
             }
+        }
+
+        /// <summary>
+        /// Runs once when units health drops to or below 0
+        /// </summary>
+        protected virtual void OnDisable()
+        {
+            return;
         }
         #endregion
 
