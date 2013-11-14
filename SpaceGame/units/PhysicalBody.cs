@@ -405,7 +405,7 @@ namespace SpaceGame.units
                         for (int y = 0; y < ICE_DIVISIONS; y++)
                             for (int x = 0; x < ICE_DIVISIONS; x++)
                             {
-                                allDestroyed = (_fragments[x, y].Health < 0) || allDestroyed;
+                                allDestroyed = (_fragments[x, y].Health < 0) && allDestroyed;
                                 _fragments[x, y].Angle += _fragments[x, y].AngularVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 _fragments[x, y].Position += _fragments[x, y].Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 _fragments[x, y].Velocity += _fragments[x, y].Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
