@@ -56,7 +56,7 @@
 
   <ParticleEffectData Name="Cryosplosion">
     <ParticleGenerators>
-      <ParticleGeneratorDataRef Name="Explosion" StartColor="255,0,0,255" Speed="600" SpawnRate="8600" ParticleLife="0.3"/>
+      <ParticleGeneratorDataRef Name="Explosion" StartColor="255,0,0,255" />
     </ParticleGenerators>
   </ParticleEffectData>
 
