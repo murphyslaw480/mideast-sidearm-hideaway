@@ -36,7 +36,13 @@ namespace SpaceGame.units
             _maxSpawnTime = data.MaxSpawnTime;
             _respawnTimer = XnaHelper.RandomTime(_minSpawnTime, _maxSpawnTime);
             _destroyEffect = data.DestroyEffect == null ? null : new ProjectileEffect(data.DestroyEffect);
+            _explodeTimer = TimeSpan.Zero;
             _isSpawned = false;
+        }
+
+        public bool Exploding
+        {
+            get { return _explodeTimer > TimeSpan.Zero; }
         }
 
         public override bool CanRespawn
@@ -50,7 +56,7 @@ namespace SpaceGame.units
         public override void Update(GameTime gameTime, Rectangle levelBounds)
         {
             base.Update(gameTime, levelBounds);
-            if (_lifeState == LifeState.Disabled && _destroyEffect != null)
+            if (Exploding)
             {
                 _destroyEffect.Update(gameTime);
                 if (_explodeTimer > TimeSpan.Zero)
@@ -59,6 +65,7 @@ namespace SpaceGame.units
                     _explodeTimer -= gameTime.ElapsedGameTime;
                 }
             }
+            _destroyEffect.Update(gameTime);
         }
 
         public void UpdateRespawnTimer(TimeSpan time)
@@ -76,7 +83,7 @@ namespace SpaceGame.units
 
         public void CheckAndApplyEffect(PhysicalBody other, TimeSpan time)
         {
-            if (_lifeState == LifeState.Disabled && _destroyEffect != null && _explodeTimer > TimeSpan.Zero)
+            if (Exploding && _destroyEffect != null && _explodeTimer > TimeSpan.Zero)
             {
                 _destroyEffect.TryApply(_destroyPosition, other, time);
                 _explodeTimer -= time;
@@ -96,7 +103,14 @@ namespace SpaceGame.units
             {
                 _destroyPosition = _position;   //save position on destruction
                 _explodeTimer = _destroyEffect.Duration;
+                shatter();
             }
+        }
+
+        public override void Respawn(Vector2 newPosition)
+        {
+            base.Respawn(newPosition);
+            _explodeTimer = TimeSpan.Zero;
         }
     }
 }

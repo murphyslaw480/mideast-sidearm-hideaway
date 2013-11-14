@@ -313,7 +313,7 @@ namespace SpaceGame.units
                 _sprite.Flash(Color.Orange, TimeSpan.FromSeconds(0.1), 3);
         }
 
-        private void shatter()
+        protected void shatter()
         {
             _lifeState = LifeState.Shattered;
             for (int row = 0; row < ICE_DIVISIONS; row++)
@@ -401,9 +401,11 @@ namespace SpaceGame.units
                     }
                 case LifeState.Shattered:
                     {
+                        bool allDestroyed = true;
                         for (int y = 0; y < ICE_DIVISIONS; y++)
                             for (int x = 0; x < ICE_DIVISIONS; x++)
                             {
+                                allDestroyed = (_fragments[x, y].Health < 0) || allDestroyed;
                                 _fragments[x, y].Angle += _fragments[x, y].AngularVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 _fragments[x, y].Position += _fragments[x, y].Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 _fragments[x, y].Velocity += _fragments[x, y].Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -416,6 +418,7 @@ namespace SpaceGame.units
                                     _fragments[x, y].Health -= FRAGMENT_EAT_RATE * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 }
                             }
+                        if (allDestroyed) { _lifeState = LifeState.Destroyed; }
                         return;
                     }
                 case LifeState.BeingEaten:
@@ -517,7 +520,7 @@ namespace SpaceGame.units
             _acceleration += direction * gravity.Magnitude * _gravitySensitivity * (float)theGameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        public void Respawn(Vector2 newPosition)
+        public virtual void Respawn(Vector2 newPosition)
         {
             System.Diagnostics.Debug.Assert(_lifeState == LifeState.Destroyed || _lifeState == LifeState.Dormant,
                 "Error: Tried to respawn an enemy that was not destroyed or dormant");
