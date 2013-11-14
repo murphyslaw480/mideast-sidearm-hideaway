@@ -53,7 +53,7 @@ namespace SpaceGame.units
         //damage is dealt to this while frozen - shatter if < 0
         const float ICE_INTEGRITY_FACTOR = 0.5f;
         //number of vertical and horizontal divisions when shattering
-        const int ICE_DIVISIONS = 3;
+        const int c_shatterDivisions = 3;
         //amount of health ice fragments have relative to unit
         const float FRAGMENT_HEALTH = 20;
         //max velocity of an ice fragment (px/second)
@@ -257,7 +257,7 @@ namespace SpaceGame.units
             _statusEffects = new StatEffect(0, 0, 0);
             _statusResist = new StatEffect(pd.FireResist, pd.CryoResist, pd.ShockResist);
 
-            _fragments = new IceFragment[ICE_DIVISIONS, ICE_DIVISIONS];
+            _fragments = new IceFragment[c_shatterDivisions, c_shatterDivisions];
         }
 
         #endregion
@@ -296,7 +296,7 @@ namespace SpaceGame.units
                 _iceIntegrity -= Damage;
                 if (_iceIntegrity < 0)
                 {
-                    shatter();
+                    shatter(true);
                 }
                 return;
             }
@@ -313,15 +313,15 @@ namespace SpaceGame.units
                 _sprite.Flash(Color.Orange, TimeSpan.FromSeconds(0.1), 3);
         }
 
-        protected void shatter()
+        protected void shatter(bool ice)
         {
             _lifeState = LifeState.Shattered;
-            for (int row = 0; row < ICE_DIVISIONS; row++)
-                for (int col = 0 ; col < ICE_DIVISIONS ; col++)
+            for (int row = 0; row < c_shatterDivisions; row++)
+                for (int col = 0 ; col < c_shatterDivisions ; col++)
                 {
-                    _fragments[row, col].Health = FRAGMENT_HEALTH * _statusEffects.Cryo / MAX_STAT_EFFECT;
-                    _fragments[row, col].Position.X = Position.X + (0.5f + _sprite.Width * (float)col / ICE_DIVISIONS);
-                    _fragments[row, col].Position.Y = Position.Y + (0.5f + _sprite.Height * (float)row / ICE_DIVISIONS);
+                    _fragments[row, col].Health = ice ? FRAGMENT_HEALTH * _statusEffects.Cryo / MAX_STAT_EFFECT : FRAGMENT_HEALTH;
+                    _fragments[row, col].Position.X = Position.X + (0.5f + _sprite.Width * (float)col / c_shatterDivisions);
+                    _fragments[row, col].Position.Y = Position.Y + (0.5f + _sprite.Height * (float)row / c_shatterDivisions);
                     XnaHelper.RandomizeVector(ref _fragments[row,col].Velocity, -FRAGMENT_MAX_VELOCITY, FRAGMENT_MAX_VELOCITY, 
                                                 -FRAGMENT_MAX_VELOCITY, FRAGMENT_MAX_VELOCITY);
                     Vector2.Add(ref _fragments[row, col].Velocity, ref _velocity, out _fragments[row, col].Velocity);
@@ -341,8 +341,8 @@ namespace SpaceGame.units
         {
             if (_lifeState == LifeState.Shattered)      //special handling
             {
-                for (int row = 0; row < ICE_DIVISIONS; row++)
-                    for (int col = 0; col < ICE_DIVISIONS; col++)
+                for (int row = 0; row < c_shatterDivisions; row++)
+                    for (int col = 0; col < c_shatterDivisions; col++)
                     {
                         if (Vector2.Distance(_fragments[row, col].Position, blackHolePos) < blackHoleRadius)
                         {
@@ -402,8 +402,8 @@ namespace SpaceGame.units
                 case LifeState.Shattered:
                     {
                         bool allDestroyed = true;
-                        for (int y = 0; y < ICE_DIVISIONS; y++)
-                            for (int x = 0; x < ICE_DIVISIONS; x++)
+                        for (int y = 0; y < c_shatterDivisions; y++)
+                            for (int x = 0; x < c_shatterDivisions; x++)
                             {
                                 allDestroyed = (_fragments[x, y].Health < 0) && allDestroyed;
                                 _fragments[x, y].Angle += _fragments[x, y].AngularVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -505,8 +505,8 @@ namespace SpaceGame.units
             Vector2 direction;
             if (_lifeState == LifeState.Shattered)
             {
-                for (int y = 0; y < ICE_DIVISIONS; y++)
-                    for (int x = 0; x < ICE_DIVISIONS; x++)
+                for (int y = 0; y < c_shatterDivisions; y++)
+                    for (int x = 0; x < c_shatterDivisions; x++)
                     {
                         direction = gravity.Position - _fragments[y,x].Position;
                         direction.Normalize();
@@ -557,17 +557,17 @@ namespace SpaceGame.units
             //special shattered collision detection
             if (_lifeState == LifeState.Shattered)
             {
-                tempRec.Width = _hitRect.Width / ICE_DIVISIONS;
-                tempRec.Height = _hitRect.Height / ICE_DIVISIONS;
-                for (int i = 0; i < ICE_DIVISIONS ; i++)
-                    for (int j = 0; j < ICE_DIVISIONS; j++)
+                tempRec.Width = _hitRect.Width / c_shatterDivisions;
+                tempRec.Height = _hitRect.Height / c_shatterDivisions;
+                for (int i = 0; i < c_shatterDivisions ; i++)
+                    for (int j = 0; j < c_shatterDivisions; j++)
                     {
                         tempRec.X = (int)(_fragments[i,j].Position.X - tempRec.Width / 2);
                         tempRec.Y = (int)(_fragments[i,j].Position.Y - tempRec.Height / 2);
                         if (tempRec.Intersects(other.HitRect))
                         {
                             Vector2 fVel = _fragments[i, j].Velocity;
-                            float fMass = (float)Mass / (ICE_DIVISIONS * ICE_DIVISIONS);
+                            float fMass = (float)Mass / (c_shatterDivisions * c_shatterDivisions);
                             temp = other.Velocity;
                             other._velocity = (other._velocity * (other.Mass - fMass) + 2 * fMass * fVel) /
                                                 (fMass + other.Mass);
@@ -621,15 +621,15 @@ namespace SpaceGame.units
             if (_lifeState == LifeState.Shattered)
             {
                 float integrityFactor;
-                for (int y = 0; y < ICE_DIVISIONS; y++)
-                    for (int x = 0; x < ICE_DIVISIONS; x++)
+                for (int y = 0; y < c_shatterDivisions; y++)
+                    for (int x = 0; x < c_shatterDivisions; x++)
                     {
                         integrityFactor = _fragments[y,x].Health / (FRAGMENT_HEALTH);
                         tempRec.X = (int)(_fragments[y,x].Position.X - tempRec.Width / 2);
                         tempRec.Y = (int)(_fragments[y,x].Position.Y - tempRec.Height / 2);
-                        tempRec.Width = (int)(_hitRect.Width * _fragments[y,x].ScaleFactor / ICE_DIVISIONS);
-                        tempRec.Height = (int)(_hitRect.Height  * _fragments[y,x].ScaleFactor / ICE_DIVISIONS);
-                        _sprite.DrawFragment(sb, y, x, ICE_DIVISIONS, tempRec, _fragments[y, x].Angle, integrityFactor);
+                        tempRec.Width = (int)(_hitRect.Width * _fragments[y,x].ScaleFactor / c_shatterDivisions);
+                        tempRec.Height = (int)(_hitRect.Height  * _fragments[y,x].ScaleFactor / c_shatterDivisions);
+                        _sprite.DrawFragment(sb, y, x, c_shatterDivisions, tempRec, _fragments[y, x].Angle, integrityFactor);
                         _sprite.DrawIce(sb, tempRec, _fragments[y, x].Angle, integrityFactor);
                     }
                 return;

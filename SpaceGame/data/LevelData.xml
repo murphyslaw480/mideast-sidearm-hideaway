@@ -9,7 +9,7 @@
       </BurstWaveData-->
     </BurstWaves>
     <TrickleWaves>
-      <TrickleWaveData StartTime="3" Duration="10" EnemySpawnRate="1" Enemies="Goblin">
+      <TrickleWaveData StartTime="3" Duration="50" EnemySpawnRate="1" Enemies="Goblin">
         <Obstacles>
           <ObstacleDataRef Name="FlameBarrel" MinSpawnTime="1" MaxSpawnTime="5"/>
           <ObstacleDataRef Name="CryoBarrel" MinSpawnTime="1" MaxSpawnTime="5"/>

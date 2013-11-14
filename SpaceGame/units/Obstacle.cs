@@ -103,7 +103,7 @@ namespace SpaceGame.units
             {
                 _destroyPosition = _position;   //save position on destruction
                 _explodeTimer = _destroyEffect.Duration;
-                shatter();
+                shatter(false);
             }
         }
 
