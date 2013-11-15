@@ -22,10 +22,10 @@
   -->
 <Weapons>
 
-  <ProjectileWeaponData Name="RocketLauncher" FireRate="2.0" ProjectilesPerFire="1" Spread="0" SourceVelocityFactor="0.5">
-    <ProjectileInfo SpriteName="Rocket" Speed="300" Acceleration="3000" SecondsToLive="3" 
+  <ProjectileWeaponData Name="RocketLauncher" FireRate="1.0" ProjectilesPerFire="1" Spread="0" SourceVelocityFactor="0.5">
+    <ProjectileInfo SpriteName="Rocket" Speed="200" Acceleration="3000" SecondsToLive="3" 
                     Penetration="1" Mass="10" >
-      <ContactEffect ParticleEffectName="RocketExplosion" Duration="0.1" Radius="100" Damage="30" Force="6000"/>
+      <ContactEffect ParticleEffectName="RocketExplosion" Duration="0.1" Radius="150" Damage="30" Force="6000"/>
       <ProximityEffect ParticleEffectName="RocketBooster"/>
     </ProjectileInfo>
   </ProjectileWeaponData>
