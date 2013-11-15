@@ -13,7 +13,9 @@ namespace SpaceGame.units
 {
     public class EnemyData : PhysicalData
     {
-        public string MeleeWeaponName;
+        public string Weapon;
+        public bool Ranged;
+        public float IdealRange;        //preferred range from player
         public int Difficulty;
     }
 
@@ -34,8 +36,17 @@ namespace SpaceGame.units
         protected Enemy(EnemyData data, Rectangle levelBounds)
             : base(data)
         {
-            if (data.MeleeWeaponName != null)
-                CurrentWeapon = new MeleeWeapon(data.MeleeWeaponName, this);
+            if (data.Weapon != null)
+            {
+                if (data.Ranged)
+                {
+                    CurrentWeapon = new ProjectileWeapon(data.Weapon, this);
+                }
+                else
+                {
+                    CurrentWeapon = new MeleeWeapon(data.Weapon, this);
+                }
+            }
             Difficulty = data.Difficulty;
         }
         #endregion
