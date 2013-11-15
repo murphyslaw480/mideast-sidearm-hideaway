@@ -95,7 +95,6 @@ namespace SpaceGame.units
         Vector2 _acceleration;
         float _angularVelocity = 0;
         float _mass;
-        float _additionalMass;
         float _gravitySensitivity;
         float _health, _maxHealth;
         float _maxSpeed;
@@ -104,11 +103,11 @@ namespace SpaceGame.units
         //fractional speed reduction each frame
         float _decelerationFactor;
         protected StatEffect _statusEffects, _statusResist;
-        public 
         ParticleEffect _burningParticleEffect;
         float _iceIntegrity;
         IceFragment[,] _fragments;
         TimeSpan _panicTimer;   //time till next direction switch
+        bool _freezeShatter;    //if shattered while frozen
         #endregion
 
         #region properties
@@ -116,7 +115,7 @@ namespace SpaceGame.units
         public float MaxHealth { get { return _maxHealth; } }
         public float MaxSpeed { get { return _maxSpeed; } }
 
-        public float Mass { get { return _mass + _additionalMass; } }
+        public float Mass { get { return _mass; } }
         Rectangle _hitRect;
 
         public Rectangle HitRect { get { return _hitRect; } }
@@ -296,7 +295,7 @@ namespace SpaceGame.units
                 _iceIntegrity -= Damage;
                 if (_iceIntegrity < 0)
                 {
-                    shatter(true);
+                    shatter();
                 }
                 return;
             }
@@ -313,13 +312,14 @@ namespace SpaceGame.units
                 _sprite.Flash(Color.Orange, TimeSpan.FromSeconds(0.1), 3);
         }
 
-        protected void shatter(bool ice)
+        protected void shatter()
         {
+            _freezeShatter = _lifeState == LifeState.Frozen;
             _lifeState = LifeState.Shattered;
             for (int row = 0; row < c_shatterDivisions; row++)
                 for (int col = 0 ; col < c_shatterDivisions ; col++)
                 {
-                    _fragments[row, col].Health = ice ? FRAGMENT_HEALTH * _statusEffects.Cryo / MAX_STAT_EFFECT : FRAGMENT_HEALTH;
+                    _fragments[row, col].Health = _freezeShatter ? FRAGMENT_HEALTH * _statusEffects.Cryo / MAX_STAT_EFFECT : FRAGMENT_HEALTH;
                     _fragments[row, col].Position.X = Position.X + (0.5f + _sprite.Width * (float)col / c_shatterDivisions);
                     _fragments[row, col].Position.Y = Position.Y + (0.5f + _sprite.Height * (float)row / c_shatterDivisions);
                     XnaHelper.RandomizeVector(ref _fragments[row,col].Velocity, -FRAGMENT_MAX_VELOCITY, FRAGMENT_MAX_VELOCITY, 
@@ -329,6 +329,7 @@ namespace SpaceGame.units
                     _fragments[row, col].Angle = 0f;
                     _fragments[row, col].AngularVelocity = XnaHelper.RandomAngle(0.0f, FRAGMENT_MAX_ANGULAR_VELOCITY);
                     _fragments[row, col].ScaleFactor = 1f;
+                    _fragments[row, col].BeingEaten = false;
                     _fragments[row, col].Active = true;
                 }
         }
@@ -410,8 +411,11 @@ namespace SpaceGame.units
                                 _fragments[x, y].Position += _fragments[x, y].Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 _fragments[x, y].Velocity += _fragments[x, y].Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 _fragments[x, y].Acceleration = Vector2.Zero;
-                                _fragments[x, y].Health -= FRAGMENT_MELT_RATE * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                                _fragments[x, y].ScaleFactor = _fragments[x,y].Health / FRAGMENT_HEALTH * FRAGMENT_SCALE_FACTOR;
+                                if (_freezeShatter)
+                                {
+                                    _fragments[x, y].Health -= FRAGMENT_MELT_RATE * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                                }
+                                _fragments[x, y].ScaleFactor = _fragments[x, y].Health / FRAGMENT_HEALTH * FRAGMENT_SCALE_FACTOR;
                                 XnaHelper.ClampVector(ref _fragments[x, y].Velocity, FRAGMENT_MAX_VELOCITY, out _fragments[x, y].Velocity);
                                 if (_fragments[x, y].BeingEaten)
                                 {
@@ -534,8 +538,8 @@ namespace SpaceGame.units
             _velocity = Vector2.Zero;
             _acceleration = Vector2.Zero;
             _health = _maxHealth;
-            _additionalMass = 0;
             _angularVelocity = 0;
+            _freezeShatter = false;
             _sprite.Reset();
         }
 
@@ -616,7 +620,6 @@ namespace SpaceGame.units
             if (_lifeState == LifeState.Destroyed || _lifeState == LifeState.Dormant)
                 return;     //dont draw destroyed or not yet spawned sprites
 
-
             //special shattered drawing logic
             if (_lifeState == LifeState.Shattered)
             {
@@ -630,7 +633,10 @@ namespace SpaceGame.units
                         tempRec.Width = (int)(_hitRect.Width * _fragments[y,x].ScaleFactor / c_shatterDivisions);
                         tempRec.Height = (int)(_hitRect.Height  * _fragments[y,x].ScaleFactor / c_shatterDivisions);
                         _sprite.DrawFragment(sb, y, x, c_shatterDivisions, tempRec, _fragments[y, x].Angle, integrityFactor);
-                        _sprite.DrawIce(sb, tempRec, _fragments[y, x].Angle, integrityFactor);
+                        if (_freezeShatter)
+                        {
+                            _sprite.DrawIce(sb, tempRec, _fragments[y, x].Angle, integrityFactor);
+                        }
                     }
                 return;
             }

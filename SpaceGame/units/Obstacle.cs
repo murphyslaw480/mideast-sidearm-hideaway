@@ -35,7 +35,7 @@ namespace SpaceGame.units
             _minSpawnTime = data.MinSpawnTime;
             _maxSpawnTime = data.MaxSpawnTime;
             _respawnTimer = XnaHelper.RandomTime(_minSpawnTime, _maxSpawnTime);
-            _destroyEffect = data.DestroyEffect == null ? null : new ProjectileEffect(data.DestroyEffect);
+            _destroyEffect = data.DestroyEffect == null ? ProjectileEffect.NullEffect : new ProjectileEffect(data.DestroyEffect);
             _explodeTimer = TimeSpan.Zero;
             _isSpawned = false;
         }
@@ -83,7 +83,7 @@ namespace SpaceGame.units
 
         public void CheckAndApplyEffect(PhysicalBody other, TimeSpan time)
         {
-            if (Exploding && _destroyEffect != null && _explodeTimer > TimeSpan.Zero)
+            if (Exploding && _explodeTimer > TimeSpan.Zero)
             {
                 _destroyEffect.TryApply(_destroyPosition, other, time);
                 _explodeTimer -= time;
@@ -93,18 +93,18 @@ namespace SpaceGame.units
         public override void Draw(SpriteBatch sb)
         {
             base.Draw(sb);
-            if (_destroyEffect != null && Updates)
+            if (Updates)
                 _destroyEffect.Draw(sb);
         }
 
         protected override void OnDisable()
         {
-            if (_destroyEffect != null)
+            if (_destroyEffect != ProjectileEffect.NullEffect)
             {
                 _destroyPosition = _position;   //save position on destruction
                 _explodeTimer = _destroyEffect.Duration;
-                shatter(false);
             }
+            shatter();
         }
 
         public override void Respawn(Vector2 newPosition)

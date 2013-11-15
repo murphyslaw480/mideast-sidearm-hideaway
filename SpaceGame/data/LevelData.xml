@@ -13,6 +13,7 @@
         <Obstacles>
           <ObstacleDataRef Name="FlameBarrel" MinSpawnTime="1" MaxSpawnTime="5"/>
           <ObstacleDataRef Name="CryoBarrel" MinSpawnTime="1" MaxSpawnTime="5"/>
+          <ObstacleDataRef Name="SpaceRock" MinSpawnTime="1" MaxSpawnTime="5"/>
         </Obstacles>
       </TrickleWaveData> 
     </TrickleWaves>
