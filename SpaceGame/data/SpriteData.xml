@@ -51,6 +51,12 @@
                     DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
 			              HandleX="5" HandleY="35" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Blaster" AssetName="Laser_Gun" 
+                    FrameWidth="19" FrameHeight="35" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="5" HandleY="30" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
   <!-- Projectile Weapon Sprites-->
 
   <WeaponSpriteData Name="Axe" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
@@ -89,6 +95,9 @@
               SecondsPerAnimation="0.5" ZLayer="0" />
 
   <SpriteData Name="FreezeRay" AssetName="BlueCircle" FrameWidth="24" FrameHeight="24" NumFrames="1" NumStates="1" DefaultScale ="0.10" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="LaserGreen" AssetName="Laser_Green" FrameWidth="6" FrameHeight="41" NumFrames="1" NumStates="1" DefaultScale ="1.00" 
               SecondsPerAnimation="0.5" ZLayer="0" />
 
   <SpriteData Name="Boomerang" AssetName="Boomerang" FrameWidth="48" FrameHeight="48" NumFrames="1" NumStates="1" DefaultScale ="0.40" 

@@ -52,6 +52,13 @@
     </ProjectileInfo>
   </ProjectileWeaponData>
 
+  <ProjectileWeaponData Name="Blaster" FireRate="1" ProjectilesPerFire="1" Spread="25">
+    <ProjectileInfo SpriteName="LaserGreen" Speed="1500" Acceleration="0" SecondsToLive="4.5"
+                    Penetration="0" Mass="1.0" >
+      <ContactEffect Damage="10" Force="10000"/>
+    </ProjectileInfo>
+  </ProjectileWeaponData>
+
   <ProjectileWeaponData Name="FreezeRay" FireRate="60" ProjectilesPerFire="1" Spread="0" >
     <ProjectileInfo SpriteName="FreezeRay" Speed="2500" Acceleration="0" SecondsToLive="1.0" 
                     Penetration="0" Mass="0" >
