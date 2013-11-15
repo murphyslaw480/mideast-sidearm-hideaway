@@ -83,7 +83,7 @@ namespace SpaceGame.states
             }
             for (int i = 0; i < data.BurstWaves.Length; i++)
             {
-                BurstWave prevWave = i == 0 ? null : (BurstWave)_waves[i-1];
+                BurstWave prevWave = (i == 0) ? null : (BurstWave)_waves[i + data.TrickleWaves.Length - 1];
                 _waves[i + data.TrickleWaves.Length] = new BurstWave(data.BurstWaves[i], _levelBounds, prevWave);
             }
             //Test code to set weapons 1-6 to created weapons
@@ -111,9 +111,7 @@ namespace SpaceGame.states
             userInterface = new Hud(_player, _blackHole, _waves);
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
-            _player.PrimaryWeapon = new ProjectileWeapon("Shotgun", _player);
-            _player.SecondaryWeapon = new ProjectileWeapon("Gatling", _player);
-            //selectRandomWeapons();
+            selectRandomWeapons();
 			/*
             Song song = content.Load<Song>("music/gravitational_conflict");
             MediaPlayer.Play(song);
@@ -136,6 +134,8 @@ namespace SpaceGame.states
                 new ProjectileWeapon("Flamethrower", _player),
                 new ProjectileWeapon("RocketLauncher", _player),
             };
+            _player.PrimaryWeapon = weapons[rand1];
+            _player.SecondaryWeapon = weapons[rand2];
         }
         #endregion
 

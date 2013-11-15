@@ -1,20 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Levels>
-  <LevelData Name="Level1" Width="1200" Height="800" PlayerX="800" PlayerY="100">
-    <BlackHole X="200" Y="700" Gravity="18000" Radius="100" Capacity="200"/>
+  <LevelData Name="Level1" Width="1200" Height="1200" PlayerX="800" PlayerY="100">
+    <BlackHole X="600" Y="600" Gravity="18000" Radius="200" Capacity="300"/>
     <!--Unicorn StartTime="4" EndTime="1000" SpawnTime="8"/-->
     <BurstWaves>
-      <!--BurstWaveData RestDelay="2" Difficulty="3" EnemySpawnRate="1"
+      <BurstWaveData RestDelay="10" Difficulty="3" EnemySpawnRate="1"
                      Enemies="Goblin,Goblin,Goblin">
-      </BurstWaveData-->
+      </BurstWaveData>
+      <BurstWaveData RestDelay="30" Difficulty="5" EnemySpawnRate="1"
+                     Enemies="Goblin,Goblin,Goblin,Goblin,Goblin">
+      </BurstWaveData>
+      <BurstWaveData RestDelay="30" Difficulty="5" EnemySpawnRate="1"
+                     Enemies="Goblin,Goblin,Goblin,Goblin,Goblin">
+      </BurstWaveData>
     </BurstWaves>
     <TrickleWaves>
-      <TrickleWaveData StartTime="3" Duration="50" EnemySpawnRate="1" Enemies="Goblin">
+      <TrickleWaveData StartTime="3" Duration="360" EnemySpawnRate="1" Enemies="Goblin,Goblin">
         <Obstacles>
-          <ObstacleDataRef Name="FlameBarrel" MinSpawnTime="1" MaxSpawnTime="5"/>
-          <ObstacleDataRef Name="CryoBarrel" MinSpawnTime="1" MaxSpawnTime="5"/>
-          <ObstacleDataRef Name="SpaceRock" MinSpawnTime="1" MaxSpawnTime="5"/>
+          <ObstacleDataRef Name="FlameBarrel" MinSpawnTime="10" MaxSpawnTime="30"/>
+          <ObstacleDataRef Name="CryoBarrel" MinSpawnTime="10" MaxSpawnTime="30"/>
+          <ObstacleDataRef Name="SpaceRock" MinSpawnTime="10" MaxSpawnTime="30"/>
         </Obstacles>
+      </TrickleWaveData> 
+      <TrickleWaveData StartTime="60" Duration="300" EnemySpawnRate="1" Enemies="Goblin,Goblin">
       </TrickleWaveData> 
     </TrickleWaves>
   </LevelData>
