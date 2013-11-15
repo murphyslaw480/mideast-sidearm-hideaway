@@ -38,6 +38,7 @@ namespace SpaceGame.equipment
         string _name;
         int _projectilesPerFire;
         float _spread;
+        float _sourceVelFactor;
         ProjectileData _projectileInfo;
         ParticleEffect _fireParticleEffect;
         ParticleEffect _shellParticleEffect;
@@ -59,6 +60,7 @@ namespace SpaceGame.equipment
             _projectilesPerFire = data.ProjectilesPerFire;
             _projectileInfo = data.ProjectileInfo;
             _spread = data.Spread;
+            _sourceVelFactor = data.SourceVelocityFactor;
 
             _contactEffect = _projectileInfo.ContactEffect == null ?
                 ProjectileEffect.NullEffect : new ProjectileEffect(_projectileInfo.ContactEffect);
@@ -113,7 +115,7 @@ namespace SpaceGame.equipment
                     float rotAngle = XnaHelper.RandomAngle(0, _spread);
                     Matrix.CreateRotationZ(MathHelper.ToRadians(rotAngle), out tempMatrix);
                     p.Initialize(_fireLocation, Vector2.Transform(_fireDirection, tempMatrix),
-                        _projectileInfo, _targetDestination, _owner.Velocity,
+                        _projectileInfo, _targetDestination, _owner.Velocity * _sourceVelFactor,
                         _contactEffect, _destinationEffect,
                         _proximityEffect);
                     projectilesToSpawn--;
@@ -179,9 +181,16 @@ namespace SpaceGame.equipment
     {
         public float Spread;
         public int ProjectilesPerFire;
+        public float SourceVelocityFactor;      //how much weapon's velocity affects projectile velocity
         public ProjectileData ProjectileInfo;
         public string FireParticleEffectName;   //particle effect that exits barrel
         public string ShellParticleEffectName;  //particle effect for ejected shell
+
+        public ProjectileWeaponData()
+        {
+            ProjectilesPerFire = 1;
+            SourceVelocityFactor = 1;
+        }
     }
 
 }

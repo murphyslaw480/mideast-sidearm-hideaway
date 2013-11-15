@@ -22,7 +22,7 @@
   -->
 <Weapons>
 
-  <ProjectileWeaponData Name="RocketLauncher" FireRate="2.0" ProjectilesPerFire="1" Spread="0">
+  <ProjectileWeaponData Name="RocketLauncher" FireRate="2.0" ProjectilesPerFire="1" Spread="0" SourceVelocityFactor="0.5">
     <ProjectileInfo SpriteName="Rocket" Speed="300" Acceleration="3000" SecondsToLive="3" 
                     Penetration="1" Mass="10" >
       <ContactEffect ParticleEffectName="RocketExplosion" Duration="0.1" Radius="100" Damage="30" Force="6000"/>
@@ -44,7 +44,7 @@
     </ProjectileInfo>
   </ProjectileWeaponData>
 
-  <ProjectileWeaponData Name="Gatling" FireRate="20" ProjectilesPerFire="1" Spread="10" 
+  <ProjectileWeaponData Name="Gatling" FireRate="20" ProjectilesPerFire="1" Spread="10" SourceVelocityFactor="0.7"
                     FireParticleEffectName="GatlingFireEffect" ShellParticleEffectName="GatlingShellEffect">
     <ProjectileInfo SpriteName="Bullet" Speed="2500" Acceleration="0" SecondsToLive="1.5" 
                     Penetration="0" Mass="1.0" >
@@ -52,7 +52,7 @@
     </ProjectileInfo>
   </ProjectileWeaponData>
 
-  <ProjectileWeaponData Name="Blaster" FireRate="1" ProjectilesPerFire="1" Spread="25">
+  <ProjectileWeaponData Name="Blaster" FireRate="1" ProjectilesPerFire="1" Spread="25" SourceVelocityFactor="0">
     <ProjectileInfo SpriteName="LaserGreen" Speed="1500" Acceleration="0" SecondsToLive="4.5"
                     Penetration="0" Mass="1.0" >
       <ContactEffect Damage="10" Force="10000"/>
