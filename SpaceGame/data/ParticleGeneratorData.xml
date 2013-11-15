@@ -33,9 +33,9 @@
                       Reversed="False" />
 
   <ParticleGeneratorData Name="Explosion" 
-                      Speed="300.0" SpeedVariance="3.0" DecelerationFactor="3.0" ParticleRotation="0.0" 
-                      StartScale ="1.0" ScaleVariance="0.3" EndScale="40.0" 
-                      SpawnArc="360.0" SpawnRate="16000" ParticleLife="0.2" ParticleLifeVariance="0.5"
+                      Speed="200.0" SpeedVariance="3.0" DecelerationFactor="3.0" ParticleRotation="0.0" 
+                      StartScale ="1.0" ScaleVariance="0.3" EndScale="20.0" 
+                      SpawnArc="360.0" SpawnRate="36000" ParticleLife="0.2" ParticleLifeVariance="0.5"
                       StartColor="255,255,255,255" EndColor ="0,0,0,0"
                       UniqueParticle="Circle_Small" 
                       Reversed="False"/>
