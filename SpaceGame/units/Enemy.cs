@@ -26,6 +26,7 @@ namespace SpaceGame.units
         #endregion
 
         public int Difficulty { get; private set; }
+        float _idealRange;
 
         #region constructor
         public Enemy(string unitName, Rectangle levelBounds)
@@ -48,14 +49,17 @@ namespace SpaceGame.units
                 }
             }
             Difficulty = data.Difficulty;
+            _idealRange = data.IdealRange;
         }
         #endregion
 
         #region methods
         public virtual void Update(GameTime gameTime, Vector2 playerPosition, Vector2 blackHolePosition, Rectangle levelBounds)
         {
-            Vector2 directionToPlayer = XnaHelper.DirectionBetween(Position, playerPosition);
-            MoveDirection = directionToPlayer;
+            Vector2 playerDisposition = playerPosition - Position;
+            Vector2 directionToPlayer;
+            Vector2.Normalize(ref playerDisposition, out directionToPlayer);
+            MoveDirection = playerDisposition.Length() > _idealRange ? directionToPlayer : -directionToPlayer;
             LookDirection = directionToPlayer;
             if (CurrentWeapon != null)
             {
