@@ -31,7 +31,7 @@
   <WeaponSpriteData Name="RocketLauncher" AssetName="Rocket_Launcher" 
                     FrameWidth="31" FrameHeight="64" NumFrames="1" NumStates="1" 
                     DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
-			              HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
+			              HandleX="4" HandleY="10" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
 
   <WeaponSpriteData Name="Gatling" AssetName="Gatling_Gun" 
