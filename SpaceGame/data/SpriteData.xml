@@ -79,6 +79,9 @@
   <SpriteData Name="Flame" AssetName="Flame" FrameWidth="4" FrameHeight="4" NumFrames="1" NumStates="1" DefaultScale ="1.0" 
               SecondsPerAnimation="0.03" ZLayer="0" />
 
+  <SpriteData Name="TestFlame" AssetName="Bullet" FrameWidth="4" FrameHeight="4" NumFrames="1" NumStates="1" DefaultScale ="0.4" 
+              SecondsPerAnimation="0.03" ZLayer="0" />
+
   <SpriteData Name="Unicorn" AssetName="Unicorn" FrameWidth="466" FrameHeight="349" NumFrames="1" NumStates="1" DefaultScale ="0.12" 
               SecondsPerAnimation="0.5" ZLayer="0" />
 

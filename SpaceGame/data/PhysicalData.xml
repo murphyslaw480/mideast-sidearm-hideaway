@@ -11,7 +11,7 @@ Health: How much damage a unit can take before dying
 <UnitData>
   <PhysicalData Name="Spaceman" MovementParticleEffectName ="Jetpack" Mass ="10" 
                 MoveForce ="10000" MaxSpeed="500" DecelerationFactor="1.00" Health ="100"
-                FireResist="40" CryoResist="40"/>
+                FireResist="80" CryoResist="50"/>
 
   <EnemyData Name="Goblin" Weapon="Blaster" Ranged="True" IdealRange="200" Difficulty="1" 
      Mass="8" MoveForce="6000" MaxSpeed="400" DecelerationFactor="0.50" Health ="40" FireResist="10" CryoResist="10"/>

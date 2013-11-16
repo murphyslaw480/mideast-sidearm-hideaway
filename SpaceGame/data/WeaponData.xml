@@ -30,10 +30,11 @@
     </ProjectileInfo>
   </ProjectileWeaponData>
 
-  <ProjectileWeaponData Name="Flamethrower" FireRate="200" ProjectilesPerFire="1" FireParticleEffectName="Flamethrower" Spread="30" >
-    <ProjectileInfo SpriteName="Flame" Speed="700" Acceleration="-12" SecondsToLive="0.6" 
+  <ProjectileWeaponData Name="Flamethrower" FireRate="100" ProjectilesPerFire="1"
+                        FireParticleEffectName="Flamethrower" Spread="20" SourceVelocityFactor="0.7">
+    <ProjectileInfo SpriteName="TestFlame" Speed="500" Acceleration="-17" SecondsToLive="0.7"
                     Penetration="100" Mass="0.0" >
-      <ProximityEffect Radius="1" Damage="0.5" Force="0" FireEffect="3"/>
+      <ProximityEffect Radius="1" Damage="0.0" Force="0" FireEffect="5"/>
     </ProjectileInfo>
   </ProjectileWeaponData>
 
