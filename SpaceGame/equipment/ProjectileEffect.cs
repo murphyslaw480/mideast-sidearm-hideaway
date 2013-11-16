@@ -13,6 +13,7 @@ namespace SpaceGame.equipment
 {
     struct StatEffect
     {
+        public const float MaxEffect = 100;
         public float Fire, Cryo, Shock;
         public StatEffect(float fire, float cryo, float shock)
         {
@@ -40,6 +41,13 @@ namespace SpaceGame.equipment
             return new StatEffect(s.Fire * f,
                                   s.Cryo * f,
                                   s.Shock * f);
+        }
+
+        public StatEffect ApplyResist(StatEffect resist)
+        {
+            return new StatEffect(Fire * (1 - resist.Fire / MaxEffect),
+                                  Cryo * (1 - resist.Cryo / MaxEffect),
+                                  Shock * (1 - resist.Shock / MaxEffect));
         }
 
         public void Clamp(float min, float max)

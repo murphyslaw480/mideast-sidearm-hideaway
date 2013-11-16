@@ -42,7 +42,6 @@ namespace SpaceGame.units
         const float BLACK_HOLE_EAT_SCALE_FACTOR = 1.5f;
 
         //status effect constants
-        protected const float MAX_STAT_EFFECT = 100;
         const float FIRE_DPS = 0.2f;   //damage per second per point of fire effect 
         const int FIRE_SPREAD_DISTANCE = 80;   //how far away a unit must be to transfer fire
         //portion of own fire effect transfered to nearby units per second
@@ -282,7 +281,7 @@ namespace SpaceGame.units
 
         public void ApplyStatus(StatEffect effects)
         {
-            _statusEffects += effects;
+            _statusEffects += effects.ApplyResist(_statusResist);
         }
 
         public void ApplyDamage(float Damage)
@@ -320,7 +319,7 @@ namespace SpaceGame.units
             for (int row = 0; row < c_shatterDivisions; row++)
                 for (int col = 0 ; col < c_shatterDivisions ; col++)
                 {
-                    _fragments[row, col].Health = _freezeShatter ? FRAGMENT_HEALTH * _statusEffects.Cryo / MAX_STAT_EFFECT : FRAGMENT_HEALTH;
+                    _fragments[row, col].Health = _freezeShatter ? FRAGMENT_HEALTH * _statusEffects.Cryo / StatEffect.MaxEffect : FRAGMENT_HEALTH;
                     _fragments[row, col].Position.X = Position.X + (0.5f + _sprite.Width * (float)col / c_shatterDivisions);
                     _fragments[row, col].Position.Y = Position.Y + (0.5f + _sprite.Height * (float)row / c_shatterDivisions);
                     XnaHelper.RandomizeVector(ref _fragments[row,col].Velocity, -FRAGMENT_MAX_VELOCITY, FRAGMENT_MAX_VELOCITY, 
@@ -397,7 +396,7 @@ namespace SpaceGame.units
                         {
                             _lifeState = Health > 0 ? LifeState.Living : LifeState.Destroyed;
                             //still cold after defrosting
-                            _statusEffects.Cryo = MAX_STAT_EFFECT / 2;
+                            _statusEffects.Cryo = StatEffect.MaxEffect / 2;
                         }
                         break;
                     }
@@ -451,20 +450,20 @@ namespace SpaceGame.units
 
             //burning visual effect
             _burningParticleEffect.Spawn(Position, 0.0f, gameTime.ElapsedGameTime, _velocity);
-            _burningParticleEffect.IntensityFactor = _statusEffects.Fire / MAX_STAT_EFFECT;
+            _burningParticleEffect.IntensityFactor = _statusEffects.Fire / StatEffect.MaxEffect;
             _burningParticleEffect.Update(gameTime);
 
             //cryo visual effect
             if (_statusEffects.Cryo > 0 && _lifeState != LifeState.Disabled)
             {
-                _sprite.Shade = Color.Lerp(Color.White, Color.Blue, _statusEffects.Cryo / MAX_STAT_EFFECT);
+                _sprite.Shade = Color.Lerp(Color.White, Color.Blue, _statusEffects.Cryo / StatEffect.MaxEffect);
             }
 
             _hitRect.X = (int)Position.X - _hitRect.Width / 2;
             _hitRect.Y = (int)Position.Y - _hitRect.Height / 2;
 
             //manage stat effects
-            if (_statusEffects.Cryo >= MAX_STAT_EFFECT && _lifeState != LifeState.Frozen)
+            if (_statusEffects.Cryo >= StatEffect.MaxEffect && _lifeState != LifeState.Frozen)
             {
                 _lifeState = LifeState.Frozen;
                 _iceIntegrity = MaxHealth * ICE_INTEGRITY_FACTOR;
@@ -473,7 +472,7 @@ namespace SpaceGame.units
 
             //decrement every stat effect based on status resist
             _statusEffects -= _statusResist * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _statusEffects.Clamp(0, MAX_STAT_EFFECT);
+            _statusEffects.Clamp(0, StatEffect.MaxEffect);
 
             _sprite.Update(gameTime);
         }
@@ -655,7 +654,7 @@ namespace SpaceGame.units
                 tempRec = HitRect;
                 tempRec.X += (int)(HitRect.Width / 2);
                 tempRec.Y += (int)(HitRect.Height / 2);
-                _sprite.DrawIce(sb, tempRec, _sprite.Angle, _statusEffects.Cryo / MAX_STAT_EFFECT);
+                _sprite.DrawIce(sb, tempRec, _sprite.Angle, _statusEffects.Cryo / StatEffect.MaxEffect);
             }
         }
 
