@@ -186,7 +186,7 @@ namespace SpaceGame.units
                 if (_bodies[i] is Enemy)
                 {
                     (_bodies[i] as Enemy).CheckAndApplyWeaponCollision(player, gameTime.ElapsedGameTime);
-                    (_bodies[i] as Enemy).Update(gameTime, player.Position, Vector2.Zero, _levelBounds);
+                    (_bodies[i] as Enemy).Update(gameTime, player.Position, blackHole, _levelBounds);
                 }
                 else
                 {

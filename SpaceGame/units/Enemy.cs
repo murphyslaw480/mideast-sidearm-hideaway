@@ -23,6 +23,8 @@ namespace SpaceGame.units
     {
         #region static
         public static Dictionary<string, EnemyData> EnemyDataDict;
+        //multiple of black hole radius to avoid
+        const float c_blackHoleSafety = 2.0f;
         #endregion
 
         public int Difficulty { get; private set; }
@@ -54,12 +56,21 @@ namespace SpaceGame.units
         #endregion
 
         #region methods
-        public virtual void Update(GameTime gameTime, Vector2 playerPosition, Vector2 blackHolePosition, Rectangle levelBounds)
+        public virtual void Update(GameTime gameTime, Vector2 playerPosition, BlackHole blackHole, Rectangle levelBounds)
         {
             Vector2 playerDisposition = playerPosition - Position;
             Vector2 directionToPlayer;
+            Vector2 blackHoleDisposition = blackHole.Position - Position;
             Vector2.Normalize(ref playerDisposition, out directionToPlayer);
-            MoveDirection = playerDisposition.Length() > _idealRange ? directionToPlayer : -directionToPlayer;
+            if (blackHoleDisposition.Length() < blackHole.Radius * c_blackHoleSafety)
+            {   //too close to black hole
+                blackHoleDisposition.Normalize();
+                MoveDirection = -blackHoleDisposition;
+            }
+            else
+            {
+                MoveDirection = playerDisposition.Length() > _idealRange ? directionToPlayer : -directionToPlayer;
+            }
             LookDirection = directionToPlayer;
             if (CurrentWeapon != null)
             {
