@@ -45,6 +45,8 @@ namespace SpaceGame.units
             get { return _explodeTimer > TimeSpan.Zero; }
         }
 
+        public override float MassForBlackHole { get { return Mass * 0.25f; } }
+
         public override bool CanRespawn
         {
             get

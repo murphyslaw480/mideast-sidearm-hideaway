@@ -116,6 +116,7 @@ namespace SpaceGame.units
         public float MaxSpeed { get { return _maxSpeed; } }
 
         public float Mass { get { return _mass; } }
+        public virtual float MassForBlackHole { get { return _mass; } }
         Rectangle _hitRect;
 
         public Rectangle HitRect { get { return _hitRect; } }
@@ -357,7 +358,7 @@ namespace SpaceGame.units
             {
                 _lifeState = LifeState.BeingEaten;
                 _angularVelocity = 4 * MathHelper.TwoPi;
-                return Mass;
+                return MassForBlackHole;
             }
             return 0;
         }
