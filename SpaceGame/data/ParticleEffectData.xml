@@ -41,7 +41,6 @@
     </ParticleGenerators>
   </ParticleEffectData>
 
-
   <ParticleEffectData Name="BulletTrace">
     <ParticleGenerators>
       <ParticleGeneratorDataRef Name="BlurPath" StartColor="255,255,155,0" Offset="0" UniqueParticle="BulletTrace"/>
