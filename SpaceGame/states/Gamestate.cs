@@ -29,6 +29,7 @@ namespace SpaceGame.states
         public bool Transparent { get; protected set; }
         public SongCollection BgMusic { get; protected set; }
         protected ContentManager _content;
+        static Random s_rand = new Random();
         #endregion
 
         #region constructor
@@ -46,7 +47,10 @@ namespace SpaceGame.states
                     BgMusic.Add(Content.Load<Song>(name));
                 }
             }
-            if (BgMusic != null) { MediaPlayer.Play(BgMusic); }
+            if (BgMusic != null) 
+            {
+                MediaPlayer.Play(BgMusic, s_rand.Next(BgMusic.Count));
+            }
         }
         #endregion
 
