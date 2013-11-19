@@ -20,7 +20,7 @@ namespace SpaceGame.states
         public static SpriteFont spriteFont;
 
         public Gamemenu(ContentManager content) 
-            : base(content, false, "Space_Oddity_Start_Screen.wav")
+            : base(content, false, "Gamemenu")
         {
             title = "Space Game";
             MenuItems = new List<string>();

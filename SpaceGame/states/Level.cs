@@ -67,7 +67,7 @@ namespace SpaceGame.states
 
         #region constructor
         public Level (ContentManager content, int levelNumber, InventoryManager im)
-            : base(content, false, "Space_Oddity_1.wav")
+            : base(content, false, "Level")
         {
             LevelData data = DataManager.GetData<LevelData>(String.Format(c_levelNameFormat, levelNumber));
             _levelBounds = new Rectangle(0, 0, data.Width, data.Height);
