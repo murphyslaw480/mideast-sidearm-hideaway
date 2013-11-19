@@ -19,7 +19,8 @@ namespace SpaceGame.states
         public string title { get; set; }
         public static SpriteFont spriteFont;
 
-        public Gamemenu(ContentManager content) : base(content, false)
+        public Gamemenu(ContentManager content) 
+            : base(content, false, "Space_Oddity_Start_Screen.wav")
         {
             title = "Space Game";
             MenuItems = new List<string>();
@@ -28,12 +29,6 @@ namespace SpaceGame.states
             MenuItems.Add("Exit Game");
             Iterator = 0;
             infoText = string.Empty;
-			/*
-            Song song = content.Load<Song>("music/space");
-            MediaPlayer.Volume = 0.7f;
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(song);
-			*/
         }
 
         public int Iterator

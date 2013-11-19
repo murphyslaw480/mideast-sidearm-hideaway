@@ -6,6 +6,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 using SpaceGame.utility;
 
@@ -13,6 +15,7 @@ namespace SpaceGame.states
 {
     abstract class Gamestate
     {
+        protected const string c_bgMusicDir = "audio/music/";
         public static ContentManager Content;
         #region properties
         //request to exit state (pop off state stack)
@@ -23,14 +26,17 @@ namespace SpaceGame.states
         public Gamestate ReplaceState { get; protected set; }
         //if true, the state below on the stack should also be drawn
         public bool Transparent { get; protected set; }
+        public Song BgMusic { get; protected set; }
         protected ContentManager _content;
         #endregion
 
         #region constructor
-        public Gamestate(ContentManager content, bool transparent)
+        public Gamestate(ContentManager content, bool transparent, string bgMusicName = null)
         {
             Transparent = transparent;
             _content = content;
+            BgMusic = bgMusicName == null ? null : Content.Load<Song>(c_bgMusicDir + bgMusicName);
+            if (BgMusic != null) { MediaPlayer.Play(BgMusic); }
         }
         #endregion
 

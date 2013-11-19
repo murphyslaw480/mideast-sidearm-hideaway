@@ -67,7 +67,7 @@ namespace SpaceGame.states
 
         #region constructor
         public Level (ContentManager content, int levelNumber, InventoryManager im)
-            : base(content, false)
+            : base(content, false, "Space_Oddity_1.wav")
         {
             LevelData data = DataManager.GetData<LevelData>(String.Format(c_levelNameFormat, levelNumber));
             _levelBounds = new Rectangle(0, 0, data.Width, data.Height);
@@ -112,10 +112,6 @@ namespace SpaceGame.states
 
 			_cursorTextureCenter = new Vector2(s_CursorTexture.Width / 2 , s_CursorTexture.Height / 2);
             selectRandomWeapons();
-			/*
-            Song song = content.Load<Song>("music/gravitational_conflict");
-            MediaPlayer.Play(song);
-			*/
         }
 
         void selectRandomWeapons()
