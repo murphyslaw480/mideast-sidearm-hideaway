@@ -231,11 +231,15 @@ namespace SpaceGame.units
 
             if (spriteType == Sprite.SpriteType.Unit)
             {
-                _sprite = new UnitSprite(pd.Name, (PhysicalUnit)this);
+                _sprite = pd.SpriteName == null ? 
+                    new UnitSprite(pd.Name, (PhysicalUnit)this) :
+                    new UnitSprite(pd.SpriteName, (PhysicalUnit)this);
             }
             else
             {
-                _sprite = new Sprite(pd.Name, spriteType);
+                _sprite = pd.SpriteName == null ? 
+                    new Sprite(pd.Name, spriteType) :
+                    new Sprite(pd.SpriteName, spriteType);
             }
 
             _burningParticleEffect = new ParticleEffect("Burning");

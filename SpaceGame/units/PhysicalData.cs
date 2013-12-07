@@ -11,6 +11,7 @@ namespace SpaceGame.units
         public const float DEFAULT_STAT_RESIST = 10;
 
         public String Name;
+        public String SpriteName;
         public String MovementParticleEffectName;
         public float Mass;
         public float GravitySensitivity;
