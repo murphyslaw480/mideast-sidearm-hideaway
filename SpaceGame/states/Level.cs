@@ -132,6 +132,7 @@ namespace SpaceGame.states
             };
             _player.PrimaryWeapon = weapons[rand1];
             _player.SecondaryWeapon = weapons[rand2];
+            _player.PrimaryWeapon = new MeleeWeapon("Axe", _player);
         }
         #endregion
 
