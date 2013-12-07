@@ -38,7 +38,6 @@ namespace SpaceGame.equipment
         float _swingArc;  //total swing arc in radians
         float _swingAngle;  //current angle of swing
         float _swingSpeed;  //in radians
-        bool _swinging;
         ParticleEffect _attackParticleEffect;
         ParticleEffect _hitParticleEffect;
         Vector2 _tempVector;
@@ -47,6 +46,14 @@ namespace SpaceGame.equipment
         #region properties
         public override float Range { get { return _range; } }
         #endregion
+
+        enum SwingState
+        {
+            Waiting,
+            Swinging,
+            Backswing
+        }
+        SwingState _swingState;
 
         #region constructor
         public MeleeWeapon(string weaponName, PhysicalUnit owner)
@@ -67,13 +74,14 @@ namespace SpaceGame.equipment
                 new ParticleEffect(data.AttackParticleEffect);
             _hitParticleEffect = (data.HitParticleEffect == null) ?
                 null : new ParticleEffect(data.HitParticleEffect);
+            _swingState = SwingState.Waiting;
         }
         #endregion
 
         #region methods
         public override void CheckAndApplyCollision(PhysicalBody unit, TimeSpan time)
         {
-            if (!_swinging || !unit.Collides)
+            if (_swingState != SwingState.Swinging || !unit.Collides)
                 return;     //don't check collisions if not swinging
 
             float fireAngle = XnaHelper.RadiansFromVector(_fireDirection);
@@ -87,26 +95,43 @@ namespace SpaceGame.equipment
         }
         protected override void UpdateWeapon(GameTime gameTime)
         {
-            if (_swinging)
+            switch (_swingState)
             {
-                _swingAngle -= _swingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                Sprite.SetSwingAngle(_swingAngle);
-                if (-_swingAngle > _swingArc)
-                {
-                    _swinging = false;
-                    _swingAngle = 0;
-                    Sprite.SetSwingAngle(0);
-                }
-            }
+                case SwingState.Swinging:
+                    {
+                        _swingAngle -= _swingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Sprite.SetSwingAngle(_swingAngle);
+                        if (-_swingAngle > _swingArc)
+                        {
+                            _swingState = SwingState.Backswing;
+                        }
+                        break;
+                    }
+                case SwingState.Backswing:
+                    {
+                        _swingAngle += _swingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Sprite.SetSwingAngle(_swingAngle);
+                        if (_swingAngle > 0)
+                        {
+                            _swingState = SwingState.Waiting;
+                            _swingAngle = 0;
+                            Sprite.SetSwingAngle(0);
+                        }
+                        break;
+                    }
 
-            if (_firing)
-            {
-                _swinging = true;
-                Sprite.SetSwingAngle(0);    //start swing
-                _attackParticleEffect.Spawn(_owner.Center, XnaHelper.DegreesFromVector(_fireDirection),
-                    gameTime.ElapsedGameTime, _owner.Velocity);
+                case SwingState.Waiting:
+                    {
+                        if (_firing)
+                        {
+                            _swingState = SwingState.Swinging;
+                            Sprite.SetSwingAngle(0);    //start swing
+                            _attackParticleEffect.Spawn(_owner.Center, XnaHelper.DegreesFromVector(_fireDirection),
+                                gameTime.ElapsedGameTime, _owner.Velocity);
+                        }
+                        break;
+                    }
             }
-
             _attackParticleEffect.Update(gameTime);
         }
         public override void Draw(SpriteBatch sb)
