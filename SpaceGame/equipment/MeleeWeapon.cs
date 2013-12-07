@@ -21,7 +21,9 @@ namespace SpaceGame.equipment
             public int Impact;
             public float Range;
             public float Recoil;
-            public float HitArc;
+
+            public float SwingArc;
+            public float SwingSpeed;
 
             public string AttackParticleEffect;
             public string HitParticleEffect;
@@ -33,7 +35,10 @@ namespace SpaceGame.equipment
         int _force;
         float _range;
         float _recoil;
-        float _hitArc;  //in radians
+        float _swingArc;  //total swing arc in radians
+        float _swingAngle;  //current angle of swing
+        float _swingSpeed;  //in radians
+        bool _swinging;
         ParticleEffect _attackParticleEffect;
         ParticleEffect _hitParticleEffect;
         Vector2 _tempVector;
@@ -54,7 +59,8 @@ namespace SpaceGame.equipment
             _damage = data.Damage;
             _force = data.Impact;
             _recoil = data.Recoil;
-            _hitArc = data.HitArc;
+            _swingArc = MathHelper.ToRadians(data.SwingArc);
+            _swingSpeed = MathHelper.ToRadians(data.SwingSpeed);
             _range = data.Range;
             _attackParticleEffect = (data.AttackParticleEffect == null) ?
                 null : new ParticleEffect(data.AttackParticleEffect);
@@ -66,11 +72,11 @@ namespace SpaceGame.equipment
         #region methods
         public override void CheckAndApplyCollision(PhysicalBody unit, TimeSpan time)
         {
-            if (!_firing || !unit.Collides)
-                return;     //don't check collisions if not firing
+            if (!_swinging || !unit.Collides)
+                return;     //don't check collisions if not swinging
 
             float fireAngle = XnaHelper.RadiansFromVector(_fireDirection);
-            if (XnaHelper.RectangleIntersectsArc(unit.HitRect, _owner.Center, _range, fireAngle, _hitArc))
+            if (XnaHelper.RectangleIntersectsArc(unit.HitRect, _owner.Center, _range, fireAngle, _swingArc))
             { 
                 _tempVector = unit.Center - _owner.Center;
                 _tempVector.Normalize();
@@ -80,19 +86,42 @@ namespace SpaceGame.equipment
         }
         protected override void UpdateWeapon(GameTime gameTime)
         {
+            if (_swinging)
+            {
+                _swingAngle -= _swingSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Sprite.SetSwingAngle(_swingAngle);
+                if (-_swingAngle > _swingArc)
+                {
+                    _swinging = false;
+                    _swingAngle = 0;
+                    Sprite.SetSwingAngle(0);
+                }
+            }
+
             if (_firing)
             {
-                _attackParticleEffect.Spawn(_owner.Center, XnaHelper.DegreesFromVector(_fireDirection),
-                    gameTime.ElapsedGameTime, _owner.Velocity);
+                _swinging = true;
+                Sprite.SetSwingAngle(0);    //start swing
+                if (_attackParticleEffect != null)
+                {
+                    _attackParticleEffect.Spawn(_owner.Center, XnaHelper.DegreesFromVector(_fireDirection),
+                        gameTime.ElapsedGameTime, _owner.Velocity);
+                }
                 //recoil
                 _owner.ApplyImpact(-_recoil * _fireDirection, 1);
             }
 
-            _attackParticleEffect.Update(gameTime);
+            if (_attackParticleEffect != null)
+            {
+                _attackParticleEffect.Update(gameTime);
+            }
         }
         public override void Draw(SpriteBatch sb)
         {
-            _attackParticleEffect.Draw(sb);
+            if (_attackParticleEffect != null)
+            {
+                _attackParticleEffect.Draw(sb);
+            }
         }
         #endregion
     }

@@ -78,8 +78,7 @@
     </ProjectileInfo>
   </ThrowableWeaponData>
 
-  <MeleeWeaponData Name="Axe" 
-               FireRate ="1" SwingArc="90" SwingSpeed="90" 
-               Range="75" Damage="15" Impact="5000" Recoil="1500" 
-               AttackParticleEffect="PunchWave"/>
+  <MeleeWeaponData Name="Axe"
+               FireRate ="1" SwingArc="120" SwingSpeed="900"
+               Range="75" Damage="15" Impact="5000" Recoil="1500"/>
 </Weapons>
