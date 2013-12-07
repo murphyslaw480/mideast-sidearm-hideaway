@@ -63,7 +63,8 @@ namespace SpaceGame.equipment
             _swingSpeed = MathHelper.ToRadians(data.SwingSpeed);
             _range = data.Range;
             _attackParticleEffect = (data.AttackParticleEffect == null) ?
-                null : new ParticleEffect(data.AttackParticleEffect);
+                ParticleEffect.NullEffect : 
+                new ParticleEffect(data.AttackParticleEffect);
             _hitParticleEffect = (data.HitParticleEffect == null) ?
                 null : new ParticleEffect(data.HitParticleEffect);
         }
@@ -102,24 +103,15 @@ namespace SpaceGame.equipment
             {
                 _swinging = true;
                 Sprite.SetSwingAngle(0);    //start swing
-                if (_attackParticleEffect != null)
-                {
-                    _attackParticleEffect.Spawn(_owner.Center, XnaHelper.DegreesFromVector(_fireDirection),
-                        gameTime.ElapsedGameTime, _owner.Velocity);
-                }
+                _attackParticleEffect.Spawn(_owner.Center, XnaHelper.DegreesFromVector(_fireDirection),
+                    gameTime.ElapsedGameTime, _owner.Velocity);
             }
 
-            if (_attackParticleEffect != null)
-            {
-                _attackParticleEffect.Update(gameTime);
-            }
+            _attackParticleEffect.Update(gameTime);
         }
         public override void Draw(SpriteBatch sb)
         {
-            if (_attackParticleEffect != null)
-            {
-                _attackParticleEffect.Draw(sb);
-            }
+            _attackParticleEffect.Draw(sb);
         }
         #endregion
     }

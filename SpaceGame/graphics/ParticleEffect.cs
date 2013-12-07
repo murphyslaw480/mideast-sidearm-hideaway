@@ -136,5 +136,13 @@ namespace SpaceGame.graphics
             }
         }
 
+        #region NullEffect
+        private ParticleEffect ()
+        {}
+        public static ParticleEffect NullEffect = new ParticleEffect()
+        {
+            _generators = new ParticleGenerator[0],
+        };
+        #endregion
     }
 }
