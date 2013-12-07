@@ -69,6 +69,11 @@
     </ProjectileInfo>
   </ProjectileWeaponData>
 
+  <!--Melee Weapons-->
+  <MeleeWeaponData Name="Axe"
+               FireRate ="2.5" SwingArc="140" SwingSpeed="800"
+               Range="75" Damage="15" Impact="5000" Recoil="1500"/>
+
   <!-- Consumable Weapons -->
   <ThrowableWeaponData Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" UsesPerStack="6">
     <ProjectileInfo SpriteName="Cryonade" Speed="800" Acceleration="-320" SecondsToLive="2.5" 
@@ -78,7 +83,4 @@
     </ProjectileInfo>
   </ThrowableWeaponData>
 
-  <MeleeWeaponData Name="Axe"
-               FireRate ="1" SwingArc="120" SwingSpeed="900"
-               Range="75" Damage="15" Impact="5000" Recoil="1500"/>
 </Weapons>
