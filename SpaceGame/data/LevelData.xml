@@ -31,14 +31,8 @@
 	<!--Test level with no enemies-->
     <BlackHole X="200" Y="700" Gravity="000" Radius="100" Capacity="200"/>
     <BurstWaves>
-      <BurstWaveData RestDelay="5" Difficulty="3" EnemySpawnRate="1" 
-                     Enemies="Goblin,Goblin,Goblin,Goblin">
-      </BurstWaveData> 
     </BurstWaves>
     <TrickleWaves>
-      <TrickleWaveData StartTime="3" Duration="30" EnemySpawnRate="1" 
-                     Enemies="Goblin, Goblin, Goblin">
-      </TrickleWaveData> 
     </TrickleWaves>
   </LevelData>
 
