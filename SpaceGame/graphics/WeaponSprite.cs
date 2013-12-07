@@ -34,6 +34,9 @@ namespace SpaceGame.graphics
             set { _handleToMuzzle = value; }
         }
 
+        public float ArmAngleOffset { get; private set; }
+        public float HoldAngle { get; private set; }
+
         public WeaponSprite(string name)
 			:this(DataManager.GetData<WeaponSpriteData>(name))
         {}
@@ -43,6 +46,8 @@ namespace SpaceGame.graphics
         {
             HandleOffset = new Vector2(data.HandleX, data.HandleY);
 			HandleToMuzzle =  new Vector2(data.MuzzleX, data.MuzzleY) - HandleOffset;
+            ArmAngleOffset = MathHelper.ToRadians(data.ArmAngleOffset);
+            HoldAngle = MathHelper.ToRadians(data.HoldAngle);
         }
 
     }
@@ -51,5 +56,9 @@ namespace SpaceGame.graphics
     {
         public int HandleX, HandleY;
         public int MuzzleX, MuzzleY;
+        //angle between arm and aim direction
+        public float ArmAngleOffset;
+        //angle between weapon handle and hand
+        public float HoldAngle;
     }
 }

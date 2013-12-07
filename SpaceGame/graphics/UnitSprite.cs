@@ -141,13 +141,13 @@ namespace SpaceGame.graphics
 
             if (!FlipH)
             {   //draw arm and weapon, and 
+                aimAngle += _unit.WeaponSprite.ArmAngleOffset;
 
                 if (_unit.WeaponSprite != null)
                 {   //draw weapon behind unit
                     _unit.WeaponSprite.FlipH = false;
                     _unit.WeaponSprite.Draw(batch, _absShoulderPos, aimAngle, _weaponOrigin);
                 }
-
                 batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, spriteEffect, 0);
             }
 
@@ -155,6 +155,7 @@ namespace SpaceGame.graphics
             
             if (FlipH)
             {   //draw arm and weapon in front of unit, leg still behind
+                aimAngle -= _unit.WeaponSprite.ArmAngleOffset;
                 if (_unit.WeaponSprite != null)
                 {   //draw weapon behind unit
                     _unit.WeaponSprite.FlipH = true;
