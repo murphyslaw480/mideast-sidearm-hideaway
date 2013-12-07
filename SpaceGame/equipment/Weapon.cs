@@ -15,6 +15,7 @@ namespace SpaceGame.equipment
 {
     public class WeaponData
     {
+        public string SpriteName;
         public string Name;
         public float FireRate;
     }
@@ -56,7 +57,7 @@ namespace SpaceGame.equipment
             _owner = owner;
             if (spriteName != null)
             {
-                Sprite = new WeaponSprite(spriteName);
+                Sprite = new WeaponSprite(data.SpriteName ?? spriteName);
             }
         }
         #endregion

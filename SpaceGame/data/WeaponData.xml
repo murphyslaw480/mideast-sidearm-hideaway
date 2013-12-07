@@ -72,7 +72,11 @@
   <!--Melee Weapons-->
   <MeleeWeaponData Name="Axe"
                FireRate ="2.5" SwingArc="140" SwingSpeed="800"
-               Range="75" Damage="15" Impact="5000" Recoil="1500"/>
+               Range="75" Damage="40" Impact="5000" Recoil="1500"/>
+
+  <MeleeWeaponData Name="GoblinAxe" SpriteName="Axe"
+               FireRate ="1" SwingArc="140" SwingSpeed="800"
+               Range="75" Damage="10" Impact="5000" Recoil="1500"/>
 
   <!-- Consumable Weapons -->
   <ThrowableWeaponData Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" UsesPerStack="6">
