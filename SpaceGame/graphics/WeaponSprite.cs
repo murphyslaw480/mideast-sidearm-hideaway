@@ -35,6 +35,7 @@ namespace SpaceGame.graphics
         }
 
         public float ArmAngleOffset { get; private set; }
+        float _originalArmAngleOffset;
         public float HoldAngle { get; private set; }
 
         public WeaponSprite(string name)
@@ -47,9 +48,19 @@ namespace SpaceGame.graphics
             HandleOffset = new Vector2(data.HandleX, data.HandleY);
 			HandleToMuzzle =  new Vector2(data.MuzzleX, data.MuzzleY) - HandleOffset;
             ArmAngleOffset = MathHelper.ToRadians(data.ArmAngleOffset);
+            _originalArmAngleOffset = ArmAngleOffset;
             HoldAngle = MathHelper.ToRadians(data.HoldAngle);
         }
 
+        /// <summary>
+        /// set the angle of swing (radians) from starting offset
+        /// changes return value of ArmAngleOffset
+        /// </summary>
+        /// <param name="angle"></param>
+        public void SetSwingAngle(float angle)
+        {
+            ArmAngleOffset = _originalArmAngleOffset + angle;
+        }
     }
 
     class WeaponSpriteData : SpriteData
