@@ -107,8 +107,6 @@ namespace SpaceGame.equipment
                     _attackParticleEffect.Spawn(_owner.Center, XnaHelper.DegreesFromVector(_fireDirection),
                         gameTime.ElapsedGameTime, _owner.Velocity);
                 }
-                //recoil
-                _owner.ApplyImpact(-_recoil * _fireDirection, 1);
             }
 
             if (_attackParticleEffect != null)
