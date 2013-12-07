@@ -52,6 +52,13 @@
 			              HandleX="5" HandleY="35" MuzzleX="12" MuzzleY="0">
   </WeaponSpriteData>
 
+  <WeaponSpriteData Name="Axe" AssetName="Axe" 
+                    ArmAngleOffset="45"
+                    FrameWidth="54" FrameHeight="34" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="10" HandleY="24" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+
   <WeaponSpriteData Name="Blaster" AssetName="Laser_Gun" 
                     FrameWidth="19" FrameHeight="35" NumFrames="1" NumStates="1" 
                     DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
