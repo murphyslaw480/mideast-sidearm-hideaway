@@ -118,6 +118,7 @@ namespace SpaceGame
             XnaHelper.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             XnaHelper.PixelTexture.SetData<Color>(new Color[] {Color.White});
 
+            Weapon.Content = Content;
             Sprite.Content = Content;   //Sprite gets reference to content so it can load textures
             ParticleGenerator.Content = Content;   //ParticleGenerator gets reference to content so it can load textures
             Gamestate.Content = Content;
