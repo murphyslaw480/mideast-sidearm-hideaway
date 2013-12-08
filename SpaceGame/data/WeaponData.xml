@@ -22,7 +22,8 @@
   -->
 <Weapons>
 
-  <ProjectileWeaponData Name="RocketLauncher" FireRate="1.0" ProjectilesPerFire="1" Spread="0" SourceVelocityFactor="0.5">
+  <ProjectileWeaponData Name="RocketLauncher" FireRate="1.0" ProjectilesPerFire="1" Spread="0" SourceVelocityFactor="0.5"
+                        FireSoundEffect="Rocket_1">
     <ProjectileInfo SpriteName="Rocket" Speed="200" Acceleration="3000" SecondsToLive="3" 
                     Penetration="1" Mass="10" >
       <ContactEffect ParticleEffectName="RocketExplosion" Duration="0.1" Radius="180" Damage="40" Force="6000"/>
@@ -31,7 +32,8 @@
   </ProjectileWeaponData>
 
   <ProjectileWeaponData Name="Flamethrower" FireRate="100" ProjectilesPerFire="1"
-                        FireParticleEffectName="Flamethrower" Spread="20" SourceVelocityFactor="0.7">
+                        FireParticleEffectName="Flamethrower" Spread="20" SourceVelocityFactor="0.7"
+                        FireSoundEffect="Flamethrower_1">
     <ProjectileInfo SpriteName="TestFlame" Speed="500" Acceleration="-17" SecondsToLive="0.7"
                     Penetration="100" Mass="0.0" >
       <ProximityEffect Radius="1" Damage="0.0" Force="0" FireEffect="5"/>
@@ -39,7 +41,8 @@
   </ProjectileWeaponData>
 
   <ProjectileWeaponData Name="Gatling" FireRate="20" ProjectilesPerFire="1" Spread="10" SourceVelocityFactor="0.7"
-                    FireParticleEffectName="GatlingFireEffect" ShellParticleEffectName="GatlingShellEffect">
+                        FireParticleEffectName="GatlingFireEffect" ShellParticleEffectName="GatlingShellEffect"
+                        FireSoundEffect="Gatling_Gun">
     <ProjectileInfo SpriteName="Bullet" Speed="2500" Acceleration="0" SecondsToLive="1.5" 
                     Penetration="0" Mass="1.0" >
       <ProximityEffect Radius="5" Damage="10" Force="0" ParticleEffectName="BulletTrace" />
@@ -53,8 +56,9 @@
     </ProjectileInfo>
   </ProjectileWeaponData>
 
-  <ProjectileWeaponData Name="Shotgun" FireRate="1" ProjectilesPerFire="16" Spread="30" 
-                    FireParticleEffectName="ShotgunFireEffect" ShellParticleEffectName="ShotgunShellEffect">
+  <ProjectileWeaponData Name="Shotgun" FireRate="1" ProjectilesPerFire="16" Spread="30"
+                        FireParticleEffectName="ShotgunFireEffect" ShellParticleEffectName="ShotgunShellEffect"
+                        FireSoundEffect="Shotgun_2">
     <ProjectileInfo SpriteName="Bullet" Speed="2500" Acceleration="0" SecondsToLive="0.4" 
                     Penetration="0" Mass="3.0" >
       <ProximityEffect Radius="5" Damage="15" Force="0" ParticleEffectName="BulletTrace"/>
@@ -62,8 +66,8 @@
     </ProjectileInfo>
   </ProjectileWeaponData>
 
-  <ProjectileWeaponData Name="GravityWell" FireRate="0.5" ProjectilesPerFire="1" Spread="0" >
-    <ProjectileInfo SpriteName="GravityWell" Speed="400" Acceleration="5" SecondsToLive="3.0" 
+  <ProjectileWeaponData Name="GravityWell" FireRate="0.5" ProjectilesPerFire="1" Spread="0">
+    <ProjectileInfo SpriteName="GravityWell" Speed="400" Acceleration="5" SecondsToLive="3.0"
                     Penetration="-1" Mass="1.0" >
       <ProximityEffect Radius="150" Damage="0" Force="-300" ParticleEffectName="GravityWell"/>
     </ProjectileInfo>
@@ -71,12 +75,14 @@
 
   <!--Melee Weapons-->
   <MeleeWeaponData Name="Axe"
-               FireRate ="2.5" SwingArc="140" SwingSpeed="800"
-               Range="75" Damage="40" Impact="5000" Recoil="1500"/>
+       FireRate ="2.5" SwingArc="140" SwingSpeed="800"
+       Range="75" Damage="40" Impact="5000" Recoil="1500"
+       FireSoundEffect="Axe_1"/>
 
   <MeleeWeaponData Name="GoblinAxe" SpriteName="Axe"
-               FireRate ="1" SwingArc="140" SwingSpeed="800"
-               Range="75" Damage="10" Impact="5000" Recoil="1500"/>
+       FireRate ="1" SwingArc="140" SwingSpeed="800"
+       Range="75" Damage="10" Impact="5000" Recoil="1500"
+       FireSoundEffect="Axe_1"/>
 
   <!-- Consumable Weapons -->
   <ThrowableWeaponData Name="Cryonade" FireRate="0.5" ProjectilesPerFire="1" Spread="0" UsesPerStack="6">
