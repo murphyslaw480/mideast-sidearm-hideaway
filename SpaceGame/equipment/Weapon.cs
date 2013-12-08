@@ -6,22 +6,27 @@ using System.Diagnostics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 using SpaceGame.graphics;
 using SpaceGame.units;
 using SpaceGame.utility;
+using Microsoft.Xna.Framework.Content;
 
 namespace SpaceGame.equipment
 {
     public class WeaponData
     {
         public string SpriteName;
+        public string FireSoundEffect;
         public string Name;
         public float FireRate;
     }
 
     abstract class Weapon
     {
+        const string c_soundEffectDir = "audio/sound_effects/weapon/";
+        public static ContentManager Content;
         #region properties
         public abstract float Range { get; }
         public WeaponSprite Sprite { get; private set; }
@@ -40,6 +45,7 @@ namespace SpaceGame.equipment
         protected Vector2 _targetDestination;
 
         protected PhysicalUnit _owner;
+        SoundEffect _fireSoundEffect;
         #endregion
 
         #region constructor
@@ -58,6 +64,10 @@ namespace SpaceGame.equipment
             if (spriteName != null)
             {
                 Sprite = new WeaponSprite(data.SpriteName ?? spriteName);
+            }
+            if (!String.IsNullOrEmpty(data.FireSoundEffect))
+            {
+                _fireSoundEffect = Content.Load<SoundEffect>(c_soundEffectDir + data.FireSoundEffect + ".wav");
             }
         }
         #endregion
@@ -84,6 +94,10 @@ namespace SpaceGame.equipment
                 if (Sprite != null)
                 {
                     Sprite.PlayAnimation(0, false);
+                }
+                if (_fireSoundEffect != null)
+                {
+                    _fireSoundEffect.Play();
                 }
                 return true;
             }
