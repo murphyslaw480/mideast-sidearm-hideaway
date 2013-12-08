@@ -19,6 +19,7 @@ namespace SpaceGame.equipment
     {
         public string SpriteName;
         public string FireSoundEffect;
+        public float SoundEffectVolume = 0.5f;
         public string Name;
         public float FireRate;
     }
@@ -46,6 +47,7 @@ namespace SpaceGame.equipment
 
         protected PhysicalUnit _owner;
         SoundEffect _fireSoundEffect;
+        float _soundEffectVolume;
         #endregion
 
         #region constructor
@@ -69,6 +71,7 @@ namespace SpaceGame.equipment
             {
                 _fireSoundEffect = Content.Load<SoundEffect>(c_soundEffectDir + data.FireSoundEffect + ".wav");
             }
+            _soundEffectVolume = data.SoundEffectVolume;
         }
         #endregion
 
@@ -97,7 +100,7 @@ namespace SpaceGame.equipment
                 }
                 if (_fireSoundEffect != null)
                 {
-                    _fireSoundEffect.Play();
+                    _fireSoundEffect.Play(_soundEffectVolume, 0, 0);
                 }
                 return true;
             }
