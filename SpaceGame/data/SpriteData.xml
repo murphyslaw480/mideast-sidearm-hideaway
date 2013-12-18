@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SpriteDatas>
+  <!--SpriteData Name="Spaceman" AssetName="Spaceman" FrameWidth="724" FrameHeight="863" NumFrames="1" NumStates="4" DefaultScale ="0.05" SecondsPerAnimation="0.5" ZLayer="0" /-->
+
+  <UnitSpriteData Name="Spaceman" AssetName="Spaceman_Body" FrameWidth="52" FrameHeight="76" NumFrames="1" NumStates="1" DefaultScale ="1.00"
+              SecondsPerAnimation="0.25" ZLayer="0" ShoulderX="0" ShoulderY="10" HipX="0" HipY="35" ExhaustX="15" ExhaustY="30"> 
+    <SpriteArmData Name="Spaceman_Arm_Right" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-25"/>
+    <SpriteLegData Name="Spaceman_Leg" HipX="11" HipY="6"/>
+  </UnitSpriteData>
+
+  <UnitSpriteData Name="Goblin" AssetName="Goblin1" FrameWidth="217" FrameHeight="287" NumFrames="1" NumStates="1" DefaultScale ="0.15"
+              SecondsPerAnimation="0.5" ZLayer="0" >
+    <SpriteArmData Name="basic_arm" ShoulderX="8" ShoulderY="25" HandX="0" HandY="-25"/>
+    <SpriteLegData Name="Spaceman_Leg" HipX="11" HipY="6"/>
+  </UnitSpriteData>
+
+  <!-- Obstacle Sprites-->
+  <SpriteData Name="Crate" AssetName="Crate" FrameWidth="57" FrameHeight="56" NumFrames="1" NumStates="1" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="CryoBarrel" AssetName="CryoBarrel" FrameWidth="51" FrameHeight="67" NumFrames="1" NumStates="1" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="FlameBarrel" AssetName="FlameBarrel" FrameWidth="43" FrameHeight="63" NumFrames="1" NumStates="1" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+              
+  <SpriteData Name="SpaceRock" AssetName="SpaceRock" FrameWidth="125" FrameHeight="122" NumFrames="1" NumStates="1" 
+              DefaultScale ="1.00" SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <!-- Projectile Weapon Sprites-->
+  <WeaponSpriteData Name="RocketLauncher" AssetName="Rocket_Launcher" 
+                    FrameWidth="31" FrameHeight="64" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="4" HandleY="10" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Gatling" AssetName="Gatling_Gun" 
+                    FrameWidth="28" FrameHeight="54" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="6" HandleY="42" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Flamethrower" AssetName="Flamethrower" 
+                    FrameWidth="25" FrameHeight="60" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="12" HandleY="51" MuzzleX="15" MuzzleY="10">
+  </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Shotgun" AssetName="Shotgun" 
+                    FrameWidth="18" FrameHeight="57" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="5" HandleY="35" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+
+  <WeaponSpriteData Name="Blaster" AssetName="Laser_Gun" 
+                    FrameWidth="19" FrameHeight="35" NumFrames="1" NumStates="1" 
+                    DefaultScale ="1.00" SecondsPerAnimation="0.25" ZLayer="0" 
+			              HandleX="5" HandleY="30" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+  <!-- Projectile Weapon Sprites-->
+
+  <WeaponSpriteData Name="Axe" AssetName="Placeholder" FrameWidth="17" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="1.00"
+              SecondsPerAnimation="0.25" ZLayer="0" 
+			  HandleX="8" HandleY="24" MuzzleX="12" MuzzleY="0">
+  </WeaponSpriteData>
+
+  <SpriteData Name="Projectile" AssetName="Projectile" FrameWidth="32" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="0.5" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="HookClaw" AssetName="HookClaw" FrameWidth="256" FrameHeight="266" NumFrames="1" NumStates="1" DefaultScale ="0.1" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="HookChain" AssetName="HookChain" FrameWidth="32" FrameHeight="32" NumFrames="1" NumStates="1" DefaultScale ="0.5" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="Rocket" AssetName="Rocket" FrameWidth="89" FrameHeight="218" NumFrames="1" NumStates="1" DefaultScale ="0.2" 
+              SecondsPerAnimation="0.03" ZLayer="0" />
+
+  <SpriteData Name="Flame" AssetName="Flame" FrameWidth="4" FrameHeight="4" NumFrames="1" NumStates="1" DefaultScale ="1.0" 
+              SecondsPerAnimation="0.03" ZLayer="0" />
+
+  <SpriteData Name="TestFlame" AssetName="Bullet" FrameWidth="4" FrameHeight="4" NumFrames="1" NumStates="1" DefaultScale ="0.4" 
+              SecondsPerAnimation="0.03" ZLayer="0" />
+
+  <SpriteData Name="Unicorn" AssetName="Unicorn" FrameWidth="466" FrameHeight="349" NumFrames="1" NumStates="1" DefaultScale ="0.12" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="Bullet" AssetName="Bullet" FrameWidth="3" FrameHeight="15" NumFrames="1" NumStates="1" DefaultScale ="1.00" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="GravityWell" AssetName="GravityWell" FrameWidth="48" FrameHeight="48" NumFrames="1" NumStates="1" DefaultScale ="0.10" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="Cryonade" AssetName="Cryonade" FrameWidth="278" FrameHeight="270" NumFrames="1" NumStates="1" DefaultScale ="0.10" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+
+  <SpriteData Name="LaserGreen" AssetName="Laser_Green" FrameWidth="6" FrameHeight="41" NumFrames="1" NumStates="1" DefaultScale ="1.00" 
+              SecondsPerAnimation="0.5" ZLayer="0" />
+</SpriteDatas>

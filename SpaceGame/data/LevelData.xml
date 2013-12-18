@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Levels>
+  <LevelData Name="Level1" Width="1200" Height="1200" PlayerX="800" PlayerY="100">
+    <BlackHole X="600" Y="600" Gravity="18000" Radius="200" Capacity="300"/>
+    <!--Unicorn StartTime="4" EndTime="1000" SpawnTime="8"/-->
+    <BurstWaves>
+      <BurstWaveData RestDelay="10" Difficulty="3" EnemySpawnRate="1"
+                     Enemies="Goblin,Goblin,Goblin">
+      </BurstWaveData>
+      <BurstWaveData RestDelay="30" Difficulty="5" EnemySpawnRate="1"
+                     Enemies="Goblin,Goblin,Goblin,Goblin,Goblin">
+      </BurstWaveData>
+      <BurstWaveData RestDelay="30" Difficulty="5" EnemySpawnRate="1"
+                     Enemies="Goblin,Goblin,Goblin,Goblin,Goblin">
+      </BurstWaveData>
+    </BurstWaves>
+    <TrickleWaves>
+      <TrickleWaveData StartTime="3" Duration="360" EnemySpawnRate="1" Enemies="Goblin,Goblin">
+        <Obstacles>
+          <ObstacleDataRef Name="FlameBarrel" MinSpawnTime="10" MaxSpawnTime="30"/>
+          <ObstacleDataRef Name="CryoBarrel" MinSpawnTime="10" MaxSpawnTime="30"/>
+          <ObstacleDataRef Name="SpaceRock" MinSpawnTime="10" MaxSpawnTime="30"/>
+        </Obstacles>
+      </TrickleWaveData> 
+      <TrickleWaveData StartTime="60" Duration="300" EnemySpawnRate="1" Enemies="Goblin,Goblin">
+      </TrickleWaveData> 
+    </TrickleWaves>
+  </LevelData>
+
+  <LevelData Name="Level0" Width="1200" Height="800" PlayerX="800" PlayerY="100">
+	<!--Test level with no enemies-->
+    <BlackHole X="200" Y="700" Gravity="000" Radius="100" Capacity="200"/>
+    <BurstWaves>
+      <BurstWaveData RestDelay="5" Difficulty="3" EnemySpawnRate="1" 
+                     Enemies="Goblin,Goblin,Goblin,Goblin">
+      </BurstWaveData> 
+    </BurstWaves>
+    <TrickleWaves>
+      <TrickleWaveData StartTime="3" Duration="30" EnemySpawnRate="1" 
+                     Enemies="Goblin, Goblin, Goblin">
+      </TrickleWaveData> 
+    </TrickleWaves>
+  </LevelData>
+
+</Levels>
