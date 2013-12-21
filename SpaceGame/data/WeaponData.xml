@@ -34,7 +34,7 @@
   <ProjectileWeaponData Name="Flamethrower" FireRate="100" ProjectilesPerFire="1"
                         FireParticleEffectName="Flamethrower" Spread="20" SourceVelocityFactor="0.7"
                         FireSoundEffect="Flamethrower_1">
-    <ProjectileInfo SpriteName="TestFlame" Speed="500" Acceleration="-17" SecondsToLive="0.7"
+    <ProjectileInfo SpriteName="Flame" Speed="500" Acceleration="-17" SecondsToLive="0.7"
                     Penetration="100" Mass="0.0" >
       <ProximityEffect Radius="1" Damage="0.0" Force="0" FireEffect="5"/>
     </ProjectileInfo>
