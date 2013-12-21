@@ -165,7 +165,6 @@ namespace SpaceGame.graphics
                 batch.Draw(_armTexture, _absShoulderPos, null, Color.White, aimAngle, _armShoulderPos, Scale, spriteEffect, 0);
             }
 
-            XnaHelper.DrawRect(Color.Red, _absHipPos, 5, 5, batch);
         }
 
     }
