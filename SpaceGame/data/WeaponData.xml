@@ -76,7 +76,7 @@
   <!--Melee Weapons-->
   <MeleeWeaponData Name="Axe"
        FireRate ="2.5" SwingArc="140" SwingSpeed="800"
-       Range="75" Damage="40" Impact="5000" Recoil="1500"
+       Range="75" Damage="40" Impact="9000" Recoil="1500"
        FireSoundEffect="Axe_1"/>
 
   <MeleeWeaponData Name="GoblinAxe" SpriteName="Axe"
