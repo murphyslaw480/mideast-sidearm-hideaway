@@ -27,7 +27,6 @@ namespace SpaceGame.utilities
         static SpriteFont s_scoreFont;
         static ScoreData[] s_scoreData;
         public static ContentManager Content;
-
         ScorePopup[] _scorePopups;
         public int CurrentScore { get; private set; }
 
@@ -139,5 +138,4 @@ namespace SpaceGame.utilities
         public float LifeTime;
         public float Scale;
     }
-
 }
