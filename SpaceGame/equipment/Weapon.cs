@@ -87,7 +87,7 @@ namespace SpaceGame.equipment
             if (_tillNextFire.TotalSeconds <= 0)
             {
                 _firing = true;
-                _fireDirection = XnaHelper.DirectionBetween(firePosition, targetPosition);
+                _fireDirection = XnaHelper.DirectionBetween(_owner.Center, targetPosition);
                 _fireLocation = firePosition;
                 _targetDestination = targetPosition;
 
