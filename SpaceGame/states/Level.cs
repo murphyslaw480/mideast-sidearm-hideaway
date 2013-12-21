@@ -117,22 +117,19 @@ namespace SpaceGame.states
         void selectRandomWeapons()
         {
             Random rand = new Random();
-            int rand1 = rand.Next(0, 4);
-            int rand2;
-            do
-            {
-                rand2 = rand.Next(0, 4);
-            } while (rand2 == rand1);
-            ProjectileWeapon[] weapons = new ProjectileWeapon[]
+            Weapon[] longRange = new Weapon[]
             {
                 new ProjectileWeapon("Shotgun", _player),
                 new ProjectileWeapon("Gatling", _player),
-                new ProjectileWeapon("Flamethrower", _player),
-                new ProjectileWeapon("RocketLauncher", _player),
+                new ProjectileWeapon("RocketLauncher", _player)
             };
-            _player.PrimaryWeapon = weapons[rand1];
-            _player.SecondaryWeapon = weapons[rand2];
-            _player.PrimaryWeapon = new MeleeWeapon("Axe", _player);
+            Weapon[] shortRange = new Weapon[]
+            {
+                new ProjectileWeapon("Flamethrower", _player),
+                new MeleeWeapon("Axe", _player)
+            };
+            _player.PrimaryWeapon = longRange[rand.Next(0, longRange.Length)];
+            _player.SecondaryWeapon = shortRange[rand.Next(0, shortRange.Length)];
         }
         #endregion
 
