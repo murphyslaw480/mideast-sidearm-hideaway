@@ -80,6 +80,7 @@
     <Compile Include="utilities\Gravity.cs" />
     <Compile Include="utilities\InputManager.cs" />
     <Compile Include="utilities\InventoryManager.cs" />
+    <Compile Include="utilities\ScoreManager.cs" />
     <Compile Include="utilities\XnaHelper.cs" />
   </ItemGroup>
   <ItemGroup>
