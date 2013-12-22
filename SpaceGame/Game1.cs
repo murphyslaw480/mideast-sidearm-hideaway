@@ -18,6 +18,7 @@ using SpaceGame.equipment;
 using SpaceGame.states;
 
 using MonoGameExtensions;
+using SpaceGame.utilities;
 
 
 namespace SpaceGame
@@ -122,6 +123,7 @@ namespace SpaceGame
             Sprite.Content = Content;   //Sprite gets reference to content so it can load textures
             ParticleGenerator.Content = Content;   //ParticleGenerator gets reference to content so it can load textures
             Gamestate.Content = Content;
+            ScoreManager.Content = Content;
 
             Gamemenu.LoadContent(Content);
             _stateStack.Add(new Gamemenu(Content));
