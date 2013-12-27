@@ -21,7 +21,7 @@ namespace SpaceGame.utilities
     class ScoreManager
     {
         const int c_maxScorePops = 20;  //Max # of on-screen score popups
-        const string c_scoreFont = "MenuFont";
+        const string c_scoreFontName = "MenuFont";
 
         static ScoreManager s_instance;
         static SpriteFont s_scoreFont;
@@ -31,9 +31,10 @@ namespace SpaceGame.utilities
         ScorePopup[] _scorePopups;
         public int CurrentScore { get; private set; }
 
-        public static ScoreManager()
+        public static void LoadContent(ContentManager content)
         {
-            s_scoreFont = Content.Load<SpriteFont>(c_scoreFont);
+            Content = content;
+            s_scoreFont = Content.Load<SpriteFont>(c_scoreFontName);
             s_scoreData = new ScoreData[Enum.GetValues(typeof(ScoreType)).Length];
             foreach (int val in Enum.GetValues(typeof(ScoreType)))
             {   //populate score data table from data manager for fast lookup (index by enum values)
@@ -98,7 +99,14 @@ namespace SpaceGame.utilities
             public TimeSpan LifeTime;
             public Vector2 Position;
             public ScoreData Data;
-            public Color TextColor;
+            public Color TextColor
+            {
+                get { return Data.Color; }
+            }
+            public int Score
+            {
+                get { return Data.Points; }
+            }
 
             public ScorePopup(Vector2 position, ScoreData data)
             {
@@ -116,7 +124,7 @@ namespace SpaceGame.utilities
             {
                 if (LifeTime > TimeSpan.Zero)
                 {
-                    sb.DrawString(c_scoreFont, Data.Text, Position, TextColor);
+                    sb.DrawString(s_scoreFont, Data.Text, Position, Data.Color);
                 }
             }
         }
