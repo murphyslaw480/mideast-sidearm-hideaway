@@ -255,6 +255,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="data\ScoreData.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Icon.ico" />
     <Content Include="Content\music\space.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

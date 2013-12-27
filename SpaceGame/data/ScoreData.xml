@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<!--Define parameters for Score Events
+  Score Data Attributes:
+    Name (string)     : Must match name in ScoreType enum
+    Text (string)     : Text to display on screen for popup
+    Points (int)      : Score value of event
+    Color (Color)     : Color of popup text
+    LifeTime (float)  : Duration of popup text
+    Scale (float)     : Size of popup text
+-->
+<ScoreDatas>
+  <ScoreData Name="MeleeKill"
+             Text="Melee Kill!"
+             Points="5"
+             Color="255,0,0"
+             LifeTime="3"
+             Scale="2">
+  </ScoreData>
+</ScoreDatas>

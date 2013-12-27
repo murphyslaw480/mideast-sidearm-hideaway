@@ -6,6 +6,8 @@ using System.Xml.Linq;
 using System.Reflection;
 using System.Collections;
 using System.IO;
+using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 public static class DataManager
 {
@@ -13,10 +15,18 @@ public static class DataManager
     const string c_refKeyword = "Ref";
 
     static Dictionary<Type, Dictionary<string, object>> s_dataDict;
+    /// <summary>
+    /// Custom functions to parse element/attribute text into a given type
+    /// </summary>
+    static Dictionary<Type, Func<string, object>> s_typeParser;
 
     static DataManager()
     {
         s_dataDict = new Dictionary<Type, Dictionary<string, object>>();
+        s_typeParser = new Dictionary<Type, Func<string, object>>
+        {
+            {typeof(Color), ParseColor}
+        };
     }
 
     /// <summary>
@@ -103,6 +113,11 @@ public static class DataManager
     {
         Type dataType = typeof(T);
 
+        if (s_typeParser.ContainsKey(dataType))
+        {   //try custom parsing function
+            return (T)s_typeParser[dataType](el.Value);
+        }
+
         try
         {   //primitive type
             return (T)Convert.ChangeType(el.Value, dataType);
@@ -127,6 +142,10 @@ public static class DataManager
                     MethodInfo genericMethod = method.MakeGenericMethod(new Type[] { p.FieldType.GetElementType() });
                     dataType.GetField(fieldName).SetValue(data, genericMethod.Invoke(null, new object[] { at }));
                 }
+                else if (s_typeParser.ContainsKey(p.FieldType))
+                {   //try custom parsing function
+                    p.SetValue(data, s_typeParser[p.FieldType](at.Value));
+                }
                 else
                 {
                     p.SetValue(data, Convert.ChangeType(at.Value, p.FieldType));
@@ -149,7 +168,7 @@ public static class DataManager
                     Type arrayElementType = subElType.GetElementType();
                     MethodInfo method = typeof(DataManager).GetMethod("ParseArray");
                     MethodInfo genericMethod = method.MakeGenericMethod(new Type[] { arrayElementType });
-                    dataType.GetField(fieldName).SetValue(data, genericMethod.Invoke(null, new object[] {subel}));
+                    dataType.GetField(fieldName).SetValue(data, genericMethod.Invoke(null, new object[] { subel }));
                 }
                 else
                 {
@@ -184,6 +203,20 @@ public static class DataManager
         }
         return (T)s_dataDict[dataType][key];
     }
+
+    public static object ParseColor(string value)
+    {
+        int[] colorVals = value.Split(',').Select(x => int.Parse(x)).ToArray<int>();
+        if (colorVals.Length == 3)
+        {
+            return new Color(colorVals[0], colorVals[1], colorVals[2]);
+        }
+        else if (colorVals.Length == 4)
+        {
+            return new Color(colorVals[0], colorVals[1], colorVals[2], colorVals[4]);
+        }
+        throw new Exception("DataManager: Incorrect number of values for color");
+    }
 }
 
 public class DataManagerException : Exception
@@ -191,11 +224,11 @@ public class DataManagerException : Exception
     Type _dataType;
     string _dataKey;
 
-    public DataManagerException (Type dataType, string key)
-	{
+    public DataManagerException(Type dataType, string key)
+    {
         _dataType = dataType;
         _dataKey = key;
-	}
+    }
 
     public override string Message
     {
