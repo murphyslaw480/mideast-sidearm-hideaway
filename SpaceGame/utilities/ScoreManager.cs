@@ -11,9 +11,9 @@ namespace SpaceGame.utilities
 {
     enum ScoreType
     {
-        RangeKill,
+        //RangeKill,
         MeleeKill,
-        FlameKill
+        //FlameKill
     }
     /// <summary>
     /// Singleton class for tracking and displaying score within a level
