@@ -13,11 +13,17 @@ namespace SpaceGame.utility
         const int WHEEL_UNITS_PER_SCROLL = 10;
         #endregion
         #region fields
+        #region constants
+        const float c_thumbstickDeadZone = 0.1f;
+        #endregion
         #region members
-        KeyboardState previousKeyboardState;
-        KeyboardState currentKeyboardState;
-        MouseState previousMouseState;
-        MouseState currentMouseState;
+        KeyboardState _previousKeyboardState;
+        KeyboardState _currentKeyboardState;
+        MouseState _previousMouseState;
+        MouseState _currentMouseState;
+        bool _gamePadConnected;
+        GamePadState _previousGamepadState;
+        GamePadState _currentGamepadState;
         //current scrolls toward next scroll event
         //- for scroll down, + for scroll up
         int _scrollCounter;
@@ -30,19 +36,19 @@ namespace SpaceGame.utility
         //Input Requests
         public bool MoveLeft
         {
-            get { return currentKeyboardState.IsKeyDown(Keys.A); }
+            get { return _currentKeyboardState.IsKeyDown(Keys.A) || _currentGamepadState.ThumbSticks.Left.X < -c_thumbstickDeadZone; }
         }
         public bool MoveRight 
         { 
-            get {return currentKeyboardState.IsKeyDown(Keys.D);} 
+            get {return _currentKeyboardState.IsKeyDown(Keys.D) || _currentGamepadState.ThumbSticks.Left.X > c_thumbstickDeadZone;} 
         }
         public bool MoveDown 
         { 
-            get {return currentKeyboardState.IsKeyDown(Keys.S);}
+            get {return _currentKeyboardState.IsKeyDown(Keys.S) || _currentGamepadState.ThumbSticks.Left.Y < -c_thumbstickDeadZone;}
         }
         public bool MoveUp 
         { 
-            get {return currentKeyboardState.IsKeyDown(Keys.W);}
+            get {return _currentKeyboardState.IsKeyDown(Keys.W) || _currentGamepadState.ThumbSticks.Left.Y > c_thumbstickDeadZone;}
         }
 
         public bool ScrollUp { get { return _scrollUp; } }
@@ -121,40 +127,38 @@ namespace SpaceGame.utility
         }
         public bool FirePrimary 
         {
-            get { return currentMouseState.LeftButton == ButtonState.Pressed; }
+            get { return _currentMouseState.LeftButton == ButtonState.Pressed || _currentGamepadState.IsButtonDown(Buttons.RightTrigger); }
         }
         public bool FireSecondary
         {
-            get { return currentMouseState.RightButton == ButtonState.Pressed; }
+            get { return _currentMouseState.RightButton == ButtonState.Pressed || _currentGamepadState.IsButtonDown(Buttons.LeftTrigger); }
         }
-        public bool UseItem { get { return keyTapped(Keys.Q); } }
+        public bool UseItem { get { return keyTapped(Keys.Q) || buttonTapped(Buttons.A); } }
         public bool TriggerGadget1
         { 
-            get {return (currentKeyboardState.IsKeyDown(Keys.LeftShift)
-                            && previousKeyboardState.IsKeyUp(Keys.LeftShift));}
+            get {return keyTapped(Keys.LeftShift) || buttonTapped(Buttons.LeftShoulder);}
         }
         public bool TriggerGadget2 
         { 
-            get {return (currentKeyboardState.IsKeyDown(Keys.Space)
-                            && previousKeyboardState.IsKeyUp(Keys.Space));}
+            get {return keyTapped(Keys.Space) || buttonTapped(Buttons.RightShoulder);}
         }
         public Vector2 AbsoluteMousePos
         {
             get 
             { 
-                return new Vector2(currentMouseState.X + _cameraOffset.X, currentMouseState.Y + _cameraOffset.Y); 
+                return new Vector2(_currentMouseState.X + _cameraOffset.X, _currentMouseState.Y + _cameraOffset.Y); 
             }
         }
         public Vector2 RelativeMousePos
         {
             get 
             { 
-                return new Vector2(currentMouseState.X, currentMouseState.Y); 
+                return new Vector2(_currentMouseState.X, _currentMouseState.Y); 
             }
         }
         public bool Exit
         {
-            get { return currentKeyboardState.IsKeyDown(Keys.Escape); }
+            get { return _currentKeyboardState.IsKeyDown(Keys.Escape); }
         }
         //Change Item Request
         public int SelectItemNum
@@ -207,14 +211,16 @@ namespace SpaceGame.utility
         /// </summary>
         public bool DebugKey    
         {
-            get { return currentKeyboardState.IsKeyDown(Keys.B); }
+            get { return _currentKeyboardState.IsKeyDown(Keys.B); }
         }
         #endregion
         #endregion
 
         #region methods
         public InputManager()
-        { }
+        {
+            _gamePadConnected = GamePad.GetState(PlayerIndex.One).IsConnected;
+        }
 
         public void SetCameraOffset(Vector2 offset)
         {
@@ -223,11 +229,13 @@ namespace SpaceGame.utility
 
         public void Update()
         {
-            previousKeyboardState = currentKeyboardState;
-            currentKeyboardState = Keyboard.GetState();
-            previousMouseState = currentMouseState;
-            currentMouseState = Mouse.GetState();
-            _scrollCounter += (currentMouseState.ScrollWheelValue - previousMouseState.ScrollWheelValue);
+            _previousKeyboardState = _currentKeyboardState;
+            _currentKeyboardState = Keyboard.GetState();
+            _previousMouseState = _currentMouseState;
+            _currentMouseState = Mouse.GetState();
+            _previousGamepadState = _currentGamepadState;
+            _currentGamepadState = GamePad.GetState(PlayerIndex.One);
+            _scrollCounter += (_currentMouseState.ScrollWheelValue - _previousMouseState.ScrollWheelValue);
             _scrollDown = false;
             _scrollUp = false;
             if (_scrollCounter > WHEEL_UNITS_PER_SCROLL)
@@ -244,8 +252,14 @@ namespace SpaceGame.utility
 
         private bool keyTapped(Keys key)
         {
-            return currentKeyboardState.IsKeyDown(key)
-                && previousKeyboardState.IsKeyUp(key);
+            return _currentKeyboardState.IsKeyDown(key)
+                && _previousKeyboardState.IsKeyUp(key);
+        }
+
+        private bool buttonTapped(Buttons button)
+        {
+            return _currentGamepadState.IsButtonDown(button)
+                && _previousGamepadState.IsButtonUp(button);
         }
 
         /// <summary>
@@ -255,7 +269,7 @@ namespace SpaceGame.utility
         /// <returns></returns>
         public int NumKey()
         {
-            foreach (Keys key in currentKeyboardState.GetPressedKeys())
+            foreach (Keys key in _currentKeyboardState.GetPressedKeys())
             {
                 if (keyTapped(key) && Keys.NumPad0 <= key && key <= Keys.NumPad6)
                     return (int)(key - Keys.NumPad0);
