@@ -15,6 +15,8 @@ namespace SpaceGame.utility
         #region fields
         #region constants
         const float c_thumbstickDeadZone = 0.1f;
+        //how far to push thumstick to select something
+        const float c_thumbstickSelectThreshold = 0.5f;
         #endregion
         #region members
         KeyboardState _previousKeyboardState;
@@ -62,7 +64,7 @@ namespace SpaceGame.utility
         public bool SelectLeft
         {
             get { return keyTapped(Keys.A) || keyTapped(Keys.Left)
-                || keyTapped(Keys.H); }
+                || buttonTapped(Buttons.DPadLeft); }
         }
         /// <summary>
         /// Request to move selector right (use for menus)
@@ -70,7 +72,7 @@ namespace SpaceGame.utility
         public bool SelectRight 
         { 
             get { return keyTapped(Keys.D) || keyTapped(Keys.Right)
-                || keyTapped(Keys.L); }
+                || buttonTapped(Buttons.DPadRight); }
         }
         /// <summary>
         /// Request to move selector down (use for menus)
@@ -78,7 +80,7 @@ namespace SpaceGame.utility
         public bool SelectDown 
         { 
             get { return keyTapped(Keys.S) || keyTapped(Keys.Down)
-                || keyTapped(Keys.J); }
+                || buttonTapped(Buttons.DPadDown); }
         }
         /// <summary>
         /// Request to move selector up (use for menus)
@@ -86,7 +88,7 @@ namespace SpaceGame.utility
         public bool SelectUp 
         { 
             get { return keyTapped(Keys.W) || keyTapped(Keys.Up)
-                || keyTapped(Keys.K); }
+                || buttonTapped(Buttons.DPadUp); }
         }
 
         /// <summary>
@@ -95,14 +97,15 @@ namespace SpaceGame.utility
         public bool Confirm 
         {
             get { return keyTapped(Keys.Enter) || keyTapped(Keys.Space)
-                || keyTapped(Keys.I); }
+                || buttonTapped(Buttons.A) || buttonTapped(Buttons.Start); }
         }
         /// <summary>
         /// Cancellation/back button pressed (use for menus)
         /// </summary>
         public bool Cancel 
         {
-            get { return keyTapped(Keys.Escape) || keyTapped(Keys.Back); }
+            get { return keyTapped(Keys.Escape) || keyTapped(Keys.Back)
+                || buttonTapped(Buttons.B) || buttonTapped(Buttons.Back); }
         }
         /// <summary>
         /// Get requested direction based on movement keys (normalized)
