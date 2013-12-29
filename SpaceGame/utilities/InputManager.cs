@@ -15,6 +15,8 @@ namespace SpaceGame.utility
         #region fields
         #region constants
         const float c_thumbstickDeadZone = 0.1f;
+        //how far to push thumstick to select something
+        const float c_thumbstickSelectThreshold = 0.5f;
         #endregion
         #region members
         KeyboardState _previousKeyboardState;
@@ -22,8 +24,10 @@ namespace SpaceGame.utility
         MouseState _previousMouseState;
         MouseState _currentMouseState;
         bool _gamePadConnected;
+        bool _gamePadInverted;
         GamePadState _previousGamepadState;
         GamePadState _currentGamepadState;
+        Vector2 _gamepadAimOrigin;
         //current scrolls toward next scroll event
         //- for scroll down, + for scroll up
         int _scrollCounter;
@@ -60,7 +64,7 @@ namespace SpaceGame.utility
         public bool SelectLeft
         {
             get { return keyTapped(Keys.A) || keyTapped(Keys.Left)
-                || keyTapped(Keys.H); }
+                || buttonTapped(Buttons.DPadLeft); }
         }
         /// <summary>
         /// Request to move selector right (use for menus)
@@ -68,7 +72,7 @@ namespace SpaceGame.utility
         public bool SelectRight 
         { 
             get { return keyTapped(Keys.D) || keyTapped(Keys.Right)
-                || keyTapped(Keys.L); }
+                || buttonTapped(Buttons.DPadRight); }
         }
         /// <summary>
         /// Request to move selector down (use for menus)
@@ -76,7 +80,7 @@ namespace SpaceGame.utility
         public bool SelectDown 
         { 
             get { return keyTapped(Keys.S) || keyTapped(Keys.Down)
-                || keyTapped(Keys.J); }
+                || buttonTapped(Buttons.DPadDown); }
         }
         /// <summary>
         /// Request to move selector up (use for menus)
@@ -84,7 +88,7 @@ namespace SpaceGame.utility
         public bool SelectUp 
         { 
             get { return keyTapped(Keys.W) || keyTapped(Keys.Up)
-                || keyTapped(Keys.K); }
+                || buttonTapped(Buttons.DPadUp); }
         }
 
         /// <summary>
@@ -93,14 +97,15 @@ namespace SpaceGame.utility
         public bool Confirm 
         {
             get { return keyTapped(Keys.Enter) || keyTapped(Keys.Space)
-                || keyTapped(Keys.I); }
+                || buttonTapped(Buttons.A) || buttonTapped(Buttons.Start); }
         }
         /// <summary>
         /// Cancellation/back button pressed (use for menus)
         /// </summary>
         public bool Cancel 
         {
-            get { return keyTapped(Keys.Escape) || keyTapped(Keys.Back); }
+            get { return keyTapped(Keys.Escape) || keyTapped(Keys.Back)
+                || buttonTapped(Buttons.B) || buttonTapped(Buttons.Back); }
         }
         /// <summary>
         /// Get requested direction based on movement keys (normalized)
@@ -146,13 +151,20 @@ namespace SpaceGame.utility
         {
             get 
             { 
-                return new Vector2(_currentMouseState.X + _cameraOffset.X, _currentMouseState.Y + _cameraOffset.Y); 
+                return RelativeMousePos + _cameraOffset; 
             }
         }
         public Vector2 RelativeMousePos
         {
             get 
-            { 
+            {
+                if (_gamePadConnected)
+                {
+                    Vector2 screenVector = new Vector2(Game1.SCREENWIDTH, Game1.SCREENHEIGHT);
+                    Vector2 aimVector = _currentGamepadState.ThumbSticks.Right;
+                    if (!_gamePadInverted) { aimVector.Y *= -1; }
+                    return aimVector * screenVector / 2 + _gamepadAimOrigin;
+                }
                 return new Vector2(_currentMouseState.X, _currentMouseState.Y); 
             }
         }
@@ -227,7 +239,11 @@ namespace SpaceGame.utility
             _cameraOffset = offset;
         }
 
-        public void Update()
+        /// <summary>
+        /// Recieve and process input
+        /// </summary>
+        /// <param name="gamepadAimOrigin">Point from which to calculate thumstick aim position relative to screen view</param>
+        public void Update(Vector2 gamepadAimOrigin)
         {
             _previousKeyboardState = _currentKeyboardState;
             _currentKeyboardState = Keyboard.GetState();
@@ -235,6 +251,7 @@ namespace SpaceGame.utility
             _currentMouseState = Mouse.GetState();
             _previousGamepadState = _currentGamepadState;
             _currentGamepadState = GamePad.GetState(PlayerIndex.One);
+            _gamepadAimOrigin = gamepadAimOrigin;
             _scrollCounter += (_currentMouseState.ScrollWheelValue - _previousMouseState.ScrollWheelValue);
             _scrollDown = false;
             _scrollUp = false;

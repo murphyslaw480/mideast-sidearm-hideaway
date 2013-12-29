@@ -30,6 +30,13 @@ namespace SpaceGame.states
         public SongCollection BgMusic { get; protected set; }
         protected ContentManager _content;
         static Random s_rand = new Random();
+        public virtual Vector2 GamepadAimOrigin
+        {   //origin from which to calculate gamepad aim angle from thumbstick
+            get
+            {   //default is center of screen
+                return new Vector2(Game1.SCREENWIDTH / 2, Game1.SCREENHEIGHT / 2);
+            }
+        }
         #endregion
 
         #region constructor

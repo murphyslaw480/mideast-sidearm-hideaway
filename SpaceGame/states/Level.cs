@@ -65,6 +65,16 @@ namespace SpaceGame.states
         TimeSpan _gameOverTimer = TimeSpan.FromSeconds(3.0);
         #endregion
 
+        #region properties
+        public override Vector2 GamepadAimOrigin
+        {
+            get
+            {
+                return _player.Position - _camera.Position;
+            }
+        }
+        #endregion
+
         #region constructor
         public Level (ContentManager content, int levelNumber, InventoryManager im)
             : base(content, false, "Level")
