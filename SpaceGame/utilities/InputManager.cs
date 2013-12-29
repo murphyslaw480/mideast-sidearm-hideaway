@@ -22,8 +22,10 @@ namespace SpaceGame.utility
         MouseState _previousMouseState;
         MouseState _currentMouseState;
         bool _gamePadConnected;
+        bool _gamePadInverted;
         GamePadState _previousGamepadState;
         GamePadState _currentGamepadState;
+        Vector2 _gamepadAimOrigin;
         //current scrolls toward next scroll event
         //- for scroll down, + for scroll up
         int _scrollCounter;
@@ -146,13 +148,20 @@ namespace SpaceGame.utility
         {
             get 
             { 
-                return new Vector2(_currentMouseState.X + _cameraOffset.X, _currentMouseState.Y + _cameraOffset.Y); 
+                return RelativeMousePos + _cameraOffset; 
             }
         }
         public Vector2 RelativeMousePos
         {
             get 
-            { 
+            {
+                if (_gamePadConnected)
+                {
+                    Vector2 screenVector = new Vector2(Game1.SCREENWIDTH, Game1.SCREENHEIGHT);
+                    Vector2 aimVector = _currentGamepadState.ThumbSticks.Right;
+                    if (!_gamePadInverted) { aimVector.Y *= -1; }
+                    return aimVector * screenVector / 2 + _gamepadAimOrigin;
+                }
                 return new Vector2(_currentMouseState.X, _currentMouseState.Y); 
             }
         }
@@ -227,7 +236,11 @@ namespace SpaceGame.utility
             _cameraOffset = offset;
         }
 
-        public void Update()
+        /// <summary>
+        /// Recieve and process input
+        /// </summary>
+        /// <param name="gamepadAimOrigin">Point from which to calculate thumstick aim position relative to screen view</param>
+        public void Update(Vector2 gamepadAimOrigin)
         {
             _previousKeyboardState = _currentKeyboardState;
             _currentKeyboardState = Keyboard.GetState();
@@ -235,6 +248,7 @@ namespace SpaceGame.utility
             _currentMouseState = Mouse.GetState();
             _previousGamepadState = _currentGamepadState;
             _currentGamepadState = GamePad.GetState(PlayerIndex.One);
+            _gamepadAimOrigin = gamepadAimOrigin;
             _scrollCounter += (_currentMouseState.ScrollWheelValue - _previousMouseState.ScrollWheelValue);
             _scrollDown = false;
             _scrollUp = false;

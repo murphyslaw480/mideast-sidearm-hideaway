@@ -155,7 +155,7 @@ namespace SpaceGame
             if (_inputManager.Exit)
                 this.Exit();
 
-            _inputManager.Update();
+            _inputManager.Update(_stateStack.Last().GamepadAimOrigin);
             _stateStack.Last().Update(gameTime, _inputManager, _weaponManager);
 
             if (_stateStack.Last().ReplaceState != null)
