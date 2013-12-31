@@ -213,7 +213,7 @@ public static class DataManager
         }
         else if (colorVals.Length == 4)
         {
-            return new Color(colorVals[0], colorVals[1], colorVals[2], colorVals[4]);
+            return new Color(colorVals[1], colorVals[2], colorVals[3], colorVals[0]);
         }
         throw new Exception("DataManager: Incorrect number of values for color");
     }

@@ -13,6 +13,7 @@ using SpaceGame.utility;
 using SpaceGame.units;
 using SpaceGame.equipment;
 using Microsoft.Xna.Framework.Content;
+using SpaceGame.utilities;
 
 namespace SpaceGame.states
 {
@@ -57,6 +58,7 @@ namespace SpaceGame.states
         Hud userInterface;
         Rectangle _cameraLock;
         Camera2D _camera;
+        ScoreManager _scoreManager;
 
         bool _timeSlowed;
 
@@ -86,6 +88,7 @@ namespace SpaceGame.states
             //store active burst wave as last tricklewave
             _waves = new Wave[data.TrickleWaves.Length + data.BurstWaves.Length];
             _camera = new Camera2D(_player.Position, _levelBounds.Width, _levelBounds.Height);
+            _scoreManager = new ScoreManager();
             //construct waves
             for (int i = 0; i < data.TrickleWaves.Length; i++)
             { 
@@ -146,6 +149,10 @@ namespace SpaceGame.states
         #region methods
         public override void Update(GameTime gameTime, InputManager input, InventoryManager im)
         {
+            if (input.DebugKey)
+            {
+                ScoreManager.RegisterScore(new Vector2(100, 100), ScoreType.MeleeKill);
+            }
             if (_player.UnitLifeState == PhysicalUnit.LifeState.Destroyed || _player.UnitLifeState == PhysicalUnit.LifeState.Disabled
                 || _blackHole.capacityUsed > _blackHole.totalCapacity)
             {
@@ -160,6 +167,7 @@ namespace SpaceGame.states
             input.SetCameraOffset(_camera.Position);
             handleInput(input);
             _camera.Update(gameTime, _player.Position);
+            _scoreManager.Update(gameTime.ElapsedGameTime);
             //if player is outside static area rectangle, call update on camera to update position of camera until
             //the player is in the static area rectangle or the camera reaches the _levelbounds, in which case,
             //the camera does not move in that direction (locks)
@@ -292,6 +300,7 @@ namespace SpaceGame.states
             {
                 unicorn.Draw(spriteBatch);
             }
+            _scoreManager.Draw(spriteBatch);
             spriteBatch.End();
 
             spriteBatch.Begin();

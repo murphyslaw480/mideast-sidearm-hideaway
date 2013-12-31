@@ -20,8 +20,9 @@ namespace SpaceGame.utilities
     /// </summary>
     class ScoreManager
     {
-        const int c_maxScorePops = 20;  //Max # of on-screen score popups
+        const int c_maxScorePops = 20;      //Max # of on-screen score popups
         const string c_scoreFontName = "MenuFont";
+        const float c_scoreDuration = 0.6f;    //seconds for score popup to endure
 
         static ScoreManager s_instance;
         static SpriteFont s_scoreFont;
@@ -98,21 +99,21 @@ namespace SpaceGame.utilities
         {
             public TimeSpan LifeTime;
             public Vector2 Position;
-            public ScoreData Data;
+            ScoreData _data;
             public Color TextColor
             {
-                get { return Data.Color; }
+                get { return Color.Lerp(Color.TransparentBlack, _data.Color, (float)LifeTime.TotalSeconds / c_scoreDuration); }
             }
             public int Score
             {
-                get { return Data.Points; }
+                get { return _data.Points; }
             }
 
             public ScorePopup(Vector2 position, ScoreData data)
             {
                 Position = position;
-                Data = data;
-                LifeTime = TimeSpan.FromSeconds(data.LifeTime);
+                _data = data;
+                LifeTime = TimeSpan.FromSeconds(c_scoreDuration);
             }
 
             public void Update(TimeSpan time)
@@ -124,7 +125,7 @@ namespace SpaceGame.utilities
             {
                 if (LifeTime > TimeSpan.Zero)
                 {
-                    sb.DrawString(s_scoreFont, Data.Text, Position, Data.Color);
+                    sb.DrawString(s_scoreFont, _data.Text, Position, TextColor);
                 }
             }
         }
@@ -136,7 +137,6 @@ namespace SpaceGame.utilities
         public string Text;
         public int Points;
         public Color Color;
-        public float LifeTime;
         public float Scale;
     }
 }

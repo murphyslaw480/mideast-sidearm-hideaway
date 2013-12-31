@@ -12,8 +12,7 @@
   <ScoreData Name="MeleeKill"
              Text="Melee Kill!"
              Points="5"
-             Color="255,0,0"
-             LifeTime="3"
+             Color="128,128,0,0"
              Scale="2">
   </ScoreData>
 </ScoreDatas>
