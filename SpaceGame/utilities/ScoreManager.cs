@@ -11,9 +11,8 @@ namespace SpaceGame.utilities
 {
     enum ScoreType
     {
-        //RangeKill,
+        RangeKill,
         MeleeKill,
-        //FlameKill
     }
     /// <summary>
     /// Singleton class for tracking and displaying score within a level
@@ -22,7 +21,7 @@ namespace SpaceGame.utilities
     {
         const int c_maxScorePops = 20;      //Max # of on-screen score popups
         const string c_scoreFontName = "MenuFont";
-        const float c_scoreDuration = 0.6f;    //seconds for score popup to endure
+        const float c_scoreDuration = 0.8f;    //seconds for score popup to endure
 
         static ScoreManager s_instance;
         static SpriteFont s_scoreFont;
@@ -91,6 +90,7 @@ namespace SpaceGame.utilities
                 if (_scorePopups[i].LifeTime <= TimeSpan.Zero)
                 {
                     _scorePopups[i] = new ScorePopup(position, s_scoreData[(int)type]);
+                    return;
                 }
             }
         }

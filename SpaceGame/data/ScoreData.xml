@@ -5,14 +5,19 @@
     Text (string)     : Text to display on screen for popup
     Points (int)      : Score value of event
     Color (Color)     : Color of popup text
-    LifeTime (float)  : Duration of popup text
     Scale (float)     : Size of popup text
 -->
 <ScoreDatas>
   <ScoreData Name="MeleeKill"
              Text="Melee Kill!"
              Points="5"
-             Color="128,128,0,0"
+             Color="255,255,0"
+             Scale="2">
+  </ScoreData>
+  <ScoreData Name="RangeKill"
+             Text="Range Kill!"
+             Points="5"
+             Color="255,128,0"
              Scale="2">
   </ScoreData>
 </ScoreDatas>

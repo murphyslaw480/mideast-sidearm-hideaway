@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SpaceGame.graphics;
 using SpaceGame.units;
 using SpaceGame.utility;
+using SpaceGame.utilities;
 
 namespace SpaceGame.equipment
 {
@@ -90,7 +91,12 @@ namespace SpaceGame.equipment
                 _tempVector = unit.Center - _owner.Center;
                 _tempVector.Normalize();
                 unit.ApplyImpact(_force * _tempVector, 1);
+                bool wasAlive = unit.Health > 0;
                 unit.ApplyDamage(_damage);
+                if (wasAlive && unit.Health <= 0)
+                {   //this attack killed it
+                    ScoreManager.RegisterScore(unit.Position, ScoreType.MeleeKill);
+                }
             }
         }
         protected override void UpdateWeapon(GameTime gameTime)

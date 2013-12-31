@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SpaceGame.graphics;
 using SpaceGame.units;
 using SpaceGame.utility;
+using SpaceGame.utilities;
 
 namespace SpaceGame.equipment
 {
@@ -93,9 +94,14 @@ namespace SpaceGame.equipment
             if (!unit.Collides)
                 return;
 
+            bool wasAlive = unit.Health > 0;
             foreach (Projectile p in _projectiles)
             {
                 p.CheckAndApplyCollision(unit, time);
+            }
+            if (wasAlive && unit.Health <= 0)
+            {   //this attack killed it
+                ScoreManager.RegisterScore(unit.Position, ScoreType.RangeKill);
             }
         }
 
@@ -124,8 +130,8 @@ namespace SpaceGame.equipment
                 p.Update(gameTime);
             }
 
-            System.Diagnostics.Debug.Assert(projectilesToSpawn == 0, "did not spawn all projectiles", "Number left: " + projectilesToSpawn, 
-                new object[] {this});
+            System.Diagnostics.Debug.Assert(projectilesToSpawn == 0, "did not spawn all projectiles", "Number left: " + projectilesToSpawn,
+                new object[] { this });
 
             if (_fireParticleEffect != null)
             {
