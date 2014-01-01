@@ -543,6 +543,7 @@ namespace SpaceGame.units
             _acceleration = Vector2.Zero;
             _health = _maxHealth;
             _angularVelocity = 0;
+            _statusEffects = new StatEffect(0, 0, 0);
             _freezeShatter = false;
             _sprite.Reset();
         }
