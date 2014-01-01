@@ -13,6 +13,10 @@ namespace SpaceGame.utilities
     {
         RangeKill,
         MeleeKill,
+        //Black hole eat enemy scoring
+        EatFrozen,
+        EatBurning,
+        EatLiving,
     }
     /// <summary>
     /// Singleton class for tracking and displaying score within a level

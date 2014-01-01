@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using SpaceGame.utility;
 using SpaceGame.equipment;
+using SpaceGame.utilities;
 
 namespace SpaceGame.units
 {
@@ -86,6 +87,28 @@ namespace SpaceGame.units
         {
             if (CurrentWeapon != null)
                 CurrentWeapon.CheckAndApplyCollision(unit, time);
+        }
+
+        public override float EatByBlackHole(Vector2 blackHolePos, float blackHoleRadius)
+        {
+            bool wasFrozen = UnitLifeState == LifeState.Frozen;
+            float massEaten = base.EatByBlackHole(blackHolePos, blackHoleRadius);
+            if (massEaten > 0)
+            {   //was eaten. apply scoring
+                if (wasFrozen)
+                {
+                    ScoreManager.RegisterScore(Position, ScoreType.EatFrozen);
+                }
+                else if (Health > 0)
+                {
+                    ScoreManager.RegisterScore(Position, ScoreType.EatLiving);
+                }
+                else if (_statusEffects.Fire > 0)
+                {
+                    ScoreManager.RegisterScore(Position, ScoreType.EatBurning);
+                }
+            }
+            return massEaten;
         }
 
         public override void Draw(SpriteBatch sb)

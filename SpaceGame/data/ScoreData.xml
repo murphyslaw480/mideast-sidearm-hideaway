@@ -10,14 +10,32 @@
 <ScoreDatas>
   <ScoreData Name="MeleeKill"
              Text="Melee Kill!"
-             Points="5"
+             Points="6"
              Color="255,255,0"
              Scale="2">
   </ScoreData>
   <ScoreData Name="RangeKill"
              Text="Range Kill!"
-             Points="5"
+             Points="4"
              Color="255,128,0"
+             Scale="2">
+  </ScoreData>
+  <ScoreData Name="EatFrozen"
+             Text="Chill Pill!"
+             Points="10"
+             Color="0,255,255"
+             Scale="2">
+  </ScoreData>
+  <ScoreData Name="EatBurning"
+             Text="Hot Shot!"
+             Points="8"
+             Color="255,0,0"
+             Scale="2">
+  </ScoreData>
+  <ScoreData Name="EatLiving"
+             Text="Live Bait!"
+             Points="12"
+             Color="0,153,0"
              Scale="2">
   </ScoreData>
 </ScoreDatas>
