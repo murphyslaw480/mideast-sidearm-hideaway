@@ -51,6 +51,8 @@ namespace SpaceGame.units
         //factor of max health used to represent frozen integrity
         //damage is dealt to this while frozen - shatter if < 0
         const float ICE_INTEGRITY_FACTOR = 0.5f;
+        //amount of cryo that causes freeze
+        const float CRYO_FREEZE_POINT = 0.9f * StatEffect.MaxEffect;
         //number of vertical and horizontal divisions when shattering
         const int c_shatterDivisions = 3;
         //amount of health ice fragments have relative to unit
@@ -467,7 +469,7 @@ namespace SpaceGame.units
             _hitRect.Y = (int)Position.Y - _hitRect.Height / 2;
 
             //manage stat effects
-            if (_statusEffects.Cryo >= StatEffect.MaxEffect && _lifeState != LifeState.Frozen)
+            if (_statusEffects.Cryo >= CRYO_FREEZE_POINT && _lifeState != LifeState.Frozen)
             {
                 _lifeState = LifeState.Frozen;
                 _iceIntegrity = MaxHealth * ICE_INTEGRITY_FACTOR;
