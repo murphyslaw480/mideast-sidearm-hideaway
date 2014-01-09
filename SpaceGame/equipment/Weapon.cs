@@ -127,11 +127,12 @@ namespace SpaceGame.equipment
         public void Update(GameTime gameTime)
         {
             UpdateWeapon(gameTime);
+            _firing = false;
             if (_maxCharge > 0)
             {   //chargeable weapon
                 if (_charging)
                 {
-                    _currentCharge += (float)gameTime.ElapsedGameTime.Seconds;
+                    _currentCharge += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     _currentCharge = MathHelper.Clamp(_currentCharge, 0, _maxCharge);
                     _charging = false;
                 }
@@ -149,7 +150,6 @@ namespace SpaceGame.equipment
             else
             {   //non-chargeable
                 _tillNextFire -= gameTime.ElapsedGameTime;
-                _firing = false;
             }
         }
         #endregion
