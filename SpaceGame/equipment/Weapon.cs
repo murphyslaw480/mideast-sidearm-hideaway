@@ -22,6 +22,7 @@ namespace SpaceGame.equipment
         public float SoundEffectVolume = 0.5f;
         public string Name;
         public float FireRate;
+        public float MaxCharge;
     }
 
     abstract class Weapon
@@ -41,6 +42,11 @@ namespace SpaceGame.equipment
         //set during Weapon.Trigger
         //check and apply during weapon.Update()
         protected bool _firing;
+        /// <summary>amount of time weapon can be charged for (0 if cannot be charged)</summary>
+        protected float _maxCharge;
+        //amount of time weapon has been charging (in seconds)
+        protected float _currentCharge;
+        protected bool _charging;
         protected Vector2 _fireLocation;
         protected Vector2 _fireDirection;
         protected Vector2 _targetDestination;
@@ -72,6 +78,7 @@ namespace SpaceGame.equipment
                 _fireSoundEffect = Content.Load<SoundEffect>(c_soundEffectDir + data.FireSoundEffect + ".wav");
             }
             _soundEffectVolume = data.SoundEffectVolume;
+            _maxCharge = data.MaxCharge;
         }
         #endregion
 
@@ -86,32 +93,64 @@ namespace SpaceGame.equipment
         {
             if (_tillNextFire.TotalSeconds <= 0)
             {
-                _firing = true;
-                _fireDirection = XnaHelper.DirectionBetween(_owner.Center, targetPosition);
-                _fireLocation = firePosition;
-                _targetDestination = targetPosition;
-
-                _tillNextFire = _fireDelay;
-
-				//animate fire
-                if (Sprite != null)
-                {
-                    Sprite.PlayAnimation(0, false);
+                if (_maxCharge > 0)
+                {   //chargeable weapon
+                    _charging = true;
+                    _fireDirection = XnaHelper.DirectionBetween(_owner.Center, targetPosition);
+                    _fireLocation = firePosition;
+                    _targetDestination = targetPosition;
                 }
-                if (_fireSoundEffect != null)
+                else
                 {
-                    _fireSoundEffect.Play(_soundEffectVolume, 0, 0);
+                    _firing = true;
+                    _fireDirection = XnaHelper.DirectionBetween(_owner.Center, targetPosition);
+                    _fireLocation = firePosition;
+                    _targetDestination = targetPosition;
+
+                    _tillNextFire = _fireDelay;
+
+                    //animate fire
+                    if (Sprite != null)
+                    {
+                        Sprite.PlayAnimation(0, false);
+                    }
+                    if (_fireSoundEffect != null)
+                    {
+                        _fireSoundEffect.Play(_soundEffectVolume, 0, 0);
+                    }
+                    return true;
                 }
-                return true;
             }
             return false;
         }
 
         public void Update(GameTime gameTime)
         {
-            _tillNextFire -= gameTime.ElapsedGameTime;
             UpdateWeapon(gameTime);
-            _firing = false;
+            if (_maxCharge > 0)
+            {   //chargeable weapon
+                if (_charging)
+                {
+                    _currentCharge += (float)gameTime.ElapsedGameTime.Seconds;
+                    _currentCharge = MathHelper.Clamp(_currentCharge, 0, _maxCharge);
+                    _charging = false;
+                }
+                else if (_currentCharge > 0)
+                {   //charge just released
+                    _firing = true;
+                    _currentCharge = 0;
+                    _tillNextFire = _fireDelay;
+                }
+                else
+                {
+                    _tillNextFire -= gameTime.ElapsedGameTime;
+                }
+            }
+            else
+            {   //non-chargeable
+                _tillNextFire -= gameTime.ElapsedGameTime;
+                _firing = false;
+            }
         }
         #endregion
 
