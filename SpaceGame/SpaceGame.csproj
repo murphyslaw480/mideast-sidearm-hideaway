@@ -40,6 +40,7 @@
     <Compile Include="equipment\Gadget.cs" />
     <Compile Include="equipment\HookShot.cs" />
     <Compile Include="equipment\IConsumable.cs" />
+    <Compile Include="equipment\Laser.cs" />
     <Compile Include="equipment\MeleeWeapon.cs" />
     <Compile Include="equipment\Projectile.cs" />
     <Compile Include="equipment\ProjectileEffect.cs" />
